@@ -80,6 +80,14 @@ module.exports = function(grunt) {
                         dest: `${app}/`,
                         filter: 'isFile'
                     },
+                    // STYLE
+                    {
+                        expand: true,
+                        cwd: `${src}/css/`,
+                        src: '*.css',
+                        dest: `${app}/`,
+                        filter: 'isFile'
+                    },
                     // JS
                     {
                         expand: true,
@@ -145,7 +153,7 @@ module.exports = function(grunt) {
                     `src/index.html`
                 ],
                 tasks: [
-                    'htmlhint:dev'
+                    // 'htmlhint:dev'
                 ],
                 options: {
                     livereload: true

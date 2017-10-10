@@ -1,0 +1,25 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: #808080;
+  border: 2px solid blue;
+  overflow: hidden;
+}
+
+canvas#defaultCanvas0 {
+  margin: 0;
+  padding: 0;
+  width: 100% !important;
+  height: auto !important;
+  image-rendering: pixelated;
+}
+
+#debug {
+  position: absolute;
+  z-index: 1;
+  display: inline-block;
+  color: #ff008d;
+  background-color: transparent;
+  font-size: 14pt;
+  font-family: monospace;
+}
