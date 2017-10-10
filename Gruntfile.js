@@ -5,7 +5,7 @@ module.exports = function(grunt) {
     const LivereloadPort = 35729;
     const ServeStatic = require('serve-static');
 
-    let page = grunt.option('page') || 'index.html';
+    let page = grunt.option('page') || 'src/index.html';
     const dist = 'dist';
     const src = 'src';
     const tmp = '.tmp';
@@ -72,6 +72,14 @@ module.exports = function(grunt) {
         copy: {
             dev: {
                 files: [
+                    // MARKUP
+                    {
+                        expand: true,
+                        cwd: `${src}/`,
+                        src: 'index.html',
+                        dest: `${app}/`,
+                        filter: 'isFile'
+                    },
                     // JS
                     {
                         expand: true,
@@ -134,7 +142,7 @@ module.exports = function(grunt) {
             },
             markup: {
                 files: [
-                    `index.html`
+                    `src/index.html`
                 ],
                 tasks: [
                     'htmlhint:dev'
