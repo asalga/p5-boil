@@ -14,7 +14,7 @@ module.exports = function(grunt) {
   // const LivereloadPort = 35729;
   // const ServeStatic = require('serve-static');
 
-  
+
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
   grunt.initConfig({
@@ -95,7 +95,7 @@ module.exports = function(grunt) {
           // JS
           {
             expand: true,
-            cwd: `${src}/js`,
+            cwd: `${src}/sketches/0/`,
             src: '**/*.js',
             dest: `${app}/`,
             filter: 'isFile'
@@ -104,10 +104,9 @@ module.exports = function(grunt) {
           {
             expand: true,
             flatten: true,
-            cwd: `/raw-images/`,
-            //'<%= project.imgLocal %>/',
+            cwd: `src/sketches/`,
             src: ['**/*.{jpg,jpeg,png,gif,svg}'],
-            dest: `${app}/medias/`,
+            dest: `${app}/data/`,
             filter: 'isFile'
           }
         ]
@@ -143,7 +142,7 @@ module.exports = function(grunt) {
       },
       scripts_dev: {
         files: [
-          `${src}/js/*.js`
+          `${src}/sketches/0/*.js`
         ],
         tasks: [
           'copy:dev'
@@ -152,6 +151,19 @@ module.exports = function(grunt) {
           livereload: true
         }
       },
+      // IMAGES
+      images: {
+        files: [
+          `src/sketches/**/*.png`
+        ],
+        tasks: [
+          'copy:dev'
+        ],
+        options: {
+          livereload: true
+        }
+      },
+      // STYLE
       style: {
         files: [
           `src/css/style.css`
@@ -163,6 +175,7 @@ module.exports = function(grunt) {
           livereload: true
         }
       },
+      // MARKUP
       markup: {
         files: [
           `src/index.html`
@@ -178,15 +191,11 @@ module.exports = function(grunt) {
     }
   });
 
-
   grunt.registerTask('default', [
-    // JS
-    // 'jshint',
-    //'browserify:dev',
-    //'uglify:dev',
+
+    'copy:dev',
 
     // LIVE UPDATES / PREVIEW
-    'copy:dev',
     'connect:livereload',
     'open',
     'watch'
