@@ -1,99 +1,103 @@
-/*
-[5, 10, 13, 15, 15, 12, 10, 8, 1]
-[2, 7, 9, 12, 15, 14, 11, 9, 4]
+const pxSize = 2;
+let BrickHeight = 8;
 
-[3, 8, 12, 14, 15, 13, 12, 8, 3]
-6, 11, 13, 15, 15, 12, 10, 6, 0
+let sizesA = [2, 7, 11, 15, 14, 15, 11, 9, 4];
+let sizesB = [5, 10, 13, 15, 15, 12, 10, 8];
+let sizesC = [1, 5, 11, 14, 15, 14, 12, 10, 6];
+let sizesD = [4, 8, 12, 15, 15, 13, 11, 8, 2];
 
-[1, 5, 11, 14, 15, 14, 12, 10, 6]
-[4, 8, 12, 15, 15, 13, 11, 8, 2]
+let states = [
+    [sizesA, sizesB],
+    [sizesC, sizesD],
+    [sizesB, sizesA],
+    [sizesD, sizesC]
+];
+let state = 3;
 
-
------
-1,2,4,6,8, 2,4,6,8
-*/
-
-const pxSize = 4;
-var img, subImg;
-
-
-var sizes1 = [2, 7, 11, 15, 14, 15, 11, 9, 4];//P
-var sizes2 = [5, 10, 13, 15, 15, 12, 10, 8]; //P
-
-// sizes1 = [2, 6, 12, 15, 16, 14, 12, 10, 6];
-// sizes2 = [5, 9, 13, 16, 16, 13, 11, 8, 2];
-
-// sizes1 = [1, 5, 11, 14, 15, 14, 12, 10, 6]
-// sizes2 = [4, 8, 12, 15, 15, 13, 11, 8, 2]
+let x, img;
+let easing = 0.005;
+let px;
 
 function preload() {
-  brick = loadImage("data/brick@4.jpg");
+    brick = loadImage("brick2.jpg");
 }
 
 function setup() {
-  createCanvas(640, 480);
-  // subImg = img.get(0, 0, 5 * pxSize, 8 * pxSize);
+    createCanvas(320, 240);
+    x = width / 2;
 }
 
 function draw() {
-  background(0);
-  noStroke();
+    background(0);
 
-  push();
-  // row 1
-  drawRow(sizes1);
-  translate(0, pxSize * 8);
-  drawRow(sizes2);
-  pop();
+    push();
+    translate(width / 2 - 100, 0);
 
+    let diff = mouseX - x;
+    px = diff * easing;
 
-  stroke(0);
-  noFill();
-  // rect(0, 0, width - 1, height - 1);
+    px = px > .025 ? .025 : px;
+    px = px < -.025 ? -.025 : px;
+    x += 0.025; //px;
+
+    state = parseInt(x * 10) % 4;
+
+    drawTower(state);
+    pop();
+
+    noFill();
+    stroke(255, 255, 255);
+    rect(0, 0, width - 1, height - 1);
+}
+
+function drawTower(s) {
+    push();
+    drawRow(states[s][0]);
+    translate(0, pxSize * 8);
+    drawRow(states[s][1]);
+    pop();
 }
 
 /*
-	array containing widths
+  array containing widths
 */
 function drawRow(arr) {
 
-  push();
-  for (let y = 0; y < 4; ++y) {
+    push();
+    for (let y = 0; y < 13; ++y) {
+        let xOffset = 0;
 
-    translate(0, pxSize * 16);
+        for (let i = 0; i < arr.length; ++i) {
+            let yOffset = y * (BrickHeight * pxSize) + (parseInt(frameCount / 2) % 32) / 2;
 
-    let xOffset = 10;
-
-    for (let i = 0; i < arr.length; ++i) {
-      if (i <= 4) {
-        drawBrick(xOffset, 0, arr[i], 8, 1);
-      } else {
-        // xOffset += 1;
-        drawBrick(xOffset, 0, arr[i], 8, -1);
-      }
-
-      xOffset += arr[i] + 1;
+            // left side
+            if (i <= 4) {
+                drawBrick(xOffset, -16 + yOffset, arr[i], BrickHeight, 1);
+                //right side
+            } else {
+                drawBrick(xOffset, -16 + yOffset, arr[i], BrickHeight, -1);
+            }
+            xOffset += arr[i] + 1;
+        }
     }
-  }
-  pop();
-
-  /*
-  	d - direction to start copying (left or right)
-  */
-  function drawBrick(x, y, w, h, d) {
+    pop();
+}
+/*
+  d - direction to start copying (left or right)
+*/
+function drawBrick(x, y, w, h, d) {
 
     if (d === 1) {
-      image(brick,
-        x * pxSize, y * pxSize,
-        w * pxSize, h * pxSize,
-        4, 0,
-        w * pxSize, h * pxSize);
+        image(brick,
+            x * pxSize, y * pxSize,
+            w * pxSize, h * pxSize,
+            pxSize, 0,
+            w * pxSize, h * pxSize);
     } else {
-      image(brick,
-        x * pxSize, y * pxSize,
-        w * pxSize, h * pxSize,
-        (4 * 16) - (w * 4), 0,
-        (w * 4), h * pxSize);
+        image(brick,
+            x * pxSize, y * pxSize,
+            w * pxSize, h * pxSize,
+            (pxSize * 16) - (w * pxSize), 0,
+            (w * pxSize), h * pxSize);
     }
-  }
 }
