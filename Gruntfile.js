@@ -95,8 +95,8 @@ module.exports = function(grunt) {
           // JS
           {
             expand: true,
-            cwd: `${src}/sketches/0/`,
-            src: '**/*.js',
+            cwd: `${src}/sketches/1/`,
+            src: '*.js',
             dest: `${app}/`,
             filter: 'isFile'
           },
@@ -142,7 +142,7 @@ module.exports = function(grunt) {
       },
       scripts_dev: {
         files: [
-          `${src}/sketches/0/*.js`
+          `${src}/sketches/1/*.js`
         ],
         tasks: [
           'copy:dev'
