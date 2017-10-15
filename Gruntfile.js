@@ -104,7 +104,7 @@ module.exports = function(grunt) {
           {
             expand: true,
             flatten: true,
-            cwd: `src/sketches/`,
+            cwd: `${src}/sketches/1/data`,
             src: ['**/*.{jpg,jpeg,png,gif,svg}'],
             dest: `${app}/data/`,
             filter: 'isFile'
@@ -137,7 +137,7 @@ module.exports = function(grunt) {
      */
     watch: {
       options: {
-        spawn: false,
+        spawn: true,
         livereload: true
       },
       scripts_dev: {
@@ -154,7 +154,7 @@ module.exports = function(grunt) {
       // IMAGES
       images: {
         files: [
-          `src/sketches/**/*.png`
+          `src/sketches/1/data/*.{png,jpg,jpeg,gif,svg}`
         ],
         tasks: [
           'copy:dev'
