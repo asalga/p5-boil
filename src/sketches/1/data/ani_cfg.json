@@ -10,12 +10,12 @@
 
 
 {
-  "enter": {
+  "enter_hurt": {
     "type": "frames",
     "framedata": "sheet.txt",
     "frameimg": "sheet.png",
     "time": 500,
-    "frames": ["enter1", "enter2", "enter3"]
+    "frames": ["enter_hurt_0", "enter_hurt_1"]
   },
 
   "exit": {
