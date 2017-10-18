@@ -4,28 +4,18 @@
   Oct 2017
 */
 
-/*
-  
-  Create Asset manager
-  Create Animator
-  Create Timer  
-*/
+let p5 = require('p5');
+let GameBoard = require('./GameBoard');
+let Assets = require('./Assets');
+let Character = require('./Character');
 
-var p5 = require('p5');
-var GameBoard = require('./GameBoard');
-
-// var AssetLoader = require('./AssetLoader');
-
-
-let img = null;
-let armPositions = {};
-
-let hitBoxSize = 30;
-let max, maxHand;
-let rat;
 
 let debug = true;
-
+let hitBoxSize = 30;
+let max, maxHand;
+let gameBoard, assets;
+let _p5;
+let characters = [];
 let hitBoxPositions = [
   [185, 282],
   [97, 330],
@@ -33,51 +23,42 @@ let hitBoxPositions = [
   [368, 310],
   [268, 363]
 ];
+let time1 = 0,
+  time2 = 0;
+let fps = 0;
 
-let ratTest;
-let gameBoard;
-let _p5;
+/*
+ */
+var update = function(dt) {
 
-
-var Sam = new Character(opts);
-
-Sam.init(cfg);
-Sam.update(dt);
-Sam.play('str');
-
+  characters.forEach((v) => {
+    v.update(dt);
+  });
+};
 
 var newp5 = new p5(function(p) {
   _p5 = p;
 
   p.setup = function setup() {
     p.createCanvas(640, 400);
-
     gameBoard = new GameBoard(newp5);
   };
 
+  /*
+   */
   p.preload = function() {
-    img = p.loadImage('data/_idle.png');
-    rat = p.loadImage('data/rat/rat_2.png');
-    max = p.loadImage('data/max/head.png');
-    maxHand = p.loadImage('data/max/hand.png');
+    assets = new Assets(p);
+    assets.preload();
 
-    armPositions.idle = {
-      x: 224,
-      y: 90,
-      img: p.loadImage('data/arm_idle.png')
-    }
-
-    armPositions.slot3 = {
-      x: 200,
-      y: 125,
-      img: p.loadImage('data/arm_slot3.png')
-    }
-  }
+    let rat = new Character({ p5: p, name: 'rat' });
+    characters.push(rat);
+    rat.play();
+  };
 
   /*
     User tried to hit a slot
   */
-  p.mouseClicked = function(){
+  p.mouseClicked = function() {
     let slotID = gameBoard.hit(p.mouseX, p.mouseY);
 
     // if(slotID > -1){
@@ -88,26 +69,37 @@ var newp5 = new p5(function(p) {
   }
 
   p.draw = function() {
-    //characters.update(delta);
+    if (!assets.isDone()) {
+      return;
+    }
 
-    p.image(img, 0, 0);
-    p.image(max, 0, 74);
-    p.image(maxHand, 0, 280)
+    time1 = p.millis();
+    let delta = time1 - time2;
+    update(delta);
+
+    p.image(assets.get('data/_idle.png'), 0, 0);
+    p.image(assets.get('data/max/head.png'), 0, 74);
+    p.image(assets.get('data/max/hand.png'), 0, 280);
 
     drawMouseCoords();
     drawHitBoxes();
+    drawFPS();
 
-    p.image(rat, hitBoxPositions[0][0] - 14, hitBoxPositions[0][1] - 90);
 
-    if (_p5.keyIsDown(51)) {
-      drawArm('slot3');
-    } else {
-      drawArm('idle');
-    }
-
-    Sam.play('arm_slot3')
+    time2 = time1;
   }
 });
+
+function drawFPS() {
+  if (_p5.frameCount % 120 === 0) {
+    fps = Math.round(_p5.frameRate());
+  }
+
+  _p5.textSize(30);
+  _p5.noStroke(255, 255, 255);
+  _p5.fill(255,0,0);
+  _p5.text(`${fps}`, 20, 100);
+}
 
 
 function drawMouseCoords() {
@@ -131,7 +123,7 @@ function drawHitBoxes() {
 
 function drawArm(key) {
   let k = armPositions[key];
-  _p5.image(k.img, k.x, k.y);
+  //  _p5.image(k.img, k.x, k.y);
 }
 
 
@@ -152,3 +144,28 @@ function drawArm(key) {
 // ratTest.play('idle');
 // ratTest.play('dizzy1');
 // ratTest.play('dizzy2');
+// p.background(100, 100, 100);
+// _p5.textSize(30);
+// _p5.stroke(255, 255, 255);
+// newp5.text(`${_p5.mouseX} , ${_p5.mouseY}`, 230, 30);
+
+// armPositions.idle = {
+//   x: 224,
+//   y: 90,
+//   img: p.loadImage('data/arm_idle.png')
+// }
+
+// armPositions.slot3 = {
+//   x: 200,
+//   y: 125,
+//   img: p.loadImage('data/arm_slot3.png')
+// }
+
+// p.image(rat, hitBoxPositions[0][0] - 14, hitBoxPositions[0][1] - 90);
+// if (_p5.keyIsDown(51)) {
+//   drawArm('slot3');
+// } else {
+//   drawArm('idle');
+// }
+
+// Sam.play('arm_slot3')
