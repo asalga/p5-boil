@@ -88,10 +88,7 @@ var newp5 = new p5(function(p) {
   }
 
   p.draw = function() {
-
-    
     //characters.update(delta);
-
 
     p.image(img, 0, 0);
     p.image(max, 0, 74);
@@ -108,9 +105,7 @@ var newp5 = new p5(function(p) {
       drawArm('idle');
     }
 
-
     Sam.play('arm_slot3')
-
   }
 });
 

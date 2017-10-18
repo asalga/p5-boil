@@ -1,5 +1,30 @@
 {
-	
-	'arm_3': {
-		'image.png'
+  "arm_3": {
+    "type": "static",
+    "img": "image.png",
+    "time": 400
+  }
+}
+
+
+
+
+{
+  "enter": {
+    "type": "frames",
+    "framedata": "sheet.txt",
+    "frameimg": "sheet.png",
+    "time": 500,
+    "frames": ["enter1", "enter2", "enter3"]
+  },
+
+  "exit": {
+    "type": "frames",
+    "framedata": "sheet.txt",
+    "frameimg": "sheet.png",
+    "frames": ["enter1", "enter2", "enter3"]
+  }
+
+
+
 }

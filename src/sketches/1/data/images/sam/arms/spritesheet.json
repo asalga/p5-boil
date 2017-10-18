@@ -1,0 +1,30 @@
+{"frames": [
+
+{
+	"filename": "arm_idle.png",
+	"frame": {"x":2,"y":2,"w":186,"h":161},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":186,"h":161},
+	"sourceSize": {"w":186,"h":161},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "arm_slot3.png",
+	"frame": {"x":2,"y":165,"w":229,"h":202},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":229,"h":202},
+	"sourceSize": {"w":229,"h":202},
+	"pivot": {"x":0.5,"y":0.5}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "spritesheet.png",
+	"format": "RGBA8888",
+	"size": {"w":369,"h":369},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:8e1e5d118a6783d56b50c4d650d4ddbc:bb3020d0566b0194c17071aa4183ae67:729adc6043343cfda41c447ce8f464d6$"
+}
+}
