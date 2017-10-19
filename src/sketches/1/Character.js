@@ -16,17 +16,15 @@
 
 
 let Character = function(cfg) {
-  this.cfg = cfg || {};
-
-  this.p5 = cfg.p5;
+  Object.assign(this, cfg || {});
 };
 
 
 Character.prototype = {
 
   play: function() {
-    console.log('play called');
-    console.log(this.cfg.name);
+    console.log(`play called on ${this.name}`);
+    // console.log(this.cfg.name);
   },
 
   update: function(dt){
@@ -34,7 +32,7 @@ Character.prototype = {
   },
 
   draw: function(){
-  	
+
   }
 
 };
