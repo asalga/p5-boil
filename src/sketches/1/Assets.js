@@ -4,6 +4,9 @@
 
 */
 
+const Atlas = require('./Atlas');
+
+
 const Data = {
   images: [
     'data/_idle.png',
@@ -13,9 +16,13 @@ const Data = {
   ],
 
   animations: [
-    'animations/rat.json',
-    'animations/sam.json'
+    'data/images/rat/spritesheet.png'
   ],
+
+  // animations: [
+  //   'animations/rat.json',
+  //   'animations/sam.json'
+  // ],
 
   audio: [
     'blahblah'
@@ -34,6 +41,7 @@ let Assets = function(p) {
   this.p5 = p;
   this.images = {};
   this.animations = {};
+  this.atlases = [];
 
   this.numAssetsLoaded = 0;
 
@@ -46,10 +54,27 @@ let Assets = function(p) {
     }
 
     let that = this;
+    
+    // 
+    Data.animations.forEach((v)=>{
+      
+      console.log('>>>>>', v);
 
+      that.p5.loadImage(v, function(atlasImg) {
 
+        let xhr = new XMLHttpRequest();
+        xhr.onload = function(response) {
+          
+          that.atlases.push(new Atlas(
+            { img: atlasImg, meta: xhr.responseText, p:that.p5 })
+          );
 
-
+          that.numAssetsLoaded++
+        };
+        xhr.open('GET', 'data/images/rat/spritesheet.json');
+        xhr.send();
+      });
+    });
 
 
     Data.images.forEach(function(v, i, a) {
@@ -63,30 +88,19 @@ let Assets = function(p) {
       //   console.log('resolved! ', a);
       // }
 
+      // loadAtlasImage()
+      //   .then(()=> loadAtlasMeta())
+      //   .then(() => {
+      //     // split();
+      //   });
 
-      that.p5.loadImage('data/images/rat/spritesheet.png', function(a){
+      // Once we have the image, get the associated metadata file
+      // and then create a spritesheet.
 
-
-        var xhr = new XMLHttpRequest();
-        xhr.onload = function(responce){
-          console.log('loaded!! ', xhr.responseText);
-
-        };
-        xhr.open('GET',  'data/images/rat/spritesheet.json');
-        xhr.send();
-
-
-        // return new Promise((res,rej) => {
-
-
-        // });
-
-       // console.log('test');
-      });
 
 
       //  var a = new Promise(function(resolve, reject) {
-        
+
       //   that.p5.loadImage( 'data/rat/rat_2.png', function(){
       //     resolve();
       //   });
@@ -101,21 +115,18 @@ let Assets = function(p) {
 
       // once we have both the metadata and image, we can split
       // apart the spritesheet
-
-
     });
 
-    Data.animations.forEach(function() {
-      // ajax animations
-      that.numAssetsLoaded++;
-    });
+    // Data.animations.forEach(function() {
+    //   // ajax animations
+    //   that.numAssetsLoaded++;
+    // });
   };
 
   /*
    */
   this.isDone = function() {
-
-    return this.numAssetsLoaded === Data.images.length + Data.animations.length;
+    return this.numAssetsLoaded === (Data.images.length + Data.animations.length);
   };
 
   /*

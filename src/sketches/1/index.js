@@ -131,6 +131,9 @@ var newp5 = new p5(function(p) {
     drawHitBoxes();
     drawFPS();
 
+
+    p.image(assets.atlases[0].frames['exit.png'], 0,0);
+
     time2 = time1;
 
     // p.background(0, 0, 0);
