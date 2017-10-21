@@ -2,12 +2,24 @@
   Wak-a-Rat
   Andor Saga
   Oct 2017
+
+  TODO:
+  - Allow toggling debug
+   - make p5 global
+   - create keys file
+   - figure out what manages the rats. the GameBoard?
 */
 
+
+const KEY_D = 68;
+
+let rat;
 let p5 = require('p5');
 let GameBoard = require('./GameBoard');
 let Assets = require('./Assets');
 let Character = require('./Character');
+let SequenceController = require('./SequenceController');
+let UI = require('./UI');
 
 
 let debug = true;
@@ -16,43 +28,65 @@ let max, maxHand;
 let gameBoard, assets;
 let _p5;
 let characters = [];
-let hitBoxPositions = [
-  [185, 282],
-  [97, 330],
-  [225, 320],
-  [368, 310],
-  [268, 363]
-];
 let time1 = 0,
   time2 = 0;
 let fps = 0;
 
+
 /*
  */
 var update = function(dt) {
-
   characters.forEach((v) => {
     v.update(dt);
   });
 };
+
+/*
+ */
+var render = function() {
+
+  // rat.position(10, 10);
+
+  characters.forEach((v) => {
+    v.draw();
+  });
+}
 
 var newp5 = new p5(function(p) {
   _p5 = p;
 
   p.setup = function setup() {
     p.createCanvas(640, 400);
+    
+    
     gameBoard = new GameBoard(newp5);
+    // window.gb = gameBoard;
+    // console.log('<<>>');
+
+    // var g = new GameBoard(newp5);
+    // var g1 = new GameBoard(newp5);
+
+    // console.log('>>' , g=== gameBoard );
+
+
+
+    // SequenceController.setGameBoard(gameBoard);
+    // SequenceController.setDifficulty(5);
+    // SequenceController.start();
+
   };
 
   /*
    */
   p.preload = function() {
+
     assets = new Assets(p);
     assets.preload();
 
-    let rat = new Character({ p5: p, name: 'rat' });
+    rat = new Character({ p5: p, name: 'rat' });
+
+    //rat.play('enter');
     characters.push(rat);
-    rat.play();
   };
 
   /*
@@ -66,16 +100,28 @@ var newp5 = new p5(function(p) {
     // }
 
     // console.log(gameBoard.getNumMisses());
-  }
+  };
 
+  /*
+  */
+  p.keyDown = function() {
+    if (keyCode === KEY_D) {
+      debug = !debug;
+    }
+  };
+
+  /*
+  */
   p.draw = function() {
     if (!assets.isDone()) {
       return;
     }
 
+
     time1 = p.millis();
     let delta = time1 - time2;
     update(delta);
+    render();
 
     p.image(assets.get('data/_idle.png'), 0, 0);
     p.image(assets.get('data/max/head.png'), 0, 74);
@@ -85,8 +131,9 @@ var newp5 = new p5(function(p) {
     drawHitBoxes();
     drawFPS();
 
-
     time2 = time1;
+
+    // p.background(0, 0, 0);
   }
 });
 
@@ -97,7 +144,7 @@ function drawFPS() {
 
   _p5.textSize(30);
   _p5.noStroke(255, 255, 255);
-  _p5.fill(255,0,0);
+  _p5.fill(255, 0, 0);
   _p5.text(`${fps}`, 20, 100);
 }
 
