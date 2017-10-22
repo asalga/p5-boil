@@ -13,7 +13,7 @@ module.exports = function(grunt) {
   const basePath = 'src/sketches/';
 
   let config = {
-    sketchTarget: `${basePath}/1`
+    sketchTarget: `${basePath}/2`
   };
 
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
@@ -102,7 +102,7 @@ module.exports = function(grunt) {
           {
             expand: true,
             flatten: false,
-            cwd: `${src}/sketches/1/data`,
+            cwd: `${src}/sketches/2/data`,
             src: ['**/*.{jpg,jpeg,png,gif,svg}'],
             dest: `${app}/data/`,
             filter: 'isFile'
