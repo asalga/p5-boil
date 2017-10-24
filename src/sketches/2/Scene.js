@@ -13,16 +13,16 @@ let Scene = function() {
   let assets = {};
 
   let user;
-  //   let actors = [];
-  //   let bullets = [];
+  let actors = [];
+  let bullets = [];
 
   /*
    */
   this.draw = function() {
     user.draw();
 
-    //     actors.forEach(v => v.draw());
-    //     bullets.forEach(v => v.draw());
+    actors.forEach(v => v.draw());
+    bullets.forEach(v => v.draw());
   };
 
   //   /*
@@ -34,11 +34,11 @@ let Scene = function() {
     //       v.update(dt);
     //     });
 
-    //     bullets.forEach(function(v) {
-    //       v.update(dt);
-    //     });
+    bullets.forEach(function(v) {
+      v.update(dt);
+    });
 
-    //     // Check collisions
+    // Check collisions
   };
 
 
@@ -50,26 +50,18 @@ let Scene = function() {
     assets[key] = img;
   };
 
-  //   this.removeBullet = function(bullet){
+  this.removeBullet = function(bullet) {
 
-  //    // Utils.removeFromList(this.bullets, bullet);
-  //    // Utils.intersection
-  //    // BitmapFont
-  //    // 
+    // Utils.removeFromList(this.bullets, bullet);
+    // Utils.intersection
 
-  //   };
+    //   this.createActor = function(str) {
+    //     if (str == 'bullet') {
+  };
 
-  //   /*
-  //    */
-  //   this.createActor = function(str) {
-  //     if (str == 'bullet') {
-
-  //     }
-  //   };
-
-  //   this.createBullet = function(cfg) {
-  //     bullets.push(new Bullet(cfg));
-  //   };
+  this.createBullet = function(cfg) {
+    bullets.push(new Bullet(cfg));
+  };
 };
 
 

@@ -2,10 +2,7 @@
 
  */
 
-
-// const Scene = require('./Scene').getInstance();
-
-// let lastTimeFired = 0;
+let lastTimeFired = 0;
 
 let Ship = function(cfg) {
   Object.assign(this, cfg || {});
@@ -14,7 +11,7 @@ let Ship = function(cfg) {
   this.speed = 300;
   this.position = { x: 50, y: 50 };
 
-  // 1 bullet every x milliseconds
+  // 1 bullet every this many milliseconds
   this.fireRate = 500;
 };
 
@@ -34,9 +31,9 @@ Ship.prototype = {
 
     if (now - lastTimeFired > this.fireRate) {
 
-      //       let p = window.p5.createVector(0, 0);
-      //       let v = window.p5.createVector(150, 0);
-      //       Scene.createBullet({ position: p, velocity: v });
+      let p = createVector(0, 0);
+      let v = createVector(150, 0);
+      scene.createBullet({ position: p, velocity: v });
 
       lastTimeFired = millis();
     }

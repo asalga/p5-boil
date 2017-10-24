@@ -1,20 +1,13 @@
-'use strict';
-
-// let position, velocity;
-
-let Scene = require('./Scene').getInstance();
-
 let Bullet = function(cfg) {
 
   this.position = cfg.position;
   this.velocity = cfg.velocity;
 
-
   this.draw = function() {
-    window.p5.fill(255, 0, 0);
-    window.p5.rect(this.position.x, 200, 10, 10);
+    fill(255, 0, 0);
+    rect(this.position.x, 200, 10, 10);
+    image()
   };
-
 
   this.update = function(dt) {
     this.position.x += this.velocity.x * (dt / 1000);
@@ -27,4 +20,4 @@ let Bullet = function(cfg) {
 
 };
 
-module.exports = Bullet;
+// module.exports = Bullet;
