@@ -6,10 +6,8 @@ draw()
 push()
 pop()
 
-
 -Time
 millis()
-
 
 -Math
 createVector()
@@ -17,14 +15,15 @@ constrain()
 randomSeed()
 random()
 
-
-kb
+-Input
 keyIsDown()
 
+-String Functions
+nf()
 
+-Rendering
 image()
 background()
-
 
 -Environment
 width

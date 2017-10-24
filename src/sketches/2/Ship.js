@@ -1,13 +1,11 @@
 /*
 
-*/
-
-let Global = require('./Global');
-const Scene = require('./Scene').getInstance();
+ */
 
 
-let lastTimeFired = 0;
+// const Scene = require('./Scene').getInstance();
 
+// let lastTimeFired = 0;
 
 let Ship = function(cfg) {
   Object.assign(this, cfg || {});
@@ -21,58 +19,51 @@ let Ship = function(cfg) {
 };
 
 Ship.prototype = {
-
   constructor: Ship,
 
-  hit() {
-    // health -= 40;
-    if (this.heath <= 0) {
-      // scene.restart();
-    }
-  },
+  //   hit() {
+  //     // health -= 40;
+  //     if (this.heath <= 0) {
+  //       // scene.restart();
+  //     }
+  //   },
 
 
   fire() {
-    
-
-    let now = window.p5.millis();
+    let now = millis();
 
     if (now - lastTimeFired > this.fireRate) {
 
-      let p = window.p5.createVector(0, 0);
-      let v = window.p5.createVector(150, 0);
-      Scene.createBullet({ position: p, velocity: v });
-      
-      lastTimeFired = window.p5.millis();
-    }
+      //       let p = window.p5.createVector(0, 0);
+      //       let v = window.p5.createVector(150, 0);
+      //       Scene.createBullet({ position: p, velocity: v });
 
+      lastTimeFired = millis();
+    }
   },
 
   update(dt) {
-
-    if (this.p.keyIsDown(this.p.UP_ARROW)) {
+    if (keyIsDown(UP_ARROW)) {
       this.position.y -= this.speed * (dt / 1000);
 
       if (this.position.y < 0) {
         this.position.y = 0;
       }
-    } else if (this.p.keyIsDown(this.p.DOWN_ARROW)) {
+    } else if (keyIsDown(DOWN_ARROW)) {
       this.position.y += this.speed * (dt / 1000);
 
-      if (this.position.y > Global.height - this.userShip.height) {
-        this.position.y = Global.height - this.userShip.height;
+      if (this.position.y > height - this.userShip.height) {
+        this.position.y = height - this.userShip.height;
       }
     }
 
-    // 
-    if (this.p.keyIsDown(32)) {
+    // space key
+    if (keyIsDown(32)) {
       this.fire();
     }
   },
 
   draw() {
-    this.p.image(this.userShip, this.position.x, this.position.y);
+    image(this.userShip, this.position.x, this.position.y);
   }
 };
-
-module.exports = Ship;

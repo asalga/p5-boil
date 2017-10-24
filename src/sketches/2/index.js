@@ -2,103 +2,58 @@
   EP - Space Game
   Andor Saga
   Oct 2017
-
-  TODO:
- 
-  - create BitmapFont plugin
-    - create interface
-
-  - Create Scene
-  - Create Bullet
-  - Create BoundingBox
 */
 
-let rasterFont;
+let sonicFont;
+let score = 4259;
+let time1 = 0,
+  time2 = 0;
+let scene;
 
-// const Ship = require('./Ship');
-// const p5 = require('p5');
-// const scene = require('./Scene').getInstance();
+ scene = new Scene();
 
 function setup() {
-  createCanvas(500, 500);
-  rasterTextFont(rasterFont);
+  createCanvas(640, 480);
+
+ 
+
+  let user = new Ship({userShip: userShip });
+  scene.setUser(user);
+}
+
+
+function preload() {
+
+  // sonicFont = loadBitmapFont('data/sonicFont@2.png', {
+  //   glyphWidth: 8 * 2,
+  //   glyphHeight: 8 * 2,
+  //   glyphBorder: 0,
+  //   rows: 12,
+  //   cols: 8
+  // });
+
+  userShip = loadImage('data/user.png', function() {
+    scene.createAsset('user', 'data/user.png');
+  });
+
+  //loadImage('data/user_bullet.png', function() {
+  //   scene.createAsset('user_bullet','data/user_bullet.png');
+ // });
 }
 
 function draw() {
-  background(0, 0, 0);
-  rasterText("text", 20, 20);
-}
+  background(0, 0, 0);  
 
-function preload() {
-  rasterFont = loadRasterFont('data/font.png');
-}
+  time1 = millis();
+  let delta = time1 - time2;
 
+  scene.update(delta);
+  scene.draw();
 
-// let _p5;
-// let time1 = 0,
-//   time2 = 0;
-// let rasterFont;
-
-// var update = function(dt) {
-//   scene.update(dt);
-// };
-
-// /*
-//  */
-// var render = function() {
-//   scene.draw();
-// }
-
-// var newp5 = new p5(function(p) {
-
-//   window.p5 = p;
-
-//   p.setup = function setup() {
-//     p.createCanvas(640, 400);
-
-//     let user = new Ship({ p: p, userShip: userShip });
-//     scene.setUser(user);
-
-//     console.log(user);
-//   };
-
-//   /*
-//    */
-//   p.preload = function() {
-
-//     rasterFont = p.loadRasterFont('data/font.png','data/font_meta.json');
-
-//     userShip = p.loadImage('data/user.png', function(){
-//       scene.createAsset('user','data/user.png');
-//     });
-
-//     p.loadImage('data/user_bullet.png', function(){
-//       scene.createAsset('user_bullet','data/user_bullet.png');
-//     });
-//   };
-
-//   /*
-//    */
-//   p.draw = function() {
-//     time1 = p.millis();
-//     let delta = time1 - time2;
-
-//     update(delta);
-//     render();
-//     time2 = time1;
+  // bitmapTextFont(sonicFont);
+  // bitmapText('score:' + nf(score, 7), 20, 20);
+  
+  time2 = time1;
+};
 
 
-//     // window.p5.textFont(rasterFont);
-//     // window.p5.textSize(32);
-//     // window.p5.stroke(255,0,0);
-//     // window.p5.text('Hello, test', 0, 20);
-
-//     // window.p5.rasterTextFont(rasterFont);
-//     // window.p5.rasterTextSize(2);
-//     // window.p5.stroke(255,0,0);
-//     // window.p5.rasterText('asdf', 20);
-
-//     // _p5.stroke(255, 0, 0);
-//     // _p5.text(Math.round(delta), 10, 10);
-//   }
-// });
