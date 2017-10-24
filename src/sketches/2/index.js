@@ -4,94 +4,109 @@
   Oct 2017
 
   TODO:
-    - draw user ship
-    - add control to ship
+ 
+  - create BitmapFont plugin
+    - create interface
 
+  - Create Scene
+  - Create Bullet
+  - Create BoundingBox
 */
 
-const Ship = require('./Ship');
+let rasterFont;
 
-const KEY_D = 68;
+// const Ship = require('./Ship');
+// const p5 = require('p5');
+// const scene = require('./Scene').getInstance();
 
-let p5 = require('p5');
-let debug = true;
+function setup() {
+  console.log('setup');
 
-let userShip;
-let _p5;
-let time1 = 0,
-  time2 = 0;
-let user;
+  createCanvas(500, 500);
+  rasterTextFont(rasterFont);
+    console.log(rasterFont);
 
-
-/*
- */
-var update = function(dt) {
-
-  user.update(dt);
-
-};
-
-/*
- */
-var render = function() {
-  _p5.background(0, 0, 0);
-  // _p5.image(userShip, 50, 50);
-  user.draw();
 }
 
-var newp5 = new p5(function(p) {
-  _p5 = p;
-  window.p5 = p;
+function draw() {
+  background(0, 0, 0);
+  rect(0,0,100,100);
 
-  p.setup = function setup() {
-    p.createCanvas(640, 400);
+  rasterText(32, 20, 20);
+}
 
-    user = new Ship({p:p, userShip:userShip});
-
-  };
-
-  /*
-   */
-  p.preload = function() {
-    userShip = p.loadImage('data/user.png');
-  };
-
-  /*
-   */
-  p.keyPressed = function(key) {
-
-    // console.log(key);
-
-    // if (key.code === 'ArrowUp') {
-    //   user.moveUp = true;
-    //   //user.setDirection(1);
-
-    //   // user.moveUp();
-    // } else if (key.code === 'ArrowDown') {
-    //   user.moveDown = true;
-    //   // user.moveDown();
-    // }
-
-  };
+function preload() {
+  rasterFont = loadRasterFont('data/font.png', function() {
+    console.log('done!');
+  });
+}
 
 
+// let _p5;
+// let time1 = 0,
+//   time2 = 0;
+// let rasterFont;
 
-  /*
-   */
-  p.draw = function() {
-    time1 = p.millis();
-    let delta = time1 - time2;
+// var update = function(dt) {
+//   scene.update(dt);
+// };
 
-    update(delta);
-    render();
+// /*
+//  */
+// var render = function() {
+//   scene.draw();
+// }
 
-    //p.image(assets.get('data/user.png'), 0, 0);
+// var newp5 = new p5(function(p) {
 
-    time2 = time1;
-  }
-});
+//   window.p5 = p;
 
-function drawFPS() {}
+//   p.setup = function setup() {
+//     p.createCanvas(640, 400);
+
+//     let user = new Ship({ p: p, userShip: userShip });
+//     scene.setUser(user);
+
+//     console.log(user);
+//   };
+
+//   /*
+//    */
+//   p.preload = function() {
+
+//     rasterFont = p.loadRasterFont('data/font.png','data/font_meta.json');
+
+//     userShip = p.loadImage('data/user.png', function(){
+//       scene.createAsset('user','data/user.png');
+//     });
+
+//     p.loadImage('data/user_bullet.png', function(){
+//       scene.createAsset('user_bullet','data/user_bullet.png');
+//     });
+//   };
+
+//   /*
+//    */
+//   p.draw = function() {
+//     time1 = p.millis();
+//     let delta = time1 - time2;
+
+//     update(delta);
+//     render();
+//     time2 = time1;
 
 
-function drawMouseCoords() {}
+//     // window.p5.textFont(rasterFont);
+//     // window.p5.textSize(32);
+//     // window.p5.stroke(255,0,0);
+//     // window.p5.text('Hello, test', 0, 20);
+
+//     // window.p5.rasterTextFont(rasterFont);
+//     // window.p5.rasterTextSize(2);
+//     // window.p5.stroke(255,0,0);
+//     // window.p5.rasterText('asdf', 20);
+
+//     // _p5.stroke(255, 0, 0);
+//     // _p5.text(Math.round(delta), 10, 10);
+//   }
+// });

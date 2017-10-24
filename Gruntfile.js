@@ -90,14 +90,14 @@ module.exports = function(grunt) {
             dest: `${app}/`,
             filter: 'isFile'
           },
-          // // JS
-          // {
-          //   expand: true,
-          //   cwd: `${src}/sketches/1/`,
-          //   src: '*.js',
-          //   dest: `${app}/`,
-          //   filter: 'isFile'
-          // },
+          // JS LIBS
+          {
+            expand: true,
+            cwd: `${src}/libs/`,
+            src: '*.js',
+            dest: `${app}/libs/`,
+            filter: 'isFile'
+          },
           // IMAGES
           {
             expand: true,
@@ -123,6 +123,17 @@ module.exports = function(grunt) {
         options: {
           mangle: false
         }
+      }
+    },
+
+    /*
+     */
+    concat: {
+      dev: {
+        files: [{
+          dest: `${app}/dev_bundle.js`,
+          src: [`${config.sketchTarget}/index.js`]
+        }]
       }
     },
 
@@ -159,7 +170,19 @@ module.exports = function(grunt) {
         ],
         tasks: [
           'copy:dev',
-          'browserify:dev'
+          'concat:dev'
+          //'browserify:dev'
+        ],
+        options: {
+          livereload: true
+        }
+      },
+      scripts_libs: {
+        files: [
+          `${src}/libs/*.js`
+        ],
+        tasks: [
+          'copy:dev',
         ],
         options: {
           livereload: true
@@ -207,10 +230,11 @@ module.exports = function(grunt) {
   grunt.registerTask('default', [
     // STATIC ASSETS
     'copy:dev',
+    'concat:dev',
 
     // JS
     //jshint
-    'browserify:dev',
+    // 'browserify:dev',
 
     // LIVE UPDATES / PREVIEW
     'connect:livereload',
