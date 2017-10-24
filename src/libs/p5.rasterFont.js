@@ -14,19 +14,31 @@ let RasterFont = function() {
 
   this.glyphs = [];
   let sheet;
+  this.ready = false;
+  this.glyphWidth = 14;
 
   this.splitImage = function(img) {
     img.loadPixels();
     sheet = img;
 
-    this.glyphs['a'] = img.get(0, 0, 100, 100);
 
+    let glyphHeight = 14;
+    let border = 2;
+    let charCode = 0;
 
+    for (let y = 0; y < 12; ++y) {
+      for (let x = 0; x < 8; ++x) {
+
+        let test = img.get(x * (this.glyphWidth + border), y * (glyphHeight + 2), this.glyphWidth, glyphHeight);
+        this.glyphs[charCode] = test;
+        charCode++;
+      }
+    }
+    this.ready = true;
   }
-  ///splitImage();
 
   this.getGlyph = function(char) {
-    return this.glyphs['a'];
+    return this.glyphs[char];
   };
 };
 
@@ -39,17 +51,11 @@ p5.prototype.loadRasterFont = function(i, func) {
 
   let newFont = new RasterFont();
 
-
   p5.prototype.loadImage(i, function(img) {
-    console.log('image loaded');
-
-
     newFont.splitImage(img);
     func();
-
   });
 
-  console.log('>>', newFont);
   return newFont;
 };
 
@@ -67,9 +73,7 @@ p5.prototype.rasterTextFont = function(font) {
 
 */
 p5.prototype.rasterTextSize = function(size) {
-
 };
-//p5.prototype._registerPreloadFunc('loadRasterFont', p5.prototype);
 
 
 /*
@@ -77,14 +81,10 @@ p5.prototype.rasterTextSize = function(size) {
 */
 p5.prototype.rasterText = function(str, x, y) {
 
-  let g = currFont.getGlyph(str[0]);
-
-  if (g) {
-    image(g, x, y);
+  if (currFont.ready) {
+    str.split('').forEach((v, i) => {
+      let glyph = currFont.getGlyph(str.charCodeAt(i) - 32);
+      image(glyph, x + (i * (currFont.glyphWidth + 2)), y);
+    });
   }
-  // console.log(p5.prototype.image);
-  // console.log(image);
-
-  // p5.rect(0,0,1200,100);
-
 };

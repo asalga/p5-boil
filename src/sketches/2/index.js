@@ -20,25 +20,17 @@ let rasterFont;
 // const scene = require('./Scene').getInstance();
 
 function setup() {
-  console.log('setup');
-
   createCanvas(500, 500);
   rasterTextFont(rasterFont);
-    console.log(rasterFont);
-
 }
 
 function draw() {
   background(0, 0, 0);
-  rect(0,0,100,100);
-
-  rasterText(32, 20, 20);
+  rasterText("text", 20, 20);
 }
 
 function preload() {
-  rasterFont = loadRasterFont('data/font.png', function() {
-    console.log('done!');
-  });
+  rasterFont = loadRasterFont('data/font.png');
 }
 
 
