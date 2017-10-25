@@ -1,17 +1,6 @@
-// 'use strict';
-
-
-// // const Bullet = require('./Bullet');
-
-// /*
-//  Manages ships
-// */
-// let instance;
-
 let Scene = function() {
 
   let assets = {};
-
   let user;
   let actors = [];
   let bullets = [];
@@ -19,31 +8,34 @@ let Scene = function() {
   /*
    */
   this.draw = function() {
-    user.draw();
-
-    actors.forEach(v => v.draw());
     bullets.forEach(v => v.draw());
+    user.draw();
+    actors.forEach(v => v.draw());
+    
   };
 
-  //   /*
-  //    */
+  /*
+   */
   this.update = function(dt) {
 
+    
+    bullets.forEach(v => v.update(dt));
     user.update(dt);
-    //     actors.forEach(function(v) {
-    //       v.update(dt);
-    //     });
-
-    bullets.forEach(function(v) {
-      v.update(dt);
-    });
-
-    // Check collisions
+    actors.forEach(v => v.update(dt));
   };
-
 
   this.setUser = function(u) {
     user = u;
+  };
+
+  /*
+  */
+  this.createSprite = function(cfg){
+    if(cfg.tag == 'bullet'){
+      cfg.img = assets[cfg.imgName];
+      console.log('>>' , cfg.img);
+      bullets.push(new Bullet(cfg));
+    }
   };
 
   this.createAsset = function(key, img) {
@@ -59,18 +51,7 @@ let Scene = function() {
     //     if (str == 'bullet') {
   };
 
-  this.createBullet = function(cfg) {
-    bullets.push(new Bullet(cfg));
-  };
+  // this.createBullet = function(cfg) {
+  //   bullets.push(new Bullet(cfg));
+  // };
 };
-
-
-// module.exports = {
-//   getInstance: function() {
-//     if (instance) {
-//       return instance;
-//     }
-//     instance = new Scene();
-//     return instance;
-//   }
-// };

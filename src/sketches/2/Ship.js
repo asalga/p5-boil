@@ -9,10 +9,10 @@ let Ship = function(cfg) {
 
   this.health = 100;
   this.speed = 300;
-  this.position = { x: 50, y: 50 };
+  this.position = createVector(50, height/2);
 
   // 1 bullet every this many milliseconds
-  this.fireRate = 500;
+  this.fireRate = 100;
 };
 
 Ship.prototype = {
@@ -31,9 +31,19 @@ Ship.prototype = {
 
     if (now - lastTimeFired > this.fireRate) {
 
-      let p = createVector(0, 0);
-      let v = createVector(150, 0);
-      scene.createBullet({ position: p, velocity: v });
+      //let p = createVector(this.position.x, );
+      let v = createVector(250, 0);
+      let gunPos = this.position.copy();
+      gunPos.y += 26;
+      gunPos.x += 30;
+
+      scene.createSprite({
+        type: 'userBullet',
+        tag: 'bullet',
+        imgName: 'userBullet',
+        position: gunPos,
+        velocity: v
+      });
 
       lastTimeFired = millis();
     }

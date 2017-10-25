@@ -28,12 +28,12 @@ function preload() {
     cols: 8
   });
 
-  userShip = loadImage('data/user.png', function() {
-    scene.createAsset('user', 'data/user.png');
+  userShip = loadImage('data/user.png', function(img) {
+    scene.createAsset('user', img);
   });
 
-  loadImage('data/user_bullet.png', function() {
-    scene.createAsset('user_bullet', 'data/user_bullet.png');
+  loadImage('data/user_bullet.png', function(img) {
+    scene.createAsset('userBullet', img);
   });
 }
 
