@@ -1,7 +1,3 @@
-/*
-
- */
-
 let lastTimeFired = 0;
 
 let Ship = function(cfg) {
@@ -18,20 +14,10 @@ let Ship = function(cfg) {
 Ship.prototype = {
   constructor: Ship,
 
-  //   hit() {
-  //     // health -= 40;
-  //     if (this.heath <= 0) {
-  //       // scene.restart();
-  //     }
-  //   },
-
-
   fire() {
     let now = millis();
 
     if (now - lastTimeFired > this.fireRate) {
-
-      //let p = createVector(this.position.x, );
       let v = createVector(250, 0);
       let gunPos = this.position.copy();
       gunPos.y += 26;

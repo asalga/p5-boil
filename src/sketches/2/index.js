@@ -8,6 +8,7 @@ let sonicFont;
 let score = 4259;
 let time1 = 0,
   time2 = 0;
+let starBackground;
 
 let scene = new Scene();
 
@@ -16,6 +17,8 @@ function setup() {
 
   let user = new Ship({ userShip: userShip });
   scene.setUser(user);
+
+  starBackground = new Background();
 }
 
 
@@ -38,13 +41,19 @@ function preload() {
 }
 
 function draw() {
-  background(0, 0, 0);
+  //background(0, 0, 0);
+    background(0,0,0);
+
 
   time1 = millis();
   let delta = time1 - time2;
 
+  starBackground.update(delta);
   scene.update(delta);
+
+  starBackground.draw();
   scene.draw();
+
 
   bitmapTextFont(sonicFont);
   bitmapText('score:' + nf(score, 7), 20, 20);
