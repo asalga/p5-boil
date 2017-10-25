@@ -9,14 +9,16 @@ let Scene = function() {
    */
   this.draw = function() {
     bullets.forEach(v => v.draw());
-    
+
     user.draw();
     actors.forEach(v => v.draw());
+
+    bitmapText(bullets.length, 20, 50);
   };
 
   /*
    */
-  this.update = function(dt) {    
+  this.update = function(dt) {
     bullets.forEach(v => v.update(dt));
     user.update(dt);
     actors.forEach(v => v.update(dt));
@@ -27,9 +29,9 @@ let Scene = function() {
   };
 
   /*
-  */
-  this.createSprite = function(cfg){
-    if(cfg.tag == 'bullet'){
+   */
+  this.createSprite = function(cfg) {
+    if (cfg.tag == 'bullet') {
       cfg.img = assets[cfg.imgName];
       bullets.push(new Bullet(cfg));
     }
@@ -40,10 +42,10 @@ let Scene = function() {
   };
 
   this.removeBullet = function(bullet) {
-    // Utils.removeFromList(this.bullets, bullet);
-    // Utils.intersection
-
-    //   this.createActor = function(str) {
-    //     if (str == 'bullet') {
+    var idx = bullets.indexOf(bullet);
+    if (idx > -1) {
+      bullets.splice(idx, 1);
+    }
   };
+
 };

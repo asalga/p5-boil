@@ -10,6 +10,7 @@ let Bullet = function(cfg) {
 
   this.update = function(dt) {
     this.position.x += this.velocity.x * (dt / 1000);
+    this.position.y += this.velocity.y * (dt / 1000);
 
     // If we went past the bounds of the game
     if (this.position.x > width) {

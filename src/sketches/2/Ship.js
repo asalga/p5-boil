@@ -18,10 +18,10 @@ Ship.prototype = {
     let now = millis();
 
     if (now - lastTimeFired > this.fireRate) {
-      let v = createVector(250, 0);
+      let v = createVector(750, random(-10,10));
       let gunPos = this.position.copy();
       gunPos.y += 26;
-      gunPos.x += 30;
+      gunPos.x += 50;
 
       scene.createSprite({
         type: 'userBullet',

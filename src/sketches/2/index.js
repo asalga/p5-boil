@@ -41,9 +41,7 @@ function preload() {
 }
 
 function draw() {
-  //background(0, 0, 0);
-    background(0,0,0);
-
+  background(0, 0, 0);
 
   time1 = millis();
   let delta = time1 - time2;
@@ -53,7 +51,6 @@ function draw() {
 
   starBackground.draw();
   scene.draw();
-
 
   bitmapTextFont(sonicFont);
   bitmapText('score:' + nf(score, 7), 20, 20);

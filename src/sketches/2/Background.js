@@ -23,11 +23,11 @@ function Background() {
     let star = this.stars[i];
     star.x = random(width, width * 2);
     star.y = random(0, height);
-    star.s = random(-0.1, -1);
+    star.s = random(-10, -100);
   }
 
   this.draw = function() {
-background(0,0,0);
+    background(0, 0, 0);
     for (let i = 0; i < this.stars.length; ++i) {
       fill(255, 255, 255);
       rect(this.stars[i].x, this.stars[i].y, 4, 4);
