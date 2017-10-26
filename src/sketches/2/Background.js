@@ -6,7 +6,7 @@ function Background() {
     this.stars[i] = {
       x: random(0, width * 2),
       y: random(0, height),
-      s: random(-10, -100)
+      s: random(-30, -200)
     };
   }
 
@@ -23,13 +23,13 @@ function Background() {
     let star = this.stars[i];
     star.x = random(width, width * 2);
     star.y = random(0, height);
-    star.s = random(-10, -100);
+    star.s = random(-30, -200);
   }
 
   this.draw = function() {
     background(0, 0, 0);
     for (let i = 0; i < this.stars.length; ++i) {
-      fill(255, 255, 255);
+      fill(33, 66, 99);
       rect(this.stars[i].x, this.stars[i].y, 4, 4);
     }
   };

@@ -4,7 +4,6 @@ let Scene = function() {
   let actors = [];
   let bullets = [];
   this.user;
-  
 
   this.draw = function() {
     bullets.forEach(v => v.draw());
@@ -16,7 +15,7 @@ let Scene = function() {
     actors.forEach(v => v.update(dt));
     this.collisionChecks();
 
-    if(frameCount % 100 == 0){
+    if(frameCount % 50 == 0){
         scene.createSprite({ type: 'enemy_ship'});
     }
   };

@@ -1,10 +1,13 @@
 let EnemyShip = function(cfg) {
   Object.assign(this, cfg || {});
 
+  let y = parseInt(random(1, 4)) * 100;
+  console.log(y);
   this.lastTimeFired = 0;
   this.health = 100;
   this.speed = 300;
-  this.position = createVector(width + 40, random(0, height));
+  this.position = createVector(width, y);
+
   this.velocity = createVector(100, height / 2);
   this.lifeTime = millis();
 
@@ -45,15 +48,16 @@ EnemyShip.prototype = {
 
   update(dt) {
     this.position.x -= this.velocity.x * dt / 1000;
+    // this.position.y = s
 
     // if(this.position.x < -100){
     //   this.position.x = width;
     // }
 
-    if( sin(this.lifeTime + gameTime/1000) > 0.4){
-      this.fire();  
+    if (sin(this.lifeTime + gameTime / 1000) > 0.4) {
+      this.fire();
     }
-    
+
   },
 
   draw() {
