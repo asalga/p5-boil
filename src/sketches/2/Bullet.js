@@ -3,6 +3,7 @@ let Bullet = function(cfg) {
   this.img = cfg.img;
   this.position = cfg.position;
   this.velocity = cfg.velocity;
+  this.type = cfg.type;
 
   this.draw = function() {
     image(this.img, this.position.x, this.position.y);
@@ -13,10 +14,7 @@ let Bullet = function(cfg) {
     this.position.y += this.velocity.y * (dt / 1000);
 
     // If we went past the bounds of the game
-    if (this.position.x > width) {
-      scene.removeBullet(this);
-    }
-    else if(this.position.x < -10){
+    if (this.position.x > width || this.position.x < -10) {
       scene.removeBullet(this);
     }
 

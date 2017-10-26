@@ -5,10 +5,11 @@ let Ship = function(cfg) {
 
   this.health = 100;
   this.speed = 300;
+
   this.position = createVector(50, height/2);
 
   // 1 bullet every this many milliseconds
-  this.fireRate = 100;
+  this.fireRate = 50;
 };
 
 Ship.prototype = {
@@ -26,7 +27,6 @@ Ship.prototype = {
       scene.createSprite({
         type: 'user_bullet',
         tag: 'bullet',
-        //imgName: 'userBullet',
         position: gunPos,
         velocity: v
       });
@@ -35,12 +35,17 @@ Ship.prototype = {
     }
   },
 
+  hit(){
+
+  },
+
+
   update(dt) {
     if (keyIsDown(UP_ARROW)) {
       this.position.y -= this.speed * (dt / 1000);
 
-      if (this.position.y < 0) {
-        this.position.y = 0;
+      if (this.position.y < 50) {
+        this.position.y = 50;
       }
     } else if (keyIsDown(DOWN_ARROW)) {
       this.position.y += this.speed * (dt / 1000);
@@ -50,7 +55,6 @@ Ship.prototype = {
       }
     }
 
-    // space key
     if (keyIsDown(32)) {
       this.fire();
     }

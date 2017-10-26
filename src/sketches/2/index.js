@@ -9,6 +9,7 @@ let score = 4259;
 let time1 = 0,
   time2 = 0;
 let starBackground;
+let gameTime = 0;
 
 let scene = new Scene();
 
@@ -20,7 +21,6 @@ function setup() {
 
   starBackground = new Background();
 }
-
 
 function preload() {
   sonicFont = loadBitmapFont('data/sonicFont@2.png', {
@@ -47,6 +47,7 @@ function draw() {
   time1 = millis();
   let delta = time1 - time2;
 
+  gameTime += delta;
   starBackground.update(delta);
   scene.update(delta);
 
@@ -55,6 +56,7 @@ function draw() {
 
   bitmapTextFont(sonicFont);
   bitmapText('score:' + nf(score, 7), 20, 20);
+  bitmapText('time:' + sin(gameTime/1000), 20, 40);
 
   time2 = time1;
 };

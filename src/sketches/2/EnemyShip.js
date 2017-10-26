@@ -1,10 +1,12 @@
 let EnemyShip = function(cfg) {
   Object.assign(this, cfg || {});
 
+  this.lastTimeFired = 0;
   this.health = 100;
   this.speed = 300;
-  this.position = createVector(250, height/2);
-  this.velocity = createVector(100, height/2);
+  this.position = createVector(width + 40, random(0, height));
+  this.velocity = createVector(100, height / 2);
+  this.lifeTime = millis();
 
   // 1 bullet every this many milliseconds
   this.fireRate = 400;
@@ -16,7 +18,7 @@ EnemyShip.prototype = {
   fire() {
     let now = millis();
 
-    if (now - lastTimeFired > this.fireRate) {
+    if (now - this.lastTimeFired > this.fireRate) {
       let v = createVector(-250, 0);
       let gunPos = this.position.copy();
       gunPos.y += 26;
@@ -25,23 +27,33 @@ EnemyShip.prototype = {
       scene.createSprite({
         type: 'enemy_bullet',
         tag: 'bullet',
-        //imgName: 'userBullet',
         position: gunPos,
         velocity: v
       });
 
-      lastTimeFired = millis();
+      this.lastTimeFired = now;
+    }
+  },
+
+  hit() {
+    this.health -= 30;
+
+    if (this.health <= 0) {
+      scene.removeShip(this);
     }
   },
 
   update(dt) {
-    this.position.x -= this.velocity.x * dt/1000;
+    this.position.x -= this.velocity.x * dt / 1000;
 
-    if(this.position.x < -100){
-      this.position.x = width;
+    // if(this.position.x < -100){
+    //   this.position.x = width;
+    // }
+
+    if( sin(this.lifeTime + gameTime/1000) > 0.4){
+      this.fire();  
     }
-
-    this.fire();
+    
   },
 
   draw() {
