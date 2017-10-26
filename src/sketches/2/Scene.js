@@ -1,7 +1,7 @@
 let Scene = function() {
 
-  let assets = {};
-  let user;
+  this.assets = {};
+  // let user;
   let actors = [];
   let bullets = [];
 
@@ -31,14 +31,31 @@ let Scene = function() {
   /*
    */
   this.createSprite = function(cfg) {
-    if (cfg.tag == 'bullet') {
-      cfg.img = assets[cfg.imgName];
+
+    if (cfg.type == 'user_bullet') {
+      cfg.img = this.assets['user_bullet'];
       bullets.push(new Bullet(cfg));
+    }
+
+    if (cfg.type == 'enemy_bullet') {
+      cfg.img = this.assets['enemy_bullet'];
+      bullets.push(new Bullet(cfg));
+    }
+
+    if(cfg.type == 'user_ship'){
+      cfg.img = this.assets['user_ship'];
+      user = new Ship(cfg);
+      this.user = user;
+    }
+
+    if (cfg.type === 'enemy_ship') {
+      cfg.img = this.assets['enemy_ship'];
+      actors.push(new EnemyShip(cfg));
     }
   };
 
-  this.createAsset = function(key, img) {
-    assets[key] = img;
+  this.createAsset = function(name, img) {
+    this.assets[name] = img;
   };
 
   this.removeBullet = function(bullet) {

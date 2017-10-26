@@ -15,8 +15,8 @@ let scene = new Scene();
 function setup() {
   createCanvas(640, 480);
 
-  let user = new Ship({ userShip: userShip });
-  scene.setUser(user);
+  scene.createSprite({ type: 'user_ship' });
+  scene.createSprite({ type: 'enemy_ship' });
 
   starBackground = new Background();
 }
@@ -31,13 +31,14 @@ function preload() {
     cols: 8
   });
 
-  userShip = loadImage('data/user.png', function(img) {
-    scene.createAsset('user', img);
-  });
-
-  loadImage('data/user_bullet.png', function(img) {
-    scene.createAsset('userBullet', img);
-  });
+  for (var i = 0; i < Assets.images.length; ++i) {
+    let name = Assets.images[i].name;
+    let path = Assets.images[i].path;
+    
+    loadImage(path, function(img) {
+      scene.createAsset(name, img)
+    });
+  }
 }
 
 function draw() {

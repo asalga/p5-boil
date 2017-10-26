@@ -24,9 +24,9 @@ Ship.prototype = {
       gunPos.x += 50;
 
       scene.createSprite({
-        type: 'userBullet',
+        type: 'user_bullet',
         tag: 'bullet',
-        imgName: 'userBullet',
+        //imgName: 'userBullet',
         position: gunPos,
         velocity: v
       });
@@ -45,8 +45,8 @@ Ship.prototype = {
     } else if (keyIsDown(DOWN_ARROW)) {
       this.position.y += this.speed * (dt / 1000);
 
-      if (this.position.y > height - this.userShip.height) {
-        this.position.y = height - this.userShip.height;
+      if (this.position.y > height - this.img.height) {
+        this.position.y = height - this.img.height;
       }
     }
 
@@ -57,6 +57,6 @@ Ship.prototype = {
   },
 
   draw() {
-    image(this.userShip, this.position.x, this.position.y);
+    image(this.img, this.position.x, this.position.y);
   }
 };

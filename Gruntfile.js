@@ -133,8 +133,10 @@ module.exports = function(grunt) {
         files: [{
           dest: `${app}/dev_bundle.js`,
           src: [
+          `${config.sketchTarget}/Assets.js`, 
           `${config.sketchTarget}/Background.js`, 
           `${config.sketchTarget}/Bullet.js`, 
+          `${config.sketchTarget}/EnemyShip.js`, 
           `${config.sketchTarget}/Ship.js`, 
           `${config.sketchTarget}/Scene.js`, 
           `${config.sketchTarget}/index.js`
