@@ -3,65 +3,61 @@
   entering, idling and exiting
 */
 
+let Assets = require('./Assets');
+let Animation = require('./Animation');
+
+let assets;
+
 let Character = function(cfg) {
   Object.assign(this, cfg || {});
 
   // entering, exiting, idling
   let state = 'none';
   let health = 100;
+
   let timeExposed = 0;
 
-  // let atlas = Assets.get('rat/atlas.png');
+  assets = new Assets(this.p5);
+
+  this.curr = 'idle';
 
   // let animations = new Animations('data/animations/rat.json');
-  // animations.play('enter');
-
-  //this.currAnimation.play('enter');
-
-  // this.getFrame();
+  this.animations = {
+    'idle': new Animation({ p5:this.p5, name: 'idle', frames: ['idle_normal_0', 'idle_normal_1'] }),
+    //'enter': new Animation({ name: 'enter', frames: ['enter_normal_0', 'enter_normal_1'] })
+  };
 };
 
 Character.prototype = {
 
-  constructor: Character,
-
   play() {
     console.log(`play called on ${this.name}`);
-    // console.log(this.cfg.name);
   },
 
   hit() {
-
-    if(state === 'idle'){
-      if(health === 10){
+    if (state === 'idle') {
+      if (health === 10) {
         // this.animation.play('hurt');
-      }
-      else if(heath > 50){
+      } else if (heath > 50) {
         // this.animation.play('hurt2');
       }
     }
   },
 
-  hide(){
+  hide() {
     // this.animations.play('exit');
   },
 
   update(dt) {
-    
-    // this.animation.update(dt);
-
-    // if(timeExposed > 0.5){
-    //   hide();
-    // }
-
+    if (this.animations)
+      this.animations[this.curr].update(dt);
   },
 
   position(x, y) {},
 
   draw() {
-    // let frame = this.animation.getFrame();
-    // p.image(frame);
-    // this.animations['enter']
+    let frame = this.animations[this.curr].getFrame();
+    this.p5.image(frame, 55, 210);
   }
 };
 

@@ -9,7 +9,6 @@ function Atlas(cfg) {
   this.split();
 }
 
-
 Atlas.prototype = {
   get() {
   },
@@ -20,7 +19,10 @@ Atlas.prototype = {
     let sheetFrames = JSON.parse(this.meta)['frames'];
 
     sheetFrames.forEach((f, i) => {
-      let filename = f.filename;
+
+      // remove '.png' part of filename, we don't need it.
+      let filename = (f.filename).split('.')[0];
+      
       let x = f.frame.x;
       let y = f.frame.y;
       let w = f.frame.w;

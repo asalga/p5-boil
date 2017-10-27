@@ -1,11 +1,4 @@
-/*
-
-  TODO: added error state if image wasn't loaded
-
-*/
-
 const Atlas = require('./Atlas');
-
 
 const Data = {
   images: [
@@ -38,6 +31,7 @@ let Assets = function(p) {
     return instance;
   }
 
+  instance = this;
   this.p5 = p;
   this.images = {};
   this.animations = {};
@@ -57,8 +51,6 @@ let Assets = function(p) {
     
     // 
     Data.animations.forEach((v)=>{
-      
-      console.log('>>>>>', v);
 
       that.p5.loadImage(v, function(atlasImg) {
 
@@ -69,7 +61,7 @@ let Assets = function(p) {
             { img: atlasImg, meta: xhr.responseText, p:that.p5 })
           );
 
-          that.numAssetsLoaded++
+          that.numAssetsLoaded++;
         };
         xhr.open('GET', 'data/images/rat/spritesheet.json');
         xhr.send();

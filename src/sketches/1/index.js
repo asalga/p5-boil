@@ -4,7 +4,6 @@
   Oct 2017
 
   TODO:
-  - Allow toggling debug
    - make p5 global
    - create keys file
    - figure out what manages the rats. the GameBoard?
@@ -21,72 +20,47 @@ let Character = require('./Character');
 let SequenceController = require('./SequenceController');
 let UI = require('./UI');
 
-
 let debug = true;
 let hitBoxSize = 30;
 let max, maxHand;
 let gameBoard, assets;
 let _p5;
-let characters = [];
+let chars = [];
 let time1 = 0,
   time2 = 0;
 let fps = 0;
 
 
-/*
- */
-var update = function(dt) {
-  characters.forEach((v) => {
-    v.update(dt);
-  });
+function update(dt) {
+  chars.forEach(v => v.update(dt));
 };
 
-/*
- */
-var render = function() {
-
-  // rat.position(10, 10);
-
-  characters.forEach((v) => {
-    v.draw();
-  });
+function render() {
+  chars.forEach(v => v.draw());
 }
+
+
 
 var newp5 = new p5(function(p) {
   _p5 = p;
 
   p.setup = function setup() {
     p.createCanvas(640, 400);
-    
-    
+
     gameBoard = new GameBoard(newp5);
-    // window.gb = gameBoard;
-    // console.log('<<>>');
-
-    // var g = new GameBoard(newp5);
-    // var g1 = new GameBoard(newp5);
-
-    // console.log('>>' , g=== gameBoard );
-
-
+    rat = new Character({ p5: p, name: 'rat' });
+    chars.push(rat);
 
     // SequenceController.setGameBoard(gameBoard);
     // SequenceController.setDifficulty(5);
     // SequenceController.start();
-
   };
 
   /*
    */
   p.preload = function() {
-
     assets = new Assets(p);
     assets.preload();
-
-    rat = new Character({ p5: p, name: 'rat' });
-
-    //rat.play('enter');
-    characters.push(rat);
   };
 
   /*
@@ -94,16 +68,13 @@ var newp5 = new p5(function(p) {
   */
   p.mouseClicked = function() {
     let slotID = gameBoard.hit(p.mouseX, p.mouseY);
-
     // if(slotID > -1){
     //   Sam.play('hit_' + slotID);
     // }
-
-    // console.log(gameBoard.getNumMisses());
   };
 
   /*
-  */
+   */
   p.keyDown = function() {
     if (keyCode === KEY_D) {
       debug = !debug;
@@ -111,32 +82,28 @@ var newp5 = new p5(function(p) {
   };
 
   /*
-  */
+   */
   p.draw = function() {
     if (!assets.isDone()) {
       return;
     }
 
-
     time1 = p.millis();
     let delta = time1 - time2;
+
     update(delta);
-    render();
 
     p.image(assets.get('data/_idle.png'), 0, 0);
     p.image(assets.get('data/max/head.png'), 0, 74);
     p.image(assets.get('data/max/hand.png'), 0, 280);
 
+    render();
+
     drawMouseCoords();
-    drawHitBoxes();
+    // drawHitBoxes();
     drawFPS();
 
-
-    p.image(assets.atlases[0].frames['exit.png'], 0,0);
-
     time2 = time1;
-
-    // p.background(0, 0, 0);
   }
 });
 

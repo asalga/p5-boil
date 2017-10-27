@@ -1,18 +1,15 @@
 {
-  enter_hurt: {
+  "enter_hurt": {
     "type": "frames",
     "framedata": "rat.json",
     "time": 500,
     "frames": ["enter_hurt_0", "enter_hurt_1"]
   },
 
-  exit: {
+  "exit": {
     "type": "frames",
     "framedata": "rat.json",
     "frameimg": "sheet.png",
     "frames": ["enter1", "enter2", "enter3"]
   }
-
-
-
 }
