@@ -53,11 +53,10 @@ Character.prototype = {
   },
 
   enter() {
-
     ani.play('enter')
       .play('idle', 4)
       .play('exit')
-      .pause(2000);
+      .onComplete(()=>console.log('DONE!'));
   },
   exit() {
   },

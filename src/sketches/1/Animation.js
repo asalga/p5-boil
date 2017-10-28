@@ -1,16 +1,16 @@
 'use strict';
 
 /*
-  - reqs.
-  should be able to chain animations
-  need to be able to specify time for animation
-  need to be able to interrupt animation
+  TODO:
+    - fix onComplete
+    - fix pause
+    - figure out standard for queue
  */
 
 let Assets = require('./Assets');
 let assets;
 
-const msPerFrame = 200;
+const msPerFrame = 150;
 
 let frameIdx = 0,
   t = 0;
@@ -30,7 +30,7 @@ let Animation = function(cfg) {
   animations = {
     'idle': ['idle_normal_0', 'idle_normal_1'],
     'enter': ['enter_normal_0', 'enter_normal_1', 'enter_normal_2'],
-    'exit': ['enter_normal_2', 'exit'],
+    'exit': [/*'enter_normal_2',*/ 'exit'],
   };
   queue = [];
   currAnimation = 0;
@@ -45,7 +45,7 @@ Animation.prototype = {
     if (currAnimation === queue.length) {
       currAnimation = 0;
       frameIdx = 0;
-      pausedTime = 2000;
+      pausedTime = 1000;
     }
   },
 
@@ -56,10 +56,8 @@ Animation.prototype = {
       return;
     }
 
-
     if (aniName === '_pause_' && pausedTime > 0) {
       pausedTime -= dt;
-      ///console.log(pausedTime);
 
       if (pausedTime < 0) {
         pausedTime = 0;
@@ -67,7 +65,6 @@ Animation.prototype = {
       }
       return;
     }
-
 
     t += dt;
     if (t >= msPerFrame) {
@@ -95,8 +92,23 @@ Animation.prototype = {
     return assets.atlases[0].frames[f];
   },
 
+  /*
+    name - animation name
+    count - number of times to play the animation
+  */
   play(name, count) {
-    queue.push(name);
+    if ( typeof count === 'undefined') {
+      queue.push(name);
+    } else {
+
+      // in case user passes in negative value
+      count = this.p5.max(count, 0);
+
+      while (count) {
+        queue.push(name);
+        count--;
+      }
+    }
     return this;
   },
 
@@ -107,7 +119,9 @@ Animation.prototype = {
   },
 
   stop() {},
-  onComplete() {}
+  onComplete(func) {
+    func();
+  }
 };
 
 module.exports = Animation;
