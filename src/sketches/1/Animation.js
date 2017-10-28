@@ -12,46 +12,49 @@ let assets;
 
 const msPerFrame = 150;
 
-let frameIdx = 0,
-  t = 0;
-
 let animations;
-let queue;
-let currAnimation;
-
 let pausedTime = 0;
-
 
 let Animation = function(cfg) {
   console.log('Animation ctor');
   Object.assign(this, cfg || {});
   assets = new Assets(this.p5);
 
+  this.queue = [];
+  this.currAnimation = 0;
+  this.frameIdx = 0;
+  this.t = 0;
+  this.done = false;
+
   animations = {
     'idle': ['idle_normal_0', 'idle_normal_1'],
     'enter': ['enter_normal_0', 'enter_normal_1', 'enter_normal_2'],
-    'exit': [/*'enter_normal_2',*/ 'exit'],
+    'exit': [ /*'enter_normal_2',*/ 'exit'],
   };
-  queue = [];
-  currAnimation = 0;
 }
 
 Animation.prototype = {
 
   nextAnimation() {
-    currAnimation++;
-    frameIdx = 0;
+    this.currAnimation++;
+    this.frameIdx = 0;
 
-    if (currAnimation === queue.length) {
-      currAnimation = 0;
-      frameIdx = 0;
-      pausedTime = 1000;
+    if (this.currAnimation === this.queue.length) {
+      this.done = true;
+
+      // this.currAnimation = 0;
+      // this.frameIdx = 0;
+      // pausedTime = 1000;
     }
   },
 
   update(dt) {
+    if (this.done) {
+      return;
+    }
+
     // get the name of the animation ie) 'idle'    
-    let aniName = queue[currAnimation];
+    let aniName = this.queue[this.currAnimation];
     if (!aniName) {
       return;
     }
@@ -66,14 +69,18 @@ Animation.prototype = {
       return;
     }
 
-    t += dt;
-    if (t >= msPerFrame) {
+    if (typeof aniName === 'function') {
+      //  aniName();
+    }
 
-      t -= msPerFrame;
-      frameIdx++;
+    this.t += dt;
+     if ( aniName !== '_pause_' && this.t >= msPerFrame) {
+
+      this.t -= msPerFrame;
+      this.frameIdx++;
 
       // reached the end of the animation
-      if (frameIdx === animations[aniName].length) {
+      if (this.frameIdx === animations[aniName].length) {
         this.nextAnimation();
       }
     }
@@ -83,29 +90,28 @@ Animation.prototype = {
     Return null if the animation is paused
   */
   getFrame() {
-    let aniName = queue[currAnimation];
-    if (aniName === '_pause_') {
+    let aniName = this.queue[this.currAnimation];
+    if (aniName === '_pause_' || this.done) {
       return null;
     }
 
-    let f = animations[aniName][frameIdx];
+    let f = animations[aniName][this.frameIdx];
     return assets.atlases[0].frames[f];
   },
 
   /*
     name - animation name
-    count - number of times to play the animation
+    count - {optional} number of times to play the animation
   */
   play(name, count) {
-    if ( typeof count === 'undefined') {
-      queue.push(name);
+    if (typeof count === 'undefined') {
+      this.queue.push(name);
     } else {
-
       // in case user passes in negative value
       count = this.p5.max(count, 0);
 
       while (count) {
-        queue.push(name);
+        this.queue.push(name);
         count--;
       }
     }
@@ -113,7 +119,7 @@ Animation.prototype = {
   },
 
   pause(timeInMS) {
-    queue.push('_pause_');
+    this.queue.push('_pause_');
     pausedTime = timeInMS;
     return this;
   },

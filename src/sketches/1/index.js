@@ -26,7 +26,7 @@ let gameBoard, assets;
 let _p5;
 
 let max, maxHand;
-let rat, chars = [];
+let rat, rat2, chars = [];
 
 let time1 = 0,
   time2 = 0;
@@ -35,12 +35,14 @@ let fps = 0;
 
 function update(dt) {
   chars.forEach(v => v.update(dt));
+
+  gameBoard.update(dt);
 };
 
 function render() {
   chars.forEach(v => v.draw());
+  gameBoard.render();
 }
-
 
 var newp5 = new p5(function(p) {
   _p5 = p;
@@ -49,10 +51,6 @@ var newp5 = new p5(function(p) {
     p.createCanvas(640, 400);
 
     gameBoard = new GameBoard(newp5);
-    rat = new Character({ p5: p, name: 'rat' });
-    
-
-
 
     // SequenceController.setGameBoard(gameBoard);
     // SequenceController.setDifficulty(5);
@@ -82,9 +80,10 @@ var newp5 = new p5(function(p) {
     if (p.keyCode === KEY_D) {
       debug = !debug;
     }
+    else if(p.keyCode === 65){
+      gameBoard.test();
+    }
 
-    rat.enter(); 
-    chars.push(rat);
   };
 
   /*
@@ -100,14 +99,10 @@ var newp5 = new p5(function(p) {
     update(delta);
 
     p.image(assets.get('data/_idle.png'), 0, 0);
-    // p.image(assets.get('data/max/head.png'), 0, 74);
-    // p.image(assets.get('data/max/hand.png'), 0, 280);
+    p.image(assets.get('data/max/head.png'), 0, 74);
+    p.image(assets.get('data/max/hand.png'), 0, 280);
 
     render();
-
-    // SeqController
-    // - rat.enter();
-
 
     drawMouseCoords();
     drawHitBoxes();
@@ -161,24 +156,6 @@ function drawArm(key) {
 }
 
 
-
-
-// let maxTest = new Max();
-// maxTest.play('hit');
-
-// ratTest = new Rat();
-// ratTest.enter(2);
-// ratTest.hit();
-// ratTest.exit();
-
-// ratTest.play('taunt');
-// ratTest.play('enter');
-// ratTest.play('exit');
-// ratTest.play('hit');
-// ratTest.play('idle');
-// ratTest.play('dizzy1');
-// ratTest.play('dizzy2');
-// p.background(100, 100, 100);
 // _p5.textSize(30);
 // _p5.stroke(255, 255, 255);
 // newp5.text(`${_p5.mouseX} , ${_p5.mouseY}`, 230, 30);

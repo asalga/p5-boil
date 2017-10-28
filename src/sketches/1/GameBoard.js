@@ -3,6 +3,8 @@
 */
 'use strict';
 
+let Character = require('./Character');
+
 let instance;
 
 let hitBoxPositions = [
@@ -25,6 +27,39 @@ let GameBoard = function(p5) {
   var misses = 0;
   var slots = [];
   var rats = [];
+  let t;
+
+  this.render = function() {
+    rats.forEach(r => r.render());
+  }
+
+  this.test = function() {
+    let rat = new Character({ p5: p5, name: 'rat' });
+    rats.push(rat);
+    rat.position({ x: 55, y: 210 });
+    rat.enter();
+    // rat.play().
+  //   .onComplete( freeSlot );
+  // freeSlot(slotId){
+  //   console.log(slotId);
+  // }
+  };
+
+  this.update = function(dt) {
+    t += dt;
+    rats.forEach(r => r.update(dt));
+
+    // rat2 = new Character({ p5: p, name: 'rat' });
+    // rat2.position({ x: 178, y: 200 });
+
+    //       rat.enter();
+    // chars.push(rat);
+
+    // rat2.enter();
+    // chars.push(rat2);
+
+
+  };
 
   /*
     User tried to hit a slot, did they succeed?
