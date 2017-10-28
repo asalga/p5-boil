@@ -118,7 +118,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "enter_taunt_0.png",
+	"filename": "enter_normal_2.png",
 	"frame": {"x":410,"y":246,"w":134,"h":120},
 	"rotated": false,
 	"trimmed": false,
@@ -127,7 +127,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "enter_taunt_1.png",
+	"filename": "enter_taunt_0.png",
 	"frame": {"x":546,"y":246,"w":134,"h":120},
 	"rotated": false,
 	"trimmed": false,
@@ -136,7 +136,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "exit.png",
+	"filename": "enter_taunt_1.png",
 	"frame": {"x":2,"y":368,"w":134,"h":120},
 	"rotated": false,
 	"trimmed": false,
@@ -145,7 +145,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "hit_0_0.png",
+	"filename": "exit.png",
 	"frame": {"x":138,"y":368,"w":134,"h":120},
 	"rotated": false,
 	"trimmed": false,
@@ -154,7 +154,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "hit_0_1.png",
+	"filename": "hit_0_0.png",
 	"frame": {"x":274,"y":368,"w":134,"h":120},
 	"rotated": false,
 	"trimmed": false,
@@ -163,7 +163,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "hit_1_0.png",
+	"filename": "hit_0_1.png",
 	"frame": {"x":410,"y":368,"w":134,"h":120},
 	"rotated": false,
 	"trimmed": false,
@@ -172,7 +172,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "hit_1_1.png",
+	"filename": "hit_1_0.png",
 	"frame": {"x":546,"y":368,"w":134,"h":120},
 	"rotated": false,
 	"trimmed": false,
@@ -181,7 +181,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "hit_2_0.png",
+	"filename": "hit_1_1.png",
 	"frame": {"x":2,"y":490,"w":134,"h":120},
 	"rotated": false,
 	"trimmed": false,
@@ -190,7 +190,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "hit_2_1.png",
+	"filename": "hit_2_0.png",
 	"frame": {"x":138,"y":490,"w":134,"h":120},
 	"rotated": false,
 	"trimmed": false,
@@ -199,7 +199,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "idle_normal_0.png",
+	"filename": "hit_2_1.png",
 	"frame": {"x":274,"y":490,"w":134,"h":120},
 	"rotated": false,
 	"trimmed": false,
@@ -208,7 +208,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "idle_normal_1.png",
+	"filename": "idle_normal_0.png",
 	"frame": {"x":410,"y":490,"w":134,"h":120},
 	"rotated": false,
 	"trimmed": false,
@@ -217,7 +217,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "idle_taunt_0.png",
+	"filename": "idle_normal_1.png",
 	"frame": {"x":546,"y":490,"w":134,"h":120},
 	"rotated": false,
 	"trimmed": false,
@@ -226,7 +226,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "normal_enter_2.png",
+	"filename": "idle_taunt_0.png",
 	"frame": {"x":2,"y":612,"w":134,"h":120},
 	"rotated": false,
 	"trimmed": false,
@@ -241,6 +241,6 @@
 	"format": "RGBA8888",
 	"size": {"w":735,"h":735},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:5ab3021f618db7faf028cd65d4d27081:81225ad5eaa8069a2e3fc80292b299c4:729adc6043343cfda41c447ce8f464d6$"
+	"smartupdate": "$TexturePacker:SmartUpdate:578b2760265cd76db3ebd7834a7ce832:c6662d6a303b01df463e604a82fb3c2f:729adc6043343cfda41c447ce8f464d6$"
 }
 }

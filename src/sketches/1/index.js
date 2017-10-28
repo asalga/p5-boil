@@ -12,20 +12,22 @@
 
 const KEY_D = 68;
 
-let rat;
+
 let p5 = require('p5');
 let GameBoard = require('./GameBoard');
 let Assets = require('./Assets');
 let Character = require('./Character');
-let SequenceController = require('./SequenceController');
 let UI = require('./UI');
 
 let debug = true;
 let hitBoxSize = 30;
-let max, maxHand;
+
 let gameBoard, assets;
 let _p5;
-let chars = [];
+
+let max, maxHand;
+let rat, chars = [];
+
 let time1 = 0,
   time2 = 0;
 let fps = 0;
@@ -40,7 +42,6 @@ function render() {
 }
 
 
-
 var newp5 = new p5(function(p) {
   _p5 = p;
 
@@ -49,7 +50,9 @@ var newp5 = new p5(function(p) {
 
     gameBoard = new GameBoard(newp5);
     rat = new Character({ p5: p, name: 'rat' });
-    chars.push(rat);
+    
+
+
 
     // SequenceController.setGameBoard(gameBoard);
     // SequenceController.setDifficulty(5);
@@ -75,10 +78,13 @@ var newp5 = new p5(function(p) {
 
   /*
    */
-  p.keyDown = function() {
-    if (keyCode === KEY_D) {
+  p.keyPressed = function() {
+    if (p.keyCode === KEY_D) {
       debug = !debug;
     }
+
+    rat.enter(); 
+    chars.push(rat);
   };
 
   /*
@@ -94,13 +100,17 @@ var newp5 = new p5(function(p) {
     update(delta);
 
     p.image(assets.get('data/_idle.png'), 0, 0);
-    p.image(assets.get('data/max/head.png'), 0, 74);
-    p.image(assets.get('data/max/hand.png'), 0, 280);
+    // p.image(assets.get('data/max/head.png'), 0, 74);
+    // p.image(assets.get('data/max/hand.png'), 0, 280);
 
     render();
 
+    // SeqController
+    // - rat.enter();
+
+
     drawMouseCoords();
-    // drawHitBoxes();
+    drawHitBoxes();
     drawFPS();
 
     time2 = time1;
@@ -108,6 +118,10 @@ var newp5 = new p5(function(p) {
 });
 
 function drawFPS() {
+  if (!debug) {
+    return;
+  }
+
   if (_p5.frameCount % 120 === 0) {
     fps = Math.round(_p5.frameRate());
   }
@@ -120,22 +134,25 @@ function drawFPS() {
 
 
 function drawMouseCoords() {
-  if (debug) {
-    _p5.textSize(30);
-    _p5.stroke(255, 255, 255);
-    newp5.text(`${_p5.mouseX} , ${_p5.mouseY}`, 230, 30);
+  if (!debug) {
+    return;
   }
+  _p5.textSize(30);
+  _p5.stroke(255, 255, 255);
+  newp5.text(`${_p5.mouseX} , ${_p5.mouseY}`, 230, 30);
+
 }
 
 function drawHitBoxes() {
-  if (debug) {
-    _p5.fill(33, 66, 99);
-    _p5.ellipse(185, 282, hitBoxSize, hitBoxSize);
-    _p5.ellipse(97, 330, hitBoxSize, hitBoxSize);
-    _p5.ellipse(225, 320, hitBoxSize, hitBoxSize);
-    _p5.ellipse(368, 310, hitBoxSize, hitBoxSize);
-    _p5.ellipse(268, 363, hitBoxSize, hitBoxSize);
+  if (!debug) {
+    return;
   }
+  _p5.fill(33, 66, 99);
+  _p5.ellipse(185, 282, hitBoxSize, hitBoxSize);
+  _p5.ellipse(97, 330, hitBoxSize, hitBoxSize);
+  _p5.ellipse(225, 320, hitBoxSize, hitBoxSize);
+  _p5.ellipse(368, 310, hitBoxSize, hitBoxSize);
+  _p5.ellipse(268, 363, hitBoxSize, hitBoxSize);
 }
 
 function drawArm(key) {

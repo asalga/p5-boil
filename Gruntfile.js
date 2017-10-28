@@ -90,6 +90,15 @@ module.exports = function(grunt) {
             dest: `${app}/`,
             filter: 'isFile'
           },
+          // DATA
+          {
+            expand: true,
+            cwd: `${src}/sketches/1/data`,
+            src: '**/*.json',
+            dest: `${app}/data/`,
+            filter: 'isFile'
+          },
+
           // // JS
           // {
           //   expand: true,
@@ -169,6 +178,18 @@ module.exports = function(grunt) {
       images: {
         files: [
           `${config.sketchTarget}/data/*.{png,jpg,jpeg,gif,svg}`
+        ],
+        tasks: [
+          'copy:dev'
+        ],
+        options: {
+          livereload: true
+        }
+      },
+      // DATA
+      data: {
+        files: [
+          `${config.sketchTarget}/data/**/*.json`
         ],
         tasks: [
           'copy:dev'
