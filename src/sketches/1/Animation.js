@@ -25,6 +25,7 @@ let Animation = function(cfg) {
   this.frameIdx = 0;
   this.t = 0;
   this.done = false;
+  this.complete = function(){};
 
   animations = {
     'idle': ['idle_normal_0', 'idle_normal_1'],
@@ -41,10 +42,7 @@ Animation.prototype = {
 
     if (this.currAnimation === this.queue.length) {
       this.done = true;
-
-      // this.currAnimation = 0;
-      // this.frameIdx = 0;
-      // pausedTime = 1000;
+      this.complete();
     }
   },
 
@@ -70,7 +68,7 @@ Animation.prototype = {
     }
 
     if (typeof aniName === 'function') {
-      //  aniName();
+        aniName();
     }
 
     this.t += dt;
@@ -99,6 +97,11 @@ Animation.prototype = {
     return assets.atlases[0].frames[f];
   },
 
+  onComplete(f){
+    this.complete = f;
+    return this;
+  },
+
   /*
     name - animation name
     count - {optional} number of times to play the animation
@@ -125,9 +128,6 @@ Animation.prototype = {
   },
 
   stop() {},
-  onComplete(func) {
-    func();
-  }
 };
 
 module.exports = Animation;

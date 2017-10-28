@@ -14,15 +14,17 @@ const KEY_D = 68;
 
 
 let p5 = require('p5');
-let GameBoard = require('./GameBoard');
+
 let Assets = require('./Assets');
 let Character = require('./Character');
+let GameBoard = require('./GameBoard');
 let UI = require('./UI');
 
 let debug = true;
 let hitBoxSize = 30;
 
-let gameBoard, assets;
+// let gameBoard, 
+let assets;
 let _p5;
 
 let max, maxHand;
@@ -50,7 +52,8 @@ var newp5 = new p5(function(p) {
   p.setup = function setup() {
     p.createCanvas(640, 400);
 
-    gameBoard = new GameBoard(newp5);
+    //gameBoard = new GameBoard(newp5);
+    window.gameBoard = new GameBoard(newp5);
 
     // SequenceController.setGameBoard(gameBoard);
     // SequenceController.setDifficulty(5);
@@ -81,9 +84,8 @@ var newp5 = new p5(function(p) {
       debug = !debug;
     }
     else if(p.keyCode === 65){
-      gameBoard.test();
+      window.gameBoard.pushOutRat();
     }
-
   };
 
   /*
@@ -139,15 +141,7 @@ function drawMouseCoords() {
 }
 
 function drawHitBoxes() {
-  if (!debug) {
-    return;
-  }
-  _p5.fill(33, 66, 99);
-  _p5.ellipse(185, 282, hitBoxSize, hitBoxSize);
-  _p5.ellipse(97, 330, hitBoxSize, hitBoxSize);
-  _p5.ellipse(225, 320, hitBoxSize, hitBoxSize);
-  _p5.ellipse(368, 310, hitBoxSize, hitBoxSize);
-  _p5.ellipse(268, 363, hitBoxSize, hitBoxSize);
+
 }
 
 function drawArm(key) {

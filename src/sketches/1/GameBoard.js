@@ -8,11 +8,21 @@ let Character = require('./Character');
 let instance;
 
 let hitBoxPositions = [
-  [185, 282],
-  [97, 330],
-  [225, 320],
-  [368, 310],
-  [268, 363]
+  [164, 260], // top
+  [70, 310], // bottom left
+  [210, 300], // center
+  [344, 286], // far right
+  [250, 340] // bottom
+];
+
+// these coordinates are the slot positions offset
+// by the rat image coords. so they can be used directly with image()
+let ratSlotCoords = [
+  [146, 164], //top
+  [54, 212], // bottom left
+  [190, 202], // center
+  [329, 188], // far right
+  [232, 246] // bottom
 ];
 
 let GameBoard = function(p5) {
@@ -25,40 +35,55 @@ let GameBoard = function(p5) {
   var p5 = p5;
   var hits = 0;
   var misses = 0;
-  var slots = [];
+  var slots = [0, 0, 0, 0, 0];
+
+  this.freeSlots = [2, 4, 0, 1, 3];
   var rats = [];
   let t;
 
   this.render = function() {
     rats.forEach(r => r.render());
-  }
 
-  this.test = function() {
-    let rat = new Character({ p5: p5, name: 'rat' });
+    p5.fill(33, 66, 99, 200);
+    p5.stroke(255);
+    hitBoxPositions.forEach((a) => {
+      // p5.rect(a[0], a[1], 80, 26);
+    });
+  };
+
+  this.remove = function(rat) {
+    this.freeSlots.push(rat.slotID);
+   // p5.shuffle(this.freeSlots, true);
+
+    let idx = rats.indexOf(rat);
+    if(idx !== -1){
+      rats.splice(idx, 1);
+    }
+  };
+
+  this.pushOutRat = function() {
+
+    if (this.freeSlots.length === 0) {
+      console.log('no free slots!');
+      return;
+    }
+
+    console.log(this.freeSlots);
+    let slotIdx = this.freeSlots.pop();
+    
+    let rat = new Character({ p5: p5, name: 'rat', slotID: slotIdx });
     rats.push(rat);
-    rat.position({ x: 55, y: 210 });
+
+    let x = ratSlotCoords[slotIdx][0];
+    let y = ratSlotCoords[slotIdx][1];
+
+    rat.position({ x: x, y: y });
     rat.enter();
-    // rat.play().
-  //   .onComplete( freeSlot );
-  // freeSlot(slotId){
-  //   console.log(slotId);
-  // }
   };
 
   this.update = function(dt) {
     t += dt;
     rats.forEach(r => r.update(dt));
-
-    // rat2 = new Character({ p5: p, name: 'rat' });
-    // rat2.position({ x: 178, y: 200 });
-
-    //       rat.enter();
-    // chars.push(rat);
-
-    // rat2.enter();
-    // chars.push(rat2);
-
-
   };
 
   /*
@@ -69,9 +94,6 @@ let GameBoard = function(p5) {
     // Check if we hit one of the slots
 
     // if the slot is occupied, tell the rat to animate
-    // rat.hit();
-    // ui.addScore(1);
-    //.play('hurt');
   };
 
   /*
