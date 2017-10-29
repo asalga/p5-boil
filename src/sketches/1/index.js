@@ -65,11 +65,8 @@ var newp5 = new p5(function(p) {
   /*
     User tried to hit a slot
   */
-  p.mouseClicked = function() {
-    // let slotID = gameBoard.hit(p.mouseX, p.mouseY);
-    // if(slotID > -1){
-    //   Sam.play('hit_' + slotID);
-    // }
+  p.mousePressed = function() {
+    GameBoard.hit({ x: p.mouseX, y: p.mouseY });
   };
 
   /*

@@ -5,13 +5,17 @@
 */
 
 let Character = require('./Character');
+let Utils = require('./Utils');
+
+const HitboxWidth = 80;
+const HitBoxHeight = 26;
 
 let hitBoxPositions = [
-  [164, 260], // top
-  [70, 310], // bottom left
-  [210, 300], // center
-  [344, 286], // far right
-  [250, 340] // bottom
+  { x: 164, y: 260 }, // top
+  { x: 70, y: 310 }, // bottom left
+  { x: 210, y: 300 }, // center
+  { x: 344, y: 286 }, // far right
+  { x: 250, y: 340 } // bottom
 ];
 
 // these coordinates are the slot positions offset
@@ -36,6 +40,33 @@ let Board = (function() {
     return instance;
   }
   instance = this;
+
+  /*
+    point - object with x and y properties
+  */
+  this.hit = function(p) {
+
+    hitBoxPositions.forEach((c, i) => {
+
+      let rect = {
+        x: c.x,
+        y: c.y,
+        w: HitboxWidth,
+        h: HitBoxHeight
+      };
+
+      if (Utils.pointInRect(p, rect)) {
+        
+        // Okay, we hit one of the slots, is it occupied?
+        
+       
+
+        return i;
+      }
+    });
+
+    return -1;
+  };
 
   /*
     Remove a mouse from the gameboard
@@ -64,8 +95,8 @@ let Board = (function() {
 
     this.p5.fill(33, 66, 99, 200);
     this.p5.stroke(255);
-    hitBoxPositions.forEach((a) => {
-      this.p5.rect(a[0], a[1], 80, 26);
+    hitBoxPositions.forEach(b => {
+      this.p5.rect(b.x, b.y, HitboxWidth, HitBoxHeight);
     });
   };
 
@@ -80,7 +111,7 @@ let Board = (function() {
 
     let slotIdx = freeSlots.pop();
     let rat = new Character({ p5: this.p5, name: 'rat', slotID: slotIdx });
-    
+
     rats.push(rat);
     rat.position(ratSlotCoords[slotIdx]);
     rat.enter();
