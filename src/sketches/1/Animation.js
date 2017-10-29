@@ -25,7 +25,7 @@ let Animation = function(cfg) {
   this.frameIdx = 0;
   this.t = 0;
   this.done = false;
-  this.complete = function(){};
+  this.complete = function() {};
 
   animations = {
     'idle': ['idle_normal_0', 'idle_normal_1'],
@@ -68,11 +68,11 @@ Animation.prototype = {
     }
 
     if (typeof aniName === 'function') {
-        aniName();
+      aniName();
     }
 
     this.t += dt;
-     if ( aniName !== '_pause_' && this.t >= msPerFrame) {
+    if (aniName !== '_pause_' && this.t >= msPerFrame) {
 
       this.t -= msPerFrame;
       this.frameIdx++;
@@ -97,7 +97,7 @@ Animation.prototype = {
     return assets.atlases[0].frames[f];
   },
 
-  onComplete(f){
+  onComplete(f) {
     this.complete = f;
     return this;
   },
@@ -121,9 +121,14 @@ Animation.prototype = {
     return this;
   },
 
+  /*
+  */
   pause(timeInMS) {
-    this.queue.push('_pause_');
-    pausedTime = timeInMS;
+
+    if (timeInMS > 0) {
+      this.queue.push('_pause_');
+      pausedTime = timeInMS;
+    }
     return this;
   },
 

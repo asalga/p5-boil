@@ -17,7 +17,7 @@ let p5 = require('p5');
 
 let Assets = require('./Assets');
 let Character = require('./Character');
-let GameBoard = require('./GameBoard');
+let GameBoard = require('./GameBoard').instance;
 let UI = require('./UI');
 
 let debug = true;
@@ -34,16 +34,14 @@ let time1 = 0,
   time2 = 0;
 let fps = 0;
 
-
 function update(dt) {
   chars.forEach(v => v.update(dt));
-
-  gameBoard.update(dt);
+  GameBoard.update(dt);
 };
 
 function render() {
   chars.forEach(v => v.draw());
-  gameBoard.render();
+  GameBoard.render();
 }
 
 var newp5 = new p5(function(p) {
@@ -51,10 +49,7 @@ var newp5 = new p5(function(p) {
 
   p.setup = function setup() {
     p.createCanvas(640, 400);
-
-    //gameBoard = new GameBoard(newp5);
-    window.gameBoard = new GameBoard(newp5);
-
+    GameBoard.p5 = p;
     // SequenceController.setGameBoard(gameBoard);
     // SequenceController.setDifficulty(5);
     // SequenceController.start();
@@ -71,7 +66,7 @@ var newp5 = new p5(function(p) {
     User tried to hit a slot
   */
   p.mouseClicked = function() {
-    let slotID = gameBoard.hit(p.mouseX, p.mouseY);
+    // let slotID = gameBoard.hit(p.mouseX, p.mouseY);
     // if(slotID > -1){
     //   Sam.play('hit_' + slotID);
     // }
@@ -82,9 +77,8 @@ var newp5 = new p5(function(p) {
   p.keyPressed = function() {
     if (p.keyCode === KEY_D) {
       debug = !debug;
-    }
-    else if(p.keyCode === 65){
-      window.gameBoard.pushOutRat();
+    } else if (p.keyCode === 65) {
+      GameBoard.pushOutRat();
     }
   };
 
@@ -107,7 +101,6 @@ var newp5 = new p5(function(p) {
     render();
 
     drawMouseCoords();
-    drawHitBoxes();
     drawFPS();
 
     time2 = time1;
@@ -137,11 +130,6 @@ function drawMouseCoords() {
   _p5.textSize(30);
   _p5.stroke(255, 255, 255);
   newp5.text(`${_p5.mouseX} , ${_p5.mouseY}`, 230, 30);
-
-}
-
-function drawHitBoxes() {
-
 }
 
 function drawArm(key) {

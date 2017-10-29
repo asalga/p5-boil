@@ -5,16 +5,15 @@
 
 let Assets = require('./Assets');
 let Animation = require('./Animation');
-// let GameBoard = require('./GameBoard');
 
 let assets;
 
 let Character = function(cfg) {
   Object.assign(this, cfg || {});
-  
+
   assets = new Assets(this.p5);
 
-  this.pos = {};
+  this.pos = this.p5.createVector();
   this.ani = new Animation({ p5: this.p5 });
 };
 
@@ -23,12 +22,14 @@ Character.prototype = {
   hit() {},
 
   enter() {
+    let GameBoard = require('./GameBoard').instance;
+
     this.ani.play('enter')
       .play('idle', 4)
       .play('exit')
-      .pause(1000)
-      .onComplete(function(){
-        window.gameBoard.remove(this);
+      .pause(0)
+      .onComplete(function() {
+        GameBoard.remove(this);
       }.bind(this));
   },
   exit() {},
@@ -42,8 +43,6 @@ Character.prototype = {
   position(p) {
     this.pos.x = p.x;
     this.pos.y = p.y;
-    window.pos = this.pos;
-
   },
 
   render() {
