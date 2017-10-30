@@ -16,7 +16,7 @@ let animations;
 let pausedTime = 0;
 
 let Animation = function(cfg) {
-  console.log('Animation ctor');
+  // console.log('Animation ctor');
   Object.assign(this, cfg || {});
   assets = new Assets(this.p5);
 
@@ -28,9 +28,10 @@ let Animation = function(cfg) {
   this.complete = function() {};
 
   animations = {
+    'hurt_0': ['hit_0_0', 'hit_0_1'],
     'idle': ['idle_normal_0', 'idle_normal_1'],
     'enter': ['enter_normal_0', 'enter_normal_1', 'enter_normal_2'],
-    'exit': [ /*'enter_normal_2',*/ 'exit'],
+    'exit': [ 'exit'],
   };
 }
 
@@ -46,12 +47,16 @@ Animation.prototype = {
     }
   },
 
+
+  /*
+   */
   update(dt) {
+
     if (this.done) {
       return;
     }
 
-    // get the name of the animation ie) 'idle'    
+    // get the name of the animation ie) 'idle'
     let aniName = this.queue[this.currAnimation];
     if (!aniName) {
       return;
@@ -88,11 +93,18 @@ Animation.prototype = {
     Return null if the animation is paused
   */
   getFrame() {
+
+    if (this.queue.length === 0) {
+      console.log('geFrame: queue is empty');
+      return null;
+    }
+
     let aniName = this.queue[this.currAnimation];
     if (aniName === '_pause_' || this.done) {
       return null;
     }
 
+    // console.log(aniName, animations[aniName]);
     let f = animations[aniName][this.frameIdx];
     return assets.atlases[0].frames[f];
   },
@@ -122,7 +134,7 @@ Animation.prototype = {
   },
 
   /*
-  */
+   */
   pause(timeInMS) {
 
     if (timeInMS > 0) {
@@ -132,7 +144,12 @@ Animation.prototype = {
     return this;
   },
 
-  stop() {},
+  stop() {
+    this.t = 0;
+    this.frameIdx = 0;
+    this.currAnimation = 0;
+    this.queue = [];
+  },
 };
 
 module.exports = Animation;

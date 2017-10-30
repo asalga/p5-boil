@@ -55,11 +55,20 @@ let Board = (function() {
         h: HitBoxHeight
       };
 
+      let slotID = i;
+
       if (Utils.pointInRect(p, rect)) {
-        
+
         // Okay, we hit one of the slots, is it occupied?
-        
-       
+
+        rats.forEach((v, i) => {
+
+          if(v.slotID === slotID ){
+            v.hit();
+          }
+
+        });
+
 
         return i;
       }

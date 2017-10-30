@@ -19,7 +19,10 @@ let Character = function(cfg) {
 
 Character.prototype = {
 
-  hit() {},
+  hit() {
+    this.ani.stop();
+    this.ani.play('hurt_0');
+  },
 
   enter() {
     let GameBoard = require('./GameBoard').instance;
