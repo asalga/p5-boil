@@ -15,13 +15,22 @@ let Character = function(cfg) {
 
   this.pos = this.p5.createVector();
   this.ani = new Animation({ p5: this.p5 });
+
+  this.hasBeenHit = false;
 };
 
 Character.prototype = {
 
+  /*
+    We only allow the rat to be hit once. After they are hit the first
+    time, they are 'invincible' until their animations completes.
+  */
   hit() {
-    this.ani.stop();
-    this.ani.play('hurt_0');
+    if (this.hasBeenHit) {
+      return;
+    }
+    this.hasBeenHit = true;
+    this.ani.stop().play('hurt_0');
   },
 
   enter() {
@@ -30,12 +39,19 @@ Character.prototype = {
     this.ani.play('enter')
       .play('idle', 4)
       .play('exit')
-      .pause(0)
+      // .pause(500)
       .onComplete(function() {
         GameBoard.remove(this);
       }.bind(this));
+
+
+    // this.ani.play('enter')
+    // .play({name: 'idle', repeat: 4, onComplete: func})
   },
-  exit() {},
+
+  exit() {
+
+  },
 
   update(dt) {
     if (this.ani) {

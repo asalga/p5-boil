@@ -60,20 +60,14 @@ let Board = (function() {
       if (Utils.pointInRect(p, rect)) {
 
         // Okay, we hit one of the slots, is it occupied?
-
         rats.forEach((v, i) => {
-
           if(v.slotID === slotID ){
             v.hit();
           }
-
         });
-
-
         return i;
       }
     });
-
     return -1;
   };
 
@@ -105,7 +99,7 @@ let Board = (function() {
     this.p5.fill(33, 66, 99, 200);
     this.p5.stroke(255);
     hitBoxPositions.forEach(b => {
-      this.p5.rect(b.x, b.y, HitboxWidth, HitBoxHeight);
+      // this.p5.rect(b.x, b.y, HitboxWidth, HitBoxHeight);
     });
   };
 
@@ -114,7 +108,7 @@ let Board = (function() {
   this.pushOutRat = function() {
 
     if (freeSlots.length === 0) {
-      console.log('no free slots!');
+      // console.log('no free slots!');
       return;
     }
 

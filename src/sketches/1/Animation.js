@@ -31,7 +31,7 @@ let Animation = function(cfg) {
     'hurt_0': ['hit_0_0', 'hit_0_1'],
     'idle': ['idle_normal_0', 'idle_normal_1'],
     'enter': ['enter_normal_0', 'enter_normal_1', 'enter_normal_2'],
-    'exit': [ 'exit'],
+    'exit': ['exit'],
   };
 }
 
@@ -149,6 +149,8 @@ Animation.prototype = {
     this.frameIdx = 0;
     this.currAnimation = 0;
     this.queue = [];
+
+    return this;
   },
 };
 

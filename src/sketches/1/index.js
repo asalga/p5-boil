@@ -2,19 +2,13 @@
   Wak-a-Rat
   Andor Saga
   Oct 2017
-
-  TODO:
-   - make p5 global
-   - create keys file
-   - figure out what manages the rats. the GameBoard?
 */
 
 
+const KEY_A = 65;
 const KEY_D = 68;
 
-
 let p5 = require('p5');
-
 let Assets = require('./Assets');
 let Character = require('./Character');
 let GameBoard = require('./GameBoard').instance;
@@ -23,24 +17,21 @@ let UI = require('./UI');
 let debug = true;
 let hitBoxSize = 30;
 
-// let gameBoard, 
 let assets;
 let _p5;
 
 let max, maxHand;
-let rat, rat2, chars = [];
-
 let time1 = 0,
   time2 = 0;
 let fps = 0;
 
 function update(dt) {
-  chars.forEach(v => v.update(dt));
+  // chars.forEach(v => v.update(dt));
   GameBoard.update(dt);
 };
 
 function render() {
-  chars.forEach(v => v.draw());
+  // chars.forEach(v => v.draw());
   GameBoard.render();
 }
 
@@ -50,9 +41,6 @@ var newp5 = new p5(function(p) {
   p.setup = function setup() {
     p.createCanvas(640, 400);
     GameBoard.p5 = p;
-    // SequenceController.setGameBoard(gameBoard);
-    // SequenceController.setDifficulty(5);
-    // SequenceController.start();
   };
 
   /*
@@ -72,10 +60,13 @@ var newp5 = new p5(function(p) {
   /*
    */
   p.keyPressed = function() {
-    if (p.keyCode === KEY_D) {
-      debug = !debug;
-    } else if (p.keyCode === 65) {
-      GameBoard.pushOutRat();
+    switch (p.keyCode) {
+      case KEY_D:
+        debug = !debug;
+        break;
+      case KEY_A:
+        GameBoard.pushOutRat();
+        break;
     }
   };
 
@@ -119,7 +110,6 @@ function drawFPS() {
   _p5.text(`${fps}`, 20, 100);
 }
 
-
 function drawMouseCoords() {
   if (!debug) {
     return;
@@ -133,11 +123,6 @@ function drawArm(key) {
   let k = armPositions[key];
   //  _p5.image(k.img, k.x, k.y);
 }
-
-
-// _p5.textSize(30);
-// _p5.stroke(255, 255, 255);
-// newp5.text(`${_p5.mouseX} , ${_p5.mouseY}`, 230, 30);
 
 // armPositions.idle = {
 //   x: 224,
