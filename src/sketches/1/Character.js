@@ -34,6 +34,7 @@ Character.prototype = {
     if (this.hasBeenHit) {
       return;
     }
+    let GameBoard = require('./GameBoard').instance;
     this.hasBeenHit = true;
     this.ani.stop();
 
@@ -44,6 +45,12 @@ Character.prototype = {
     } else {
       this.ani.play('hurt_0');
     }
+    this.ani.onComplete(() => {
+      GameBoard.increaseHits();
+      GameBoard.freeSlot(this);
+      this.reset();
+    });
+
     this.health -= damage;
   },
 
@@ -52,10 +59,9 @@ Character.prototype = {
   },
 
   enterGame() {
-    let GameBoard = require('./GameBoard').instance;
-
     let enterAnim = 0;
     let idleAnim = 0;
+    let GameBoard = require('./GameBoard').instance;
 
     if (this.health < 25) {
       enterAnim = 2;
@@ -75,6 +81,7 @@ Character.prototype = {
       // not exactly what actually happens.
       .onComplete(function() {
         GameBoard.freeSlot(this);
+        GameBoard.increaseMisses();
         this.reset();
       }.bind(this));
   },

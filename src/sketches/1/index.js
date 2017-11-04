@@ -25,6 +25,8 @@ let time1 = 0,
   time2 = 0;
 let fps = 0;
 
+let bitmapFont;
+
 function update(dt) {
   // chars.forEach(v => v.update(dt));
   GameBoard.update(dt);
@@ -41,13 +43,24 @@ var newp5 = new p5(function(p) {
   p.setup = function setup() {
     p.createCanvas(640, 400);
     GameBoard.p5 = p;
+  //  p.bitmapTextFont(bitmapFont);
   };
 
   /*
    */
   p.preload = function() {
     assets = new Assets(p);
+
     assets.preload();
+
+console.log(p.loadBitmapFont);
+    // bitmapFont = p.loadBitmapFont('data/lucasFont.png', {
+    //   glyphWidth: 8 * 2,
+    //   glyphHeight: 7 * 2,
+    //   glyphBorder: 0,
+    //   rows: 12,
+    //   cols: 8
+    // });
   };
 
   /*

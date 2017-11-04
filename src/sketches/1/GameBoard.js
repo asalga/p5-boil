@@ -35,7 +35,9 @@ let Board = (function() {
   let freeSlots = [2, 4, 0, 1, 3],
     ratsOut = [],
     ratsIn = [],
-    t;
+    t,
+    numMisses = 0,
+    numHits = 0;
 
   if (instance) {
     return instance;
@@ -92,6 +94,14 @@ let Board = (function() {
     ratsOut.forEach(r => r.update(dt));
   };
 
+  this.increaseMisses = function() {
+    numMisses++;
+  };
+
+  this.increaseHits = function() {
+    numHits++;
+  };
+
   /*
    */
   this.render = function() {
@@ -106,6 +116,9 @@ let Board = (function() {
 
     this.p5.text("in: " + ratsIn.length, 100, 100);
     this.p5.text("out: " + ratsOut.length, 100, 140);
+
+    this.p5.text(numHits, 30, 30);
+    this.p5.text(numMisses, 60, 30);
   };
 
   /*
