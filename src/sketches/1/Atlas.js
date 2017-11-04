@@ -1,8 +1,10 @@
 'use strict';
 
 /*
-	img - 
-	meta - string
+  cfg{
+   img - p5Image
+   meta - string
+  }
 */
 function Atlas(cfg) {
   Object.assign(this, cfg);
@@ -10,11 +12,10 @@ function Atlas(cfg) {
 }
 
 Atlas.prototype = {
-  get() {
-  },
+  get() {},
 
   split() {
-  	this.frames = {};
+    this.frames = {};
 
     let sheetFrames = JSON.parse(this.meta)['frames'];
 
@@ -22,13 +23,12 @@ Atlas.prototype = {
 
       // remove '.png' part of filename, we don't need it.
       let filename = (f.filename).split('.')[0];
-      
+
       let x = f.frame.x;
       let y = f.frame.y;
       let w = f.frame.w;
       let h = f.frame.h;
-      this.frames[filename] = this.img.get(x,y,w,h);
-      // console.log(this.frames[f]);
+      this.frames[filename] = this.img.get(x, y, w, h);
     });
   }
 };

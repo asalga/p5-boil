@@ -1,22 +1,27 @@
 /*
-  Character manages state of 
-  entering, idling and exiting
+  Character manages state of entering, idling and exiting
 */
 
 let Assets = require('./Assets');
 let Animation = require('./Animation');
 
 let assets;
+let damage = 25;
 
+/*
+  cfg{
+    p5 - p5 instance
+    name - string
+    slotID - Number
+  }
+*/
 let Character = function(cfg) {
   Object.assign(this, cfg || {});
 
   assets = new Assets(this.p5);
-
-  this.pos = this.p5.createVector();
   this.ani = new Animation({ p5: this.p5 });
-
-  this.hasBeenHit = false;
+  this.health = 100;
+  this.reset();
 };
 
 Character.prototype = {
@@ -30,33 +35,61 @@ Character.prototype = {
       return;
     }
     this.hasBeenHit = true;
-    this.ani.stop().play('hurt_0');
+    this.ani.stop();
+
+    if (this.health <= 25) {
+      this.ani.play('hurt_2');
+    } else if (this.health <= 50) {
+      this.ani.play('hurt_1');
+    } else {
+      this.ani.play('hurt_0');
+    }
+    this.health -= damage;
   },
 
-  enter() {
+  assignSlot(s) {
+    this.slotID = s;
+  },
+
+  enterGame() {
     let GameBoard = require('./GameBoard').instance;
 
-    this.ani.play('enter')
-      .play('idle', 4)
+    let enterAnim = 0;
+    let idleAnim = 0;
+
+    if (this.health < 25) {
+      enterAnim = 2;
+      idleAnim = 2;
+    } else if (this.health < 50) {
+      enterAnim = 1;
+      idleAnim = 1;
+    }
+
+    this.ani
+      .play('enter_' + enterAnim)
+      .play('idle_' + idleAnim, 2)
       .play('exit')
       // .pause(500)
+      // TODO: figure out a better way to handle this.
+      // It looks like once exit is done, we call remote(), but that's
+      // not exactly what actually happens.
       .onComplete(function() {
-        GameBoard.remove(this);
+        GameBoard.freeSlot(this);
+        this.reset();
       }.bind(this));
-
-
-    // this.ani.play('enter')
-    // .play({name: 'idle', repeat: 4, onComplete: func})
   },
 
-  exit() {
+  exit() {},
 
+  reset() {
+    this.pos = this.p5.createVector();
+    this.hasBeenHit = false;
+    this.slotID = -1;
+    this.ani.reset();
   },
 
   update(dt) {
-    if (this.ani) {
-      this.ani.update(dt);
-    }
+    this.ani && this.ani.update(dt);
   },
 
   position(p) {

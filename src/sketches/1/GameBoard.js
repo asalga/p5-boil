@@ -32,9 +32,10 @@ let instance;
 
 let Board = (function() {
 
-  let freeSlots = [2, 4, 0, 1, 3];
-  let rats = [];
-  let t;
+  let freeSlots = [2, 4, 0, 1, 3],
+    ratsOut = [],
+    ratsIn = [],
+    t;
 
   if (instance) {
     return instance;
@@ -42,12 +43,12 @@ let Board = (function() {
   instance = this;
 
   /*
-    point - object with x and y properties
+    p - point object with x and y properties
   */
   this.hit = function(p) {
 
     hitBoxPositions.forEach((c, i) => {
-
+      let slotID = i;
       let rect = {
         x: c.x,
         y: c.y,
@@ -55,14 +56,13 @@ let Board = (function() {
         h: HitBoxHeight
       };
 
-      let slotID = i;
-
       if (Utils.pointInRect(p, rect)) {
 
-        // Okay, we hit one of the slots, is it occupied?
-        rats.forEach((v, i) => {
-          if(v.slotID === slotID ){
-            v.hit();
+        // We hit one of the slots, is it occupied?
+        ratsOut.forEach((r, i) => {
+          console.log(r.slotID, slotID);
+          if (r.slotID === slotID) {
+            r.hit();
           }
         });
         return i;
@@ -72,52 +72,66 @@ let Board = (function() {
   };
 
   /*
-    Remove a mouse from the gameboard
+    Let the GameBoard know this slot can now be re-used
   */
-  this.remove = function(rat) {
+  this.freeSlot = function(rat) {
     freeSlots.push(rat.slotID);
     // this.p5.shuffle(freeSlots, true);
 
-    let idx = rats.indexOf(rat);
+    let idx = ratsOut.indexOf(rat);
     if (idx !== -1) {
-      rats.splice(idx, 1);
+      ratsIn.push(ratsOut.splice(idx, 1)[0]);
     }
+    rat.slotID = -1;
   };
 
   /*
    */
   this.update = function(dt) {
     t += dt;
-    rats.forEach(r => r.update(dt));
+    ratsOut.forEach(r => r.update(dt));
   };
 
   /*
    */
   this.render = function() {
-    rats.forEach(r => r.render());
+    ratsOut.forEach(r => r.render());
 
     this.p5.fill(33, 66, 99, 200);
     this.p5.stroke(255);
     hitBoxPositions.forEach(b => {
-      // this.p5.rect(b.x, b.y, HitboxWidth, HitBoxHeight);
+      this.p5.rect(b.x, b.y, HitboxWidth, HitBoxHeight);
     });
+    this.p5.stroke(255, 0, 0);
+
+    this.p5.text("in: " + ratsIn.length, 100, 100);
+    this.p5.text("out: " + ratsOut.length, 100, 140);
   };
 
   /*
    */
   this.pushOutRat = function() {
-
     if (freeSlots.length === 0) {
-      // console.log('no free slots!');
+      console.log('no free slots!');
       return;
     }
 
+    let rat;
     let slotIdx = freeSlots.pop();
-    let rat = new Character({ p5: this.p5, name: 'rat', slotID: slotIdx });
 
-    rats.push(rat);
+    // First let's see if there are any ratsIn in the queue.
+    if (ratsIn.length > 0) {
+      rat = ratsIn.pop();
+    }
+    // No ratsOut in the queue, so create a new one.
+    else {
+      rat = new Character({ p5: this.p5, name: 'rat' });
+    }
+
+    ratsOut.push(rat);
+    rat.assignSlot(slotIdx);
     rat.position(ratSlotCoords[slotIdx]);
-    rat.enter();
+    rat.enterGame();
   };
 
 }.bind(this)());

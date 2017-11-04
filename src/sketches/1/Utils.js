@@ -8,8 +8,8 @@ let Utils = {
       return true;
     }
     return false;
-  }
-
+  },
+  noop() {}
 };
 
 module.exports = Utils;

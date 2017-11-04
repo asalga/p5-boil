@@ -8,6 +8,7 @@
  */
 
 let Assets = require('./Assets');
+let Utils = require('./Utils');
 let assets;
 
 const msPerFrame = 150;
@@ -16,21 +17,24 @@ let animations;
 let pausedTime = 0;
 
 let Animation = function(cfg) {
-  // console.log('Animation ctor');
   Object.assign(this, cfg || {});
   assets = new Assets(this.p5);
 
-  this.queue = [];
-  this.currAnimation = 0;
-  this.frameIdx = 0;
-  this.t = 0;
-  this.done = false;
-  this.complete = function() {};
+  this.reset();
 
   animations = {
     'hurt_0': ['hit_0_0', 'hit_0_1'],
-    'idle': ['idle_normal_0', 'idle_normal_1'],
-    'enter': ['enter_normal_0', 'enter_normal_1', 'enter_normal_2'],
+    'hurt_1': ['hit_1_0', 'hit_1_1'],
+    'hurt_2': ['hit_2_0', 'hit_2_1'],
+
+    'enter_0': ['enter_0_0', 'enter_0_1', 'enter_0_2'],
+    'enter_1': ['enter_1_0', 'enter_1_1', 'enter_1_2'],
+    'enter_2': ['enter_2_0', 'enter_2_1', 'enter_2_2'],
+
+    'idle_0': ['idle_0_0', 'idle_0_1'],
+    'idle_1': ['idle_1_0', 'idle_1_1'],
+    'idle_2': ['idle_2_0', 'idle_2_1'],
+
     'exit': ['exit'],
   };
 }
@@ -46,7 +50,6 @@ Animation.prototype = {
       this.complete();
     }
   },
-
 
   /*
    */
@@ -93,7 +96,6 @@ Animation.prototype = {
     Return null if the animation is paused
   */
   getFrame() {
-
     if (this.queue.length === 0) {
       console.log('geFrame: queue is empty');
       return null;
@@ -107,6 +109,15 @@ Animation.prototype = {
     // console.log(aniName, animations[aniName]);
     let f = animations[aniName][this.frameIdx];
     return assets.atlases[0].frames[f];
+  },
+
+  reset() {
+    this.queue = [];
+    this.currAnimation = 0;
+    this.frameIdx = 0;
+    this.t = 0;
+    this.done = false;
+    this.complete = Utils.noop;
   },
 
   onComplete(f) {
@@ -136,7 +147,6 @@ Animation.prototype = {
   /*
    */
   pause(timeInMS) {
-
     if (timeInMS > 0) {
       this.queue.push('_pause_');
       pausedTime = timeInMS;
@@ -149,7 +159,6 @@ Animation.prototype = {
     this.frameIdx = 0;
     this.currAnimation = 0;
     this.queue = [];
-
     return this;
   },
 };

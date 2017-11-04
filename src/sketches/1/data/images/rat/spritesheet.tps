@@ -104,7 +104,7 @@
             <key>algorithm</key>
             <enum type="AlgorithmSettings::AlgorithmId">Basic</enum>
             <key>freeSizeMode</key>
-            <enum type="AlgorithmSettings::AlgorithmFreeSizeMode">Fast</enum>
+            <enum type="AlgorithmSettings::AlgorithmFreeSizeMode">Good</enum>
             <key>sizeConstraints</key>
             <enum type="AlgorithmSettings::SizeConstraints">AnySize</enum>
             <key>forceSquared</key>
