@@ -117,6 +117,9 @@ let Board = (function() {
     });
     this.p5.stroke(255, 0, 0);
 
+
+
+
     this.p5.text("in: " + ratsIn.length, 100, 100);
     this.p5.text("out: " + ratsOut.length, 100, 140);
 

@@ -41,7 +41,6 @@ let BitmapFont = function() {
         charCode++;
       }
     }
-    // debugger;
     this.ready = true;
   }
 
@@ -111,7 +110,7 @@ let bitmapText = function(str, x, y) {
   }
 };
 
-module.exports = function stuff(p5) {
+module.exports = function setupBitmapFont(p5) {
   p = p5;
   p5.prototype.loadBitmapFont = loadBitmapFont;
   p5.prototype.bitmapTextFont = bitmapTextFont;

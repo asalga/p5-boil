@@ -15,10 +15,7 @@ let Character = require('./Character');
 let GameBoard = require('./GameBoard').instance;
 let UI = require('./UI');
 
-
-test(p5);
-
-
+setupBitmapFont(p5);
 
 let debug = true;
 let hitBoxSize = 30;
@@ -130,9 +127,6 @@ function drawMouseCoords() {
   if (!debug) {
     return;
   }
-  // _p5.textSize(30);
-  // _p5.stroke(255, 255, 255);
-  // newp5.text(, 230, 30);
    _p5.bitmapText(`${_p5.mouseX} , ${_p5.mouseY}`, 200, 10);
 }
 
