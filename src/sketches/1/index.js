@@ -9,7 +9,7 @@ const KEY_A = 65;
 const KEY_D = 68;
 
 let p5 = require('p5');
-let test = require('./p5BitmapFont');
+let setupBitmapFont = require('./p5BitmapFont');
 let Assets = require('./Assets');
 let Character = require('./Character');
 let GameBoard = require('./GameBoard').instance;
@@ -61,7 +61,7 @@ var newp5 = new p5(function(p) {
       glyphHeight: 16,
       glyphBorder: 0,
       rows: 12,
-      cols: 8
+      cols: 9
     });
   };
 
@@ -127,7 +127,9 @@ function drawMouseCoords() {
   if (!debug) {
     return;
   }
-   _p5.bitmapText(`${_p5.mouseX} , ${_p5.mouseY}`, 200, 10);
+   _p5.bitmapText(`0123456789 012345`, 200, 10);
+
+    //${_p5.mouseX} , ${_p5.mouseY}`, 200, 10);
 }
 
 function drawArm(key) {
