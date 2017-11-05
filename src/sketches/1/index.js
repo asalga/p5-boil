@@ -9,10 +9,16 @@ const KEY_A = 65;
 const KEY_D = 68;
 
 let p5 = require('p5');
+let test = require('./p5BitmapFont');
 let Assets = require('./Assets');
 let Character = require('./Character');
 let GameBoard = require('./GameBoard').instance;
 let UI = require('./UI');
+
+
+test(p5);
+
+
 
 let debug = true;
 let hitBoxSize = 30;
@@ -43,7 +49,7 @@ var newp5 = new p5(function(p) {
   p.setup = function setup() {
     p.createCanvas(640, 400);
     GameBoard.p5 = p;
-  //  p.bitmapTextFont(bitmapFont);
+    p.bitmapTextFont(bitmapFont);
   };
 
   /*
@@ -53,14 +59,13 @@ var newp5 = new p5(function(p) {
 
     assets.preload();
 
-console.log(p.loadBitmapFont);
-    // bitmapFont = p.loadBitmapFont('data/lucasFont.png', {
-    //   glyphWidth: 8 * 2,
-    //   glyphHeight: 7 * 2,
-    //   glyphBorder: 0,
-    //   rows: 12,
-    //   cols: 8
-    // });
+    bitmapFont = p.loadBitmapFont('data/fonts/lucasFont.png', {
+      glyphWidth: 14,
+      glyphHeight: 16,
+      glyphBorder: 0,
+      rows: 12,
+      cols: 8
+    });
   };
 
   /*
@@ -95,9 +100,9 @@ console.log(p.loadBitmapFont);
 
     update(delta);
 
-    p.image(assets.get('data/_idle.png'), 0, 0);
-    p.image(assets.get('data/max/head.png'), 0, 74);
-    p.image(assets.get('data/max/hand.png'), 0, 280);
+    p.image(assets.get('data/images/background/background.png'), 0, 0);
+    // p.image(assets.get('data/images/max/head.png'), 0, 74);
+    // p.image(assets.get('data/images/max/hand.png'), 0, 280);
 
     render();
 
@@ -117,19 +122,18 @@ function drawFPS() {
     fps = Math.round(_p5.frameRate());
   }
 
-  _p5.textSize(30);
-  _p5.noStroke(255, 255, 255);
-  _p5.fill(255, 0, 0);
-  _p5.text(`${fps}`, 20, 100);
+  _p5.bitmapText(`${GameBoard.getNumHits()} - ${GameBoard.getNumMisses()}`, 58, 38);
+  _p5.bitmapText(`${fps}`, 20, 100);
 }
 
 function drawMouseCoords() {
   if (!debug) {
     return;
   }
-  _p5.textSize(30);
-  _p5.stroke(255, 255, 255);
-  newp5.text(`${_p5.mouseX} , ${_p5.mouseY}`, 230, 30);
+  // _p5.textSize(30);
+  // _p5.stroke(255, 255, 255);
+  // newp5.text(, 230, 30);
+   _p5.bitmapText(`${_p5.mouseX} , ${_p5.mouseY}`, 200, 10);
 }
 
 function drawArm(key) {

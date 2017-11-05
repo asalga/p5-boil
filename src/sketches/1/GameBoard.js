@@ -102,6 +102,9 @@ let Board = (function() {
     numHits++;
   };
 
+  this.getNumMisses = function() { return numMisses };
+  this.getNumHits = function() { return numHits };
+
   /*
    */
   this.render = function() {

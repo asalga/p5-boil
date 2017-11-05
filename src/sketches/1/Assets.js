@@ -2,10 +2,9 @@ const Atlas = require('./Atlas');
 
 const Data = {
   images: [
-    'data/_idle.png',
-    'data/rat/rat_2.png',
-    'data/max/head.png',
-    'data/max/hand.png'
+    'data/images/background/background.png',
+    'data/images/max/head.png',
+    'data/images/max/hand.png'
   ],
 
   animations: [
@@ -16,10 +15,9 @@ const Data = {
   //   'animations/rat.json',
   //   'animations/sam.json'
   // ],
-
-  audio: [
-    'blahblah'
-  ]
+  // audio: [
+    // 'blahblah'
+  // ]
 };
 
 

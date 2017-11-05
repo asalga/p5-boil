@@ -107,6 +107,7 @@ module.exports = function(grunt) {
           //   dest: `${app}/`,
           //   filter: 'isFile'
           // },
+
           // IMAGES
           {
             expand: true,
@@ -177,7 +178,7 @@ module.exports = function(grunt) {
       // IMAGES
       images: {
         files: [
-          `${config.sketchTarget}/data/*.{png,jpg,jpeg,gif,svg}`
+          `${config.sketchTarget}/data/**/*.{png,jpg,jpeg,gif,svg}`
         ],
         tasks: [
           'copy:dev'
