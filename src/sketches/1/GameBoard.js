@@ -110,19 +110,13 @@ let Board = (function() {
   this.render = function() {
     ratsOut.forEach(r => r.render());
 
-    this.p5.fill(33, 66, 99, 200);
-    this.p5.stroke(255);
-    hitBoxPositions.forEach(b => {
-      this.p5.rect(b.x, b.y, HitboxWidth, HitBoxHeight);
-    });
-    this.p5.stroke(255, 0, 0);
-
-
-
-
-    this.p5.text("in: " + ratsIn.length, 100, 100);
-    this.p5.text("out: " + ratsOut.length, 100, 140);
-
+    // this.p5.fill(33, 66, 99, 200);
+    // this.p5.stroke(255);
+    // hitBoxPositions.forEach(b => {
+      // this.p5.rect(b.x, b.y, HitboxWidth, HitBoxHeight);
+    // });
+    // this.p5.text("in: " + ratsIn.length, 100, 100);
+    // this.p5.text("out: " + ratsOut.length, 100, 140);
     this.p5.text(numHits, 30, 30);
     this.p5.text(numMisses, 60, 30);
   };

@@ -127,9 +127,7 @@ function drawMouseCoords() {
   if (!debug) {
     return;
   }
-   _p5.bitmapText(`0123456789 012345`, 200, 10);
-
-    //${_p5.mouseX} , ${_p5.mouseY}`, 200, 10);
+  _p5.bitmapText(`${_p5.mouseX} , ${_p5.mouseY}`, 200, 10);
 }
 
 function drawArm(key) {
