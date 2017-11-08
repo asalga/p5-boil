@@ -1,0 +1,12 @@
+- setup
+- intro to p5.js
+- create context
+
+
+
+- break
+
+
+
+- questions / customize
+- differences (push/pop)
