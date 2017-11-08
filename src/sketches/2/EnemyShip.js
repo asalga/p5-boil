@@ -2,7 +2,7 @@ let EnemyShip = function(cfg) {
   Object.assign(this, cfg || {});
 
   let y = parseInt(random(1, 4)) * 100;
-  console.log(y);
+
   this.lastTimeFired = 0;
   this.health = 100;
   this.speed = 300;

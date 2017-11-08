@@ -15,7 +15,7 @@ let Scene = function() {
     actors.forEach(v => v.update(dt));
     this.collisionChecks();
 
-    if(frameCount % 50 == 0){
+    if(frameCount % 150 == 0){
         scene.createSprite({ type: 'enemy_ship'});
     }
   };

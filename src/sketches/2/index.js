@@ -56,7 +56,7 @@ function draw() {
 
   bitmapTextFont(sonicFont);
   bitmapText('score:' + nf(score, 7), 20, 20);
-  bitmapText('time:' + sin(gameTime/1000), 20, 40);
+  // bitmapText('time:' + sin(gameTime/1000), 20, 40);
 
   time2 = time1;
 };

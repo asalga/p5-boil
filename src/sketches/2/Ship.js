@@ -6,7 +6,7 @@ let Ship = function(cfg) {
   this.health = 100;
   this.speed = 300;
 
-  this.position = createVector(50, height / 2);
+  this.position = createVector(0, height / 2);
 
   // 1 bullet every this many milliseconds
   this.fireRate = 250;
@@ -35,42 +35,18 @@ Ship.prototype = {
     }
   },
 
-  hit() {
-
-  },
-
+  hit() {},
 
   update(dt) {
     let s = this.speed * (dt / 1000);
 
-    if (keyIsDown(UP_ARROW)) {
-      this.position.y -= s;
+    if (keyIsDown(UP_ARROW)) { this.position.y -= s; }
+    if (keyIsDown(DOWN_ARROW)) { this.position.y += s; }
+    if (keyIsDown(LEFT_ARROW)) { this.position.x -= s; }
+    if (keyIsDown(RIGHT_ARROW)) { this.position.x += s; }
 
-      if (this.position.y < 50) {
-        this.position.y = 50;
-      }
-    }
-    if (keyIsDown(DOWN_ARROW)) {
-      this.position.y += s;
-
-      if (this.position.y > height - this.img.height) {
-        this.position.y = height - this.img.height;
-      }
-    }
-    if (keyIsDown(RIGHT_ARROW)) {
-      this.position.x += s;
-
-      if (this.position.x > width - this.img.width) {
-        this.position.x = width - this.img.width;
-      }
-    }
-    if (keyIsDown(LEFT_ARROW)) {
-      this.position.x -= s;
-
-      if (this.position.x < 0) {
-        this.position.x = 0;
-      }
-    }
+    this.position.y = constrain(this.position.y, 0, height - this.img.height);
+    this.position.x = constrain(this.position.x, 0, width - this.img.width);
 
     if (keyIsDown(32)) {
       this.fire();
