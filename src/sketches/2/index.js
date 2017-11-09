@@ -45,7 +45,7 @@ function draw() {
   background(0, 0, 0);
 
   time1 = millis();
-  let delta = time1 - time2;
+  var delta = time1 - time2;
 
   gameTime += delta;
   starBackground.update(delta);
@@ -56,6 +56,7 @@ function draw() {
 
   bitmapTextFont(sonicFont);
   bitmapText('score:' + nf(score, 7), 20, 20);
+  bitmapText('HEALTH:' + scene.user.health, 20, 40);
   // bitmapText('time:' + sin(gameTime/1000), 20, 40);
 
   time2 = time1;

@@ -2,18 +2,20 @@ let lastTimeFired = 0;
 
 let Ship = function(cfg) {
   Object.assign(this, cfg || {});
-
-  this.health = 100;
-  this.speed = 300;
-
-  this.position = createVector(0, height / 2);
-
-  // 1 bullet every this many milliseconds
-  this.fireRate = 250;
+  this.restart();
 };
 
 Ship.prototype = {
   constructor: Ship,
+
+  restart() {
+    this.health = 100;
+    this.damage = 100;
+    this.speed = 300;
+    this.position = createVector(0, height / 2);
+    this.fireRate = 250;
+    this.restartedTime = 0;
+  },
 
   fire() {
     let now = millis();
@@ -25,6 +27,7 @@ Ship.prototype = {
       gunPos.x += 50;
 
       scene.createSprite({
+        damage: 50,
         type: 'user_bullet',
         tag: 'bullet',
         position: gunPos,
@@ -35,10 +38,22 @@ Ship.prototype = {
     }
   },
 
-  hit() {},
+  hit(obj) {
+    // if (obj.type == 'enemy_bullet') {
+      // this.health -= 20;
+    // }
+
+    this.health -= obj.damage;
+
+    if(this.health <= 0){
+      scene.restart();
+    }
+  },
 
   update(dt) {
     let s = this.speed * (dt / 1000);
+
+    this.restartedTime += (dt / 1000);
 
     if (keyIsDown(UP_ARROW)) { this.position.y -= s; }
     if (keyIsDown(DOWN_ARROW)) { this.position.y += s; }
@@ -54,6 +69,13 @@ Ship.prototype = {
   },
 
   draw() {
+    if (this.restartedTime < 1) {
+      var c = color(255 * sin(frameCount * 10));
+      tint(c);
+    } else {
+      noTint();
+    }
     image(this.img, this.position.x, this.position.y);
+    noTint();
   }
 };

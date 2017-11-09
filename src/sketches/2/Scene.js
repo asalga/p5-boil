@@ -1,9 +1,14 @@
-let Scene = function() {
+var Scene = function() {
 
   this.assets = {};
-  let actors = [];
-  let bullets = [];
+  var actors = [];
+  var bullets = [];
   this.user;
+
+  this.restart = function() {
+    this.bullets = [];
+    this.user.restart();
+  };
 
   this.draw = function() {
     bullets.forEach(v => v.draw());
@@ -15,8 +20,8 @@ let Scene = function() {
     actors.forEach(v => v.update(dt));
     this.collisionChecks();
 
-    if(frameCount % 150 == 0){
-        scene.createSprite({ type: 'enemy_ship'});
+    if (frameCount % 150 == 0) {
+      scene.createSprite({ type: 'enemy_ship' });
     }
   };
 
@@ -39,10 +44,22 @@ let Scene = function() {
         let collision = collidePointRect(b.position.x, b.position.y, e.position.x, e.position.y, 64, 64);
 
         if (collision && b.type == 'user_bullet' && e.type == 'enemy_ship') {
-          e.hit();
+          e.hit(b);
           bulletsToRemove.push(b);
         }
       });
+    });
+
+    // user ship <-> enemy ship
+    actors.forEach(a => {
+      var collision = collideRectRect(a.position.x, a.position.y, 64, 64,
+        this.user.position.x, this.user.position.y, 64, 64);
+      
+      if (collision && a != this.user) {
+        this.user.hit(a);
+        a.hit(this.user);
+      }
+
     });
 
     bulletsToRemove.forEach(v => {

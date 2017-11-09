@@ -1,4 +1,4 @@
--Structure
+--Structure--
 createCanvas()
 preload()
 setup()
@@ -6,25 +6,29 @@ draw()
 push()
 pop()
 
--Time
+--Time--
 millis()
 
--Math
+--Math--
 createVector()
 constrain()
 randomSeed()
 random()
+sin()
 
--Input
+
+--Input--
 keyIsDown()
 
--String Functions
+--String Functions--
 nf()
 
--Rendering
+--Rendering--
 image()
 background()
+tint()
+noTint()
 
--Environment
+--Environment--
 width
 height

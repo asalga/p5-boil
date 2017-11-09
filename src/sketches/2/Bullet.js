@@ -1,9 +1,10 @@
 let Bullet = function(cfg) {
 
   this.img = cfg.img;
+  this.type = cfg.type;
+  this.damage = cfg.damage;
   this.position = cfg.position;
   this.velocity = cfg.velocity;
-  this.type = cfg.type;
 
   this.draw = function() {
     image(this.img, this.position.x, this.position.y);
@@ -17,6 +18,5 @@ let Bullet = function(cfg) {
     if (this.position.x > width || this.position.x < -10) {
       scene.removeBullet(this);
     }
-
   };
 };
