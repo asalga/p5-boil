@@ -67,8 +67,6 @@ var Scene = function() {
     });
   };
 
-  /*
-   */
   this.createSprite = function(cfg) {
 
     if (cfg.type == 'user_bullet') {

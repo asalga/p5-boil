@@ -23,7 +23,7 @@ function setup() {
 }
 
 function preload() {
-  sonicFont = loadBitmapFont('data/sonicFont@2.png', {
+  sonicFont = loadBitmapFont('data/font.png', {
     glyphWidth: 8 * 2,
     glyphHeight: 8 * 2,
     glyphBorder: 0,
@@ -57,7 +57,6 @@ function draw() {
   bitmapTextFont(sonicFont);
   bitmapText('score:' + nf(score, 7), 20, 20);
   bitmapText('HEALTH:' + scene.user.health, 20, 40);
-  // bitmapText('time:' + sin(gameTime/1000), 20, 40);
 
   time2 = time1;
 };
