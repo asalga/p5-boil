@@ -1,4 +1,4 @@
-let Bullet = function(cfg) {
+var Bullet = function(cfg) {
 
   this.img = cfg.img;
   this.type = cfg.type;

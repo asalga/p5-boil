@@ -32,3 +32,4 @@ noTint()
 --Environment--
 width
 height
+frameCount

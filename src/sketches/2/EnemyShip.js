@@ -12,12 +12,10 @@ let EnemyShip = function(cfg) {
 
   this.velocity = createVector(100, height / 2);
   this.lifeTime = millis();
-};
 
-EnemyShip.prototype = {
-  constructor: EnemyShip,
 
-  fire() {
+
+  this.fire = function() {
     var now = millis();
 
     if (now - this.lastTimeFired > this.fireRate) {
@@ -36,25 +34,26 @@ EnemyShip.prototype = {
 
       this.lastTimeFired = now;
     }
-  },
+  };
 
-  hit(obj) {
+  this.hit = function(obj) {
     this.health -= obj.damage;
 
     if (this.health <= 0) {
       scene.removeShip(this);
     }
-  },
+  };
 
-  update(dt) {
+  this.update = function(dt) {
     this.position.x -= this.velocity.x * dt / 1000;
-    
+
     if (sin(this.lifeTime + gameTime / 1000) > 0.4) {
       this.fire();
     }
-  },
+  };
 
-  draw() {
+  this.draw = function() {
     image(this.img, this.position.x, this.position.y);
-  }
+  };
+
 };

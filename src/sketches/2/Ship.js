@@ -2,22 +2,20 @@ let lastTimeFired = 0;
 
 let Ship = function(cfg) {
   Object.assign(this, cfg || {});
-  this.restart();
-};
-
-Ship.prototype = {
-  constructor: Ship,
-
-  restart() {
+  
+  this.restart = function() {
     this.health = 100;
     this.damage = 100;
     this.speed = 300;
     this.position = createVector(0, height / 2);
     this.fireRate = 250;
     this.restartedTime = 0;
-  },
+  };
 
-  fire() {
+  this.restart();
+
+
+  this.fire = function() {
     let now = millis();
 
     if (now - lastTimeFired > this.fireRate) {
@@ -36,21 +34,21 @@ Ship.prototype = {
 
       lastTimeFired = millis();
     }
-  },
+  };
 
-  hit(obj) {
-    // if (obj.type == 'enemy_bullet') {
-      // this.health -= 20;
-    // }
 
+
+  this.hit = function(obj) {
     this.health -= obj.damage;
 
-    if(this.health <= 0){
+    if (this.health <= 0) {
       scene.restart();
     }
-  },
+  };
 
-  update(dt) {
+
+
+  this.update = function(dt) {
     let s = this.speed * (dt / 1000);
 
     this.restartedTime += (dt / 1000);
@@ -66,16 +64,18 @@ Ship.prototype = {
     if (keyIsDown(32)) {
       this.fire();
     }
-  },
+  };
 
-  draw() {
+
+
+  this.draw = function() {
     if (this.restartedTime < 1) {
       var c = color(255 * sin(frameCount * 10));
-      tint(c);
+      // tint(c);
     } else {
       noTint();
     }
     image(this.img, this.position.x, this.position.y);
     noTint();
-  }
+  };
 };

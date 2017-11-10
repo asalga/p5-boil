@@ -2,6 +2,10 @@
   EP - Space Game
   Andor Saga
   Oct 2017
+
+
+  public domain sprites:
+  opengameart.org/content/1616-ship-collection
 */
 
 let sonicFont;
@@ -32,11 +36,12 @@ function preload() {
   });
 
   for (var i = 0; i < Assets.images.length; ++i) {
-    let name = Assets.images[i].name;
-    let path = Assets.images[i].path;
+    let n = Assets.images[i].name;
+    let p = Assets.images[i].path;
     
-    loadImage(path, function(img) {
-      scene.createAsset(name, img)
+    loadImage(p, function(img){
+      scene.createAsset(n, img);
+      img.loadPixels();
     });
   }
 }
