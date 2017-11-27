@@ -5,15 +5,22 @@ module.exports = function(grunt) {
   const LivereloadPort = 35729;
   const ServeStatic = require('serve-static');
 
+  // for printing to console
+  const Colors = {
+    red: `"\x1B[91m"`,
+    pink: `"\x1B[35m"`,
+    default: `"\x1B[39m"`
+  };
+
   // directories
-  const dist = 'dist';
+  const dst = 'dst';
   const src = 'src';
   const tmp = '.tmp';
   const app = 'app';
   const basePath = 'src/sketches/';
 
   let config = {
-    sketchTarget: `${basePath}/1`
+    sketchTarget: `${basePath}/0`
   };
 
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
@@ -26,7 +33,7 @@ module.exports = function(grunt) {
       build: {
         src: [
           `${app}`,
-          `${dist}`,
+          `${dst}`,
           `${tmp}`
         ]
       }

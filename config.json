@@ -1,0 +1,15 @@
+{
+  "target": "tower-toppler-viz",
+
+  "targets": {
+
+    "whack-a-rat": {
+      "dir": "whack-a-rat",
+    },
+
+    "ep-game": {
+      "dir": "ep-game",
+    },
+
+  }
+}
