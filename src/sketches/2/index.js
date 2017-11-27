@@ -27,7 +27,10 @@ function setup() {
 }
 
 function preload() {
-  sonicFont = loadBitmapFont('data/font.png', {
+  sonicFont = loadBitmapFont(
+    'data/font@2.png', 
+      // Data.get('font'),
+    {
     glyphWidth: 8 * 2,
     glyphHeight: 8 * 2,
     glyphBorder: 0,

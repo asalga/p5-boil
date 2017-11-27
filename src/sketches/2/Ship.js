@@ -71,7 +71,7 @@ let Ship = function(cfg) {
   this.draw = function() {
     if (this.restartedTime < 1) {
       var c = color(255 * sin(frameCount * 10));
-      // tint(c);
+      tint(c);
     } else {
       noTint();
     }
