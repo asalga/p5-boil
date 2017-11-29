@@ -20,7 +20,7 @@ module.exports = function(grunt) {
   const basePath = 'src/sketches/';
 
   let config = {
-    sketchTarget: `${basePath}/0`
+    sketchTarget: `${basePath}/examples/p5-require`
   };
 
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
