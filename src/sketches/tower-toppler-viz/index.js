@@ -19,7 +19,7 @@ let easing = 0.005;
 let px;
 
 function preload() {
-    brick = loadImage("brick2.jpg");
+    brick = loadImage("brick.jpg");
 }
 
 function setup() {

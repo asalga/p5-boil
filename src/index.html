@@ -2,15 +2,34 @@
 
 <head>
     <title>P5-Boil</title>
-
     <script type="text/javascript" src="//localhost:35729/livereload.js"></script>
-
     <link rel="stylesheet" href="style.css">
 
-    <script language="javascript" src="libs/p5.min.js"></script>
-    <script language="javascript" src="libs/p5.bitmapFont.js"></script>
+    <!-- build:dev -->
+    <% if (library == "p5js"){ %>
+    <script language="javascript" src="libs/p5.js"></script>
+    <% } %>
+    <% if (library == "processingjs"){ %>
+    <script language="javascript" src="libs/pjs1.4.8.js"></script>
+    <% } %>
+    <% if (library == "processingjs-hack"){ %>
+    <!-- -->
+    <% } %>
+    <!-- /build -->
+
+
+	<!-- build:dev -->
+ 	<% if (bundleMethod == "concat"){ %>
+    <!--  using concat method -->
+    <script type="text/javascript" src="index.js"></script>
+    <% } %>
     
-    <script language="javascript" src="dev_bundle.js"></script>
+    <% if (bundleMethod == "browserify"){ %>
+    <!-- using browserify -->
+	<script language="javascript" src="dev_bundle.js"></script>
+	<% } %>
+ 	<!-- /build -->
+
 </head>
 
 <body></body>

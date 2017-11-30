@@ -1,15 +1,18 @@
 {
-  "target": "tower-toppler-viz",
+  "id": "tower-toppler-viz",
 
   "targets": {
 
-    "whack-a-rat": {
-      "dir": "whack-a-rat",
+    "tower-toppler-viz": {
+      "dir": "tower-toppler-viz",
+      "library": "p5js",
+      "bundleMethod": "concat"
     },
 
-    "ep-game": {
-      "dir": "ep-game",
-    },
-
+    "p5-require": {
+      "dir": "examples/p5-require",
+      "library": "p5js",
+      "bundleMethod": "browserify"
+    }
   }
 }

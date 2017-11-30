@@ -1,5 +1,8 @@
 'use strict';
 
+
+/*
+ */
 module.exports = function(grunt) {
 
   const LivereloadPort = 35729;
@@ -19,9 +22,26 @@ module.exports = function(grunt) {
   const app = 'app';
   const basePath = 'src/sketches/';
 
+
   let config = {
-    sketchTarget: `${basePath}/examples/p5-require`
+    // load by default if we can't find the target
+    target: `${basePath}/examples/p5-require`,
+    library: 'p5js'
   };
+
+  /*
+   */
+  try {
+    let cfg = grunt.file.readJSON('config.json');
+    config.target = `${basePath}` + cfg.targets[cfg.id].dir;
+
+    config.bundleMethod = cfg.targets[cfg.id].bundleMethod;
+    config.library = cfg.targets[cfg.id].library;
+
+    grunt.log.writeln('loading:' + cfg.id);
+  } catch (e) {
+    grunt.log.writeln(e);
+  }
 
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
@@ -81,14 +101,14 @@ module.exports = function(grunt) {
     copy: {
       dev: {
         files: [
-          // MARKUP
-          {
-            expand: true,
-            cwd: `${src}/`,
-            src: 'index.html',
-            dest: `${app}/`,
-            filter: 'isFile'
-          },
+          // // MARKUP
+          // {
+          //   expand: true,
+          //   cwd: `${src}/`,
+          //   src: 'index.html',
+          //   dest: `${app}/`,
+          //   filter: 'isFile'
+          // },
           // STYLE
           {
             expand: true,
@@ -98,13 +118,13 @@ module.exports = function(grunt) {
             filter: 'isFile'
           },
           // DATA
-          {
-            expand: true,
-            cwd: `${src}/sketches/1/data`,
-            src: '**/*.json',
-            dest: `${app}/data/`,
-            filter: 'isFile'
-          },
+          // {
+          //   expand: true,
+          //   cwd: `${src}/sketches/1/data`,
+          //   src: '**/*.json',
+          //   dest: `${app}/data/`,
+          //   filter: 'isFile'
+          // },
 
           // // JS
           // {
@@ -119,7 +139,7 @@ module.exports = function(grunt) {
           {
             expand: true,
             flatten: false,
-            cwd: `${src}/sketches/1/data`,
+            cwd: `${config.target}/data/`,
             src: ['**/*.{jpg,jpeg,png,gif,svg}'],
             dest: `${app}/data/`,
             filter: 'isFile'
@@ -160,6 +180,43 @@ module.exports = function(grunt) {
       ]
     },
 
+    /**
+     *  https://www.npmjs.com/package/grunt-processhtml
+     *
+     *  process html directivces
+     *  <!-- build:include -->
+     */
+    processhtml: {
+      dev: {
+        options: {
+          process: true,
+          data: config
+        },
+        files: [{
+          src: `${src}/index.html`,
+          dest: `${app}/index.html`
+        }]
+      }
+    },
+
+    /**
+     *  https://www.npmjs.com/package/grunt-processhtml
+     *
+     *  process <!-- build:include --> directives
+     */
+    processhtml: {
+      dev: {
+        options: {
+          process: true,
+          data: config,
+          strip: true,
+        },
+        files: [{
+          src: `${src}/index.html`,
+          dest: `${app}/index.html`
+        }]
+      }
+    },
 
     /**
      * https://github.com/gruntjs/grunt-contrib-watch
@@ -176,7 +233,8 @@ module.exports = function(grunt) {
         ],
         tasks: [
           'copy:dev',
-          'browserify:dev'
+          'bundle'
+          //'browserify:dev'
         ],
         options: {
           livereload: true
@@ -233,13 +291,30 @@ module.exports = function(grunt) {
     }
   });
 
+  /*
+    To bundle or not to bundle
+  */
+  grunt.registerTask('bundle', function() {
+
+    if (`${config.bundleMethod}` === 'browserify') {
+      grunt.task.run('browserify:dev');
+    }
+    //
+    else if (`${config.bundleMethod}` === 'concat') {
+      // grunt.task.run('concat:dev');
+    }
+  });
+
   grunt.registerTask('default', [
     // STATIC ASSETS
     'copy:dev',
 
     // JS
-    //jshint
-    'browserify:dev',
+    'bundle',
+    // jshint:dev
+
+    // HTML
+    'processhtml',
 
     // LIVE UPDATES / PREVIEW
     'connect:livereload',
