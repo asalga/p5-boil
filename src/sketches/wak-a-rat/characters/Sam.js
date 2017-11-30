@@ -1,28 +1,25 @@
-/*
- */
+let Assets = require('../Assets');
 
 let instance;
 
-let Sam = (function() {
+let Sam = function(cfg) {
+
+  Object.assign(this, cfg || {});
 
   if (instance) {
     return instance;
   }
   instance = this;
 
-  this.render = function() {};
+  assets = new Assets(this.p5);
 
-  this.update = function(dt) {
+  this.render = function() {
+    this.p5.image(assets.get('data/images/sam/arms/images/arm_idle.png'), 224, 90);
   };
 
+  this.update = function(dt) {
 
-})();
-
-module.exports = {
-  instance: instance
+  };
 };
 
-Object.defineProperty(module.exports, 'instance', {
-  writable: false,
-  instance: instance
-})
+module.exports = Sam;

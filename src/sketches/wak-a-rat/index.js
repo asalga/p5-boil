@@ -11,8 +11,8 @@ let p5 = require('p5');
 let setupBitmapFont = require('./p5BitmapFont');
 let Assets = require('./Assets');
 let GameBoard = require('./GameBoard').instance;
-let Sam = require('./characters/Sam').instance;
 let Max = require('./characters/Max');
+let Sam = require('./characters/Sam');
 let UI = require('./UI');
 
 setupBitmapFont(p5);
@@ -27,19 +27,19 @@ let time1 = 0,
   time2 = 0;
 let fps = 0;
 let max;
-
+let sam;
 
 let bitmapFont;
 
 function update(dt) {
   GameBoard.update(dt);
-  // Sam.update(dt);
+  sam.update(dt);
   max.update(dt);
 };
 
 function render() {
   GameBoard.render();
-  // Sam.render();
+  sam.render();
   max.render();
 }
 
@@ -52,8 +52,8 @@ var newp5 = new p5(function(p) {
     GameBoard.p5 = p;
     p.bitmapTextFont(bitmapFont);
 
-    // Sam.p = p;
     max = new Max({ p5: p });
+    sam = new Sam({ p5: p });
   };
 
   /*
