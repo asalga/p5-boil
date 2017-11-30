@@ -19,10 +19,7 @@ let Sam = function(cfg) {
     this.p5.image(assets.get('data/images/sam/eyes/eyes_0.png'), 440, 67);
   };
 
-  this.update = function(dt) {
-
-  };
-
+  this.update = function(dt) {};
 };
 
 module.exports = Sam;

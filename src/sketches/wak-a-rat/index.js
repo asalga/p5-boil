@@ -1,3 +1,4 @@
+'use strict';
 /*
   Wak-a-Rat
   Andor Saga
@@ -18,7 +19,7 @@ let UI = require('./UI');
 setupBitmapFont(p5);
 
 let debug = true;
-let hitBoxSize = 30;
+// let hitBoxSize = 30;
 
 let assets;
 let _p5;
@@ -35,15 +36,36 @@ function update(dt) {
   GameBoard.update(dt);
   sam.update(dt);
   max.update(dt);
-};
+}
 
 function render() {
-
   sam.render();
   max.render();
   GameBoard.render();
-
 }
+
+function drawMouseCoords() {
+  if (!debug) {
+    return;
+  }
+  _p5.bitmapText(`${_p5.mouseX} , ${_p5.mouseY}`, 200, 10);
+}
+
+function drawFPS() {
+  if (!debug) {
+    return;
+  }
+
+  if (_p5.frameCount % 120 === 0) {
+    fps = Math.round(_p5.frameRate());
+  }
+
+  _p5.bitmapText(`${GameBoard.getNumHits()} - ${GameBoard.getNumMisses()}`, 58, 38);
+  _p5.bitmapText(`${fps}`, 20, 100);
+}
+
+
+
 
 var newp5 = new p5(function(p) {
   _p5 = p;
@@ -116,31 +138,11 @@ var newp5 = new p5(function(p) {
     drawFPS();
 
     time2 = time1;
-  }
+  };
 });
 
-function drawFPS() {
-  if (!debug) {
-    return;
-  }
-
-  if (_p5.frameCount % 120 === 0) {
-    fps = Math.round(_p5.frameRate());
-  }
-
-  _p5.bitmapText(`${GameBoard.getNumHits()} - ${GameBoard.getNumMisses()}`, 58, 38);
-  _p5.bitmapText(`${fps}`, 20, 100);
-}
-
-function drawMouseCoords() {
-  if (!debug) {
-    return;
-  }
-  _p5.bitmapText(`${_p5.mouseX} , ${_p5.mouseY}`, 200, 10);
-}
-
 function drawArm(key) {
-  let k = armPositions[key];
+  // let k = armPositions[key];
   //  _p5.image(k.img, k.x, k.y);
 }
 

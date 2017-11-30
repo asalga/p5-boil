@@ -1,4 +1,6 @@
-'use strict';
+/*
+
+*/
 
 const Atlas = require('./Atlas');
 
@@ -29,6 +31,7 @@ const Data = {
 let instance;
 
 let Assets = function(p) {
+  'use strict';
 
   if (instance) {
     return instance;
@@ -57,7 +60,7 @@ let Assets = function(p) {
       that.p5.loadImage(v.atlas, function(atlasImg) {
         // Once the image is loaded, get the meta file
         let xhr = new XMLHttpRequest();
-        xhr.onload = function(response) {
+        xhr.onload = function() {
 
           let atlas = new Atlas({
             name: v.name,
@@ -77,9 +80,9 @@ let Assets = function(p) {
 
 
     //
-    Data.images.forEach(function(v, i, a) {
+    Data.images.forEach(v => {
 
-      that.p5.loadImage(v, function(p5img) {
+      that.p5.loadImage(v, p5img => {
         that.images[v] = p5img;
         that.numAssetsLoaded++;
       });

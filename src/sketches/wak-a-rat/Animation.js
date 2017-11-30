@@ -37,7 +37,7 @@ let Animation = function(cfg) {
 
     'exit': ['exit'],
   };
-}
+};
 
 Animation.prototype = {
 

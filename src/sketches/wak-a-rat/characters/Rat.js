@@ -1,3 +1,4 @@
+'use strict';
 /*
   Rat manages state of entering, idling and exiting
 */
