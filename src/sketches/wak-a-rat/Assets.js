@@ -17,7 +17,7 @@ const Data = {
   //   'animations/sam.json'
   // ],
   // audio: [
-    // 'blahblah'
+  // 'blahblah'
   // ]
 };
 
@@ -47,18 +47,20 @@ let Assets = function(p) {
     }
 
     let that = this;
-    
+
     // 
-    Data.animations.forEach((v)=>{
+    Data.animations.forEach((v) => {
 
       that.p5.loadImage(v, function(atlasImg) {
 
         let xhr = new XMLHttpRequest();
         xhr.onload = function(response) {
-          
-          that.atlases.push(new Atlas(
-            { img: atlasImg, meta: xhr.responseText, p:that.p5 })
-          );
+
+          that.atlases.push(new Atlas({
+            img: atlasImg,
+            meta: xhr.responseText,
+            p: that.p5
+          }));
 
           that.numAssetsLoaded++;
         };
