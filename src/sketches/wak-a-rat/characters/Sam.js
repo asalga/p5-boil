@@ -15,6 +15,7 @@ let Sam = function(cfg) {
 
   this.render = function() {
     this.p5.image(assets.get('data/images/sam/arms/images/arm_idle.png'), 224, 90);
+    this.p5.image(assets.get('data/images/sam/eyes/eyes_0.png'), 440, 67);
   };
 
   this.update = function(dt) {

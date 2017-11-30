@@ -5,7 +5,9 @@ const Data = {
     'data/images/background/background.png',
     'data/images/max/head.png',
     'data/images/max/hand.png',
-    'data/images/sam/arms/images/arm_idle.png'
+
+    'data/images/sam/arms/images/arm_idle.png',
+    'data/images/sam/eyes/eyes_0.png'
   ],
 
   animations: [
