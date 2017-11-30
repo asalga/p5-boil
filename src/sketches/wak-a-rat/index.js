@@ -38,9 +38,11 @@ function update(dt) {
 };
 
 function render() {
-  GameBoard.render();
+
   sam.render();
   max.render();
+  GameBoard.render();
+
 }
 
 var newp5 = new p5(function(p) {

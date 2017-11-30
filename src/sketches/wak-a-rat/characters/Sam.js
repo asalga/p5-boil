@@ -1,4 +1,5 @@
 let Assets = require('../Assets');
+let Animation = require('../Animation');
 
 let instance;
 
@@ -21,6 +22,7 @@ let Sam = function(cfg) {
   this.update = function(dt) {
 
   };
+
 };
 
 module.exports = Sam;

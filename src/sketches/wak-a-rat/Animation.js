@@ -41,6 +41,8 @@ let Animation = function(cfg) {
 
 Animation.prototype = {
 
+  /*
+  */
   nextAnimation() {
     this.currAnimation++;
     this.frameIdx = 0;
@@ -97,7 +99,7 @@ Animation.prototype = {
   */
   getFrame() {
     if (this.queue.length === 0) {
-      console.log('geFrame: queue is empty');
+      console.log('getFrame(): queue is empty');
       return null;
     }
 
@@ -108,9 +110,11 @@ Animation.prototype = {
 
     // console.log(aniName, animations[aniName]);
     let f = animations[aniName][this.frameIdx];
-    return assets.atlases[0].frames[f];
+    return assets.atlases['rat1'].frames[f];
   },
 
+  /*
+   */
   reset() {
     this.queue = [];
     this.currAnimation = 0;
@@ -120,6 +124,8 @@ Animation.prototype = {
     this.complete = Utils.noop;
   },
 
+  /*
+   */
   onComplete(f) {
     this.complete = f;
     return this;
@@ -154,6 +160,8 @@ Animation.prototype = {
     return this;
   },
 
+  /*
+   */
   stop() {
     this.t = 0;
     this.frameIdx = 0;

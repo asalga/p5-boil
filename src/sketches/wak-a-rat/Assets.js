@@ -1,3 +1,5 @@
+'use strict';
+
 const Atlas = require('./Atlas');
 
 const Data = {
@@ -10,17 +12,17 @@ const Data = {
     'data/images/sam/eyes/eyes_0.png'
   ],
 
-  animations: [
-    'data/images/rat/spritesheet.png'
-  ],
-
-  // animations: [
-  //   'animations/rat.json',
-  //   'animations/sam.json'
-  // ],
-  // audio: [
-  // 'blahblah'
-  // ]
+  atlases: [{
+      name: 'rat1',
+      atlas: 'data/images/rat/spritesheet.png',
+      meta: 'data/images/rat/spritesheet.json'
+    },
+    {
+      name: 'rat2',
+      atlas: 'data/images/rat/spritesheet.png',
+      meta: 'data/images/rat/spritesheet.json'
+    }
+  ]
 };
 
 
@@ -35,8 +37,7 @@ let Assets = function(p) {
   instance = this;
   this.p5 = p;
   this.images = {};
-  this.animations = {};
-  this.atlases = [];
+  this.atlases = {};
 
   this.numAssetsLoaded = 0;
 
@@ -50,28 +51,32 @@ let Assets = function(p) {
 
     let that = this;
 
-    // 
-    Data.animations.forEach((v) => {
+    //
+    Data.atlases.forEach((v) => {
 
-      that.p5.loadImage(v, function(atlasImg) {
-
+      that.p5.loadImage(v.atlas, function(atlasImg) {
+        // Once the image is loaded, get the meta file
         let xhr = new XMLHttpRequest();
         xhr.onload = function(response) {
 
-          that.atlases.push(new Atlas({
+          let atlas = new Atlas({
+            name: v.name,
             img: atlasImg,
             meta: xhr.responseText,
             p: that.p5
-          }));
+          });
+
+          that.atlases[v.name] = atlas;
 
           that.numAssetsLoaded++;
         };
-        xhr.open('GET', 'data/images/rat/spritesheet.json');
+        xhr.open('GET', v.meta);
         xhr.send();
       });
     });
 
 
+    //
     Data.images.forEach(function(v, i, a) {
 
       that.p5.loadImage(v, function(p5img) {
@@ -121,7 +126,8 @@ let Assets = function(p) {
   /*
    */
   this.isDone = function() {
-    return this.numAssetsLoaded === (Data.images.length + Data.animations.length);
+    return this.numAssetsLoaded ===
+      (Data.images.length + Data.atlases.length);
   };
 
   /*
