@@ -26,17 +26,19 @@ module.exports = function(grunt) {
   let config = {
     // load by default if we can't find the target
     target: `${basePath}/examples/p5-require`,
-    library: 'p5js'
+    library: 'p5js',
+    bundleMethod: 'concat'
   };
 
   /*
    */
   try {
     let cfg = grunt.file.readJSON('config.json');
-    config.target = `${basePath}` + cfg.targets[cfg.id].dir;
+    let target = cfg.targets[cfg.id];
 
-    config.bundleMethod = cfg.targets[cfg.id].bundleMethod;
-    config.library = cfg.targets[cfg.id].library;
+    config.target = `${basePath}` + target.dir;
+    config.bundleMethod = target.bundleMethod;
+    config.library = target.library;
 
     grunt.log.writeln('loading:' + cfg.id);
   } catch (e) {
@@ -155,7 +157,7 @@ module.exports = function(grunt) {
       dev: {
         files: [{
           dest: `${app}/dev_bundle.js`,
-          src: `${config.sketchTarget}/index.js`
+          src: `${config.target}/index.js`
         }],
         options: {
           mangle: false
@@ -178,25 +180,6 @@ module.exports = function(grunt) {
         `${src}/json/**/*.js`,
         `!${src}/js/vendor/**/*.js`
       ]
-    },
-
-    /**
-     *  https://www.npmjs.com/package/grunt-processhtml
-     *
-     *  process html directivces
-     *  <!-- build:include -->
-     */
-    processhtml: {
-      dev: {
-        options: {
-          process: true,
-          data: config
-        },
-        files: [{
-          src: `${src}/index.html`,
-          dest: `${app}/index.html`
-        }]
-      }
     },
 
     /**
@@ -229,7 +212,7 @@ module.exports = function(grunt) {
       },
       scripts_dev: {
         files: [
-          `${config.sketchTarget}/*.js`
+          `${config.target}/*.js`
         ],
         tasks: [
           'copy:dev',
@@ -243,7 +226,7 @@ module.exports = function(grunt) {
       // IMAGES
       images: {
         files: [
-          `${config.sketchTarget}/data/**/*.{png,jpg,jpeg,gif,svg}`
+          `${config.target}/data/**/*.{png,jpg,jpeg,gif,svg}`
         ],
         tasks: [
           'copy:dev'
@@ -255,7 +238,7 @@ module.exports = function(grunt) {
       // DATA
       data: {
         files: [
-          `${config.sketchTarget}/data/**/*.json`
+          `${config.target}/data/**/*.json`
         ],
         tasks: [
           'copy:dev'

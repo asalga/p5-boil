@@ -1,5 +1,6 @@
 {
-  "id": "tower-toppler-viz",
+  "id": "whack-a-rat",
+
 
   "targets": {
 
@@ -7,6 +8,12 @@
       "dir": "tower-toppler-viz",
       "library": "p5js",
       "bundleMethod": "concat"
+    },
+
+    "whack-a-rat": {
+      "dir": "1",
+      "library": "p5js",
+      "bundleMethod": "browserify"
     },
 
     "p5-require": {
