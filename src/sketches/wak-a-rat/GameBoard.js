@@ -4,7 +4,7 @@
   Singleton for managing the rats
 */
 
-let Character = require('./Character');
+let Rat = require('./characters/Rat');
 let Utils = require('./Utils');
 
 const HitboxWidth = 80;
@@ -117,8 +117,8 @@ let Board = (function() {
     // });
     // this.p5.text("in: " + ratsIn.length, 100, 100);
     // this.p5.text("out: " + ratsOut.length, 100, 140);
-    this.p5.text(numHits, 30, 30);
-    this.p5.text(numMisses, 60, 30);
+    // this.p5.text(numHits, 30, 30);
+    // this.p5.text(numMisses, 60, 30);
   };
 
   /*
@@ -138,7 +138,7 @@ let Board = (function() {
     }
     // No ratsOut in the queue, so create a new one.
     else {
-      rat = new Character({ p5: this.p5, name: 'rat' });
+      rat = new Rat({ p5: this.p5, name: 'rat' });
     }
 
     ratsOut.push(rat);

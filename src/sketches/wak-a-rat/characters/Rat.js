@@ -1,21 +1,21 @@
 /*
-  Character manages state of entering, idling and exiting
+  Rat manages state of entering, idling and exiting
 */
 
-let Assets = require('./Assets');
-let Animation = require('./Animation');
+let Assets = require('../Assets');
+let Animation = require('../Animation');
 
 let assets;
 let damage = 25;
 
 /*
-  cfg{
+  cfg {
     p5 - p5 instance
     name - string
     slotID - Number
   }
 */
-let Character = function(cfg) {
+let Rat = function(cfg) {
   Object.assign(this, cfg || {});
 
   assets = new Assets(this.p5);
@@ -24,7 +24,7 @@ let Character = function(cfg) {
   this.reset();
 };
 
-Character.prototype = {
+Rat.prototype = {
 
   /*
     We only allow the rat to be hit once. After they are hit the first
@@ -34,7 +34,7 @@ Character.prototype = {
     if (this.hasBeenHit) {
       return;
     }
-    let GameBoard = require('./GameBoard').instance;
+    let GameBoard = require('../GameBoard').instance;
     this.hasBeenHit = true;
     this.ani.stop();
 
@@ -61,7 +61,7 @@ Character.prototype = {
   enterGame() {
     let enterAnim = 0;
     let idleAnim = 0;
-    let GameBoard = require('./GameBoard').instance;
+    let GameBoard = require('../GameBoard').instance;
 
     if (this.health < 25) {
       enterAnim = 2;
@@ -112,4 +112,4 @@ Character.prototype = {
   }
 };
 
-module.exports = Character;
+module.exports = Rat;

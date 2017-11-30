@@ -1,5 +1,5 @@
 {
-  "id": "whack-a-rat",
+  "id": "wak-a-rat",
 
 
   "targets": {
@@ -10,8 +10,8 @@
       "bundleMethod": "concat"
     },
 
-    "whack-a-rat": {
-      "dir": "1",
+    "wak-a-rat": {
+      "dir": "wak-a-rat",
       "library": "p5js",
       "bundleMethod": "browserify"
     },

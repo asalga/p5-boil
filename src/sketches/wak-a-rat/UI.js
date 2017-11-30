@@ -2,7 +2,6 @@
 	UI
  */
 
-
 let instance;
 
 let UI = function() {
@@ -10,8 +9,6 @@ let UI = function() {
   if (instance) {
     return instance;
   }
-
-
 }
 
 module.exports = UI;

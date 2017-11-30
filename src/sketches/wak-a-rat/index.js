@@ -4,15 +4,15 @@
   Oct 2017
 */
 
-
 const KEY_A = 65;
 const KEY_D = 68;
 
 let p5 = require('p5');
 let setupBitmapFont = require('./p5BitmapFont');
 let Assets = require('./Assets');
-let Character = require('./Character');
 let GameBoard = require('./GameBoard').instance;
+let Sam = require('./characters/Sam').instance;
+let Max = require('./characters/Max');
 let UI = require('./UI');
 
 setupBitmapFont(p5);
@@ -23,35 +23,43 @@ let hitBoxSize = 30;
 let assets;
 let _p5;
 
-let max, maxHand;
 let time1 = 0,
   time2 = 0;
 let fps = 0;
+let max;
+
 
 let bitmapFont;
 
 function update(dt) {
-  // chars.forEach(v => v.update(dt));
   GameBoard.update(dt);
+  // Sam.update(dt);
+  max.update(dt);
 };
 
 function render() {
-  // chars.forEach(v => v.draw());
   GameBoard.render();
+  // Sam.render();
+  max.render();
 }
 
 var newp5 = new p5(function(p) {
   _p5 = p;
 
   p.setup = function setup() {
+    console.log('>> SETUP');
     p.createCanvas(640, 400);
     GameBoard.p5 = p;
     p.bitmapTextFont(bitmapFont);
+
+    // Sam.p = p;
+    max = new Max({ p5: p });
   };
 
   /*
    */
   p.preload = function() {
+    console.log('>> PRELOAD');
     assets = new Assets(p);
 
     assets.preload();
@@ -97,9 +105,8 @@ var newp5 = new p5(function(p) {
 
     update(delta);
 
+    // background
     p.image(assets.get('data/images/background/background.png'), 0, 0);
-    // p.image(assets.get('data/images/max/head.png'), 0, 74);
-    // p.image(assets.get('data/images/max/hand.png'), 0, 280);
 
     render();
 
