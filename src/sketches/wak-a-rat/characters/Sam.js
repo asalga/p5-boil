@@ -34,7 +34,7 @@ let Sam = function(cfg) {
     let frame = this.ani.getFrame();
 
     if (frame) {
-      this.p5.image(frame, 440, 67);
+      this.p5.image(frame, 443, 70);
     }
   };
 
@@ -57,7 +57,7 @@ let Sam = function(cfg) {
     
   */
   this.getNextBlink = function() {
-    return this.p5.random(1, 3) * 1000;
+    return this.p5.random(2, 4) * 1000;
   };
 };
 
