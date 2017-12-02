@@ -189,6 +189,8 @@
         <key>fileList</key>
         <array>
             <filename>eyes</filename>
+            <filename>tongue</filename>
+            <filename>tongue</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
