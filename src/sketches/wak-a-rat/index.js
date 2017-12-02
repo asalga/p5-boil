@@ -39,9 +39,9 @@ function update(dt) {
 }
 
 function render() {
-  sam.render();
   max.render();
   GameBoard.render();
+  sam.render();
 }
 
 function drawMouseCoords() {

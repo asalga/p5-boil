@@ -1,3 +1,4 @@
+'use strict';
 /*
 
 */
@@ -12,17 +13,19 @@ const Data = {
 
     'data/images/sam/arms/images/arm_idle.png',
     'data/images/sam/eyes/eyes_0.png'
+
+    // font
   ],
 
   atlases: [{
-      name: 'rat1',
+      name: 'rat',
       atlas: 'data/images/rat/spritesheet.png',
       meta: 'data/images/rat/spritesheet.json'
     },
     {
-      name: 'rat2',
-      atlas: 'data/images/rat/spritesheet.png',
-      meta: 'data/images/rat/spritesheet.json'
+      name: 'sam',
+      atlas: 'data/images/sam/atlas.png',
+      meta: 'data/images/sam/atlas.json'
     }
   ]
 };
@@ -31,7 +34,6 @@ const Data = {
 let instance;
 
 let Assets = function(p) {
-  'use strict';
 
   if (instance) {
     return instance;
@@ -77,7 +79,6 @@ let Assets = function(p) {
         xhr.send();
       });
     });
-
 
     //
     Data.images.forEach(v => {

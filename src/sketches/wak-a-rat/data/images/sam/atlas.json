@@ -1,0 +1,39 @@
+{"frames": [
+
+{
+	"filename": "blink_0.png",
+	"frame": {"x":2,"y":2,"w":40,"h":26},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":40,"h":26},
+	"sourceSize": {"w":40,"h":26},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "blink_1.png",
+	"frame": {"x":44,"y":2,"w":40,"h":26},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":40,"h":26},
+	"sourceSize": {"w":40,"h":26},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "blink_2.png",
+	"frame": {"x":2,"y":30,"w":40,"h":26},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":40,"h":26},
+	"sourceSize": {"w":40,"h":26},
+	"pivot": {"x":0.5,"y":0.5}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "spritesheet.png",
+	"format": "RGBA8888",
+	"size": {"w":86,"h":86},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:e6520d6c0b4b39aac7921641a41cf336:c558bc3ae6d1acd9c900176e965e0af2:729adc6043343cfda41c447ce8f464d6$"
+}
+}

@@ -9,6 +9,23 @@ let Animation = require('../Animation');
 let assets;
 let damage = 25;
 
+// references to the image names from the atlas.
+let animationSequences = {
+  'hurt_0': ['hit_0_0', 'hit_0_1'],
+  'hurt_1': ['hit_1_0', 'hit_1_1'],
+  'hurt_2': ['hit_2_0', 'hit_2_1'],
+
+  'enter_0': ['enter_0_0', 'enter_0_1', 'enter_0_2'],
+  'enter_1': ['enter_1_0', 'enter_1_1', 'enter_1_2'],
+  'enter_2': ['enter_2_0', 'enter_2_1', 'enter_2_2'],
+
+  'idle_0': ['idle_0_0', 'idle_0_1'],
+  'idle_1': ['idle_1_0', 'idle_1_1'],
+  'idle_2': ['idle_2_0', 'idle_2_1'],
+
+  'exit': ['exit'],
+};
+
 /*
   cfg {
     p5 - p5 instance
@@ -20,9 +37,13 @@ let Rat = function(cfg) {
   Object.assign(this, cfg || {});
 
   assets = new Assets(this.p5);
-  this.ani = new Animation({ p5: this.p5 });
+  this.ani = new Animation({
+    p5: this.p5,
+    animations: animationSequences,
+    atlasName: 'rat'
+  });
   this.health = 100;
-  this.reset();
+  this.resetAnimation();
 };
 
 Rat.prototype = {
@@ -49,7 +70,7 @@ Rat.prototype = {
     this.ani.onComplete(() => {
       GameBoard.increaseHits();
       GameBoard.freeSlot(this);
-      this.reset();
+      this.resetAnimation();
     });
 
     this.health -= damage;
@@ -83,14 +104,15 @@ Rat.prototype = {
       .onComplete(function() {
         GameBoard.freeSlot(this);
         GameBoard.increaseMisses();
-        this.reset();
+        this.resetAnimation();
       }.bind(this));
   },
 
   exit() {},
 
-  reset() {
+  resetAnimation() {
     this.pos = this.p5.createVector();
+    // this.health = 100;
     this.hasBeenHit = false;
     this.slotID = -1;
     this.ani.reset();

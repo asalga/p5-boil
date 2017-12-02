@@ -8,41 +8,28 @@
  */
 
 let Assets = require('./Assets');
-let Utils = require('./Utils');
 let assets;
 
 const msPerFrame = 150;
-
-let animations;
 let pausedTime = 0;
 
+/*
+  cfg {
+    p5,
+    atlasName
+    animations
+  }
+*/
 let Animation = function(cfg) {
   Object.assign(this, cfg || {});
   assets = new Assets(this.p5);
-
   this.reset();
-
-  animations = {
-    'hurt_0': ['hit_0_0', 'hit_0_1'],
-    'hurt_1': ['hit_1_0', 'hit_1_1'],
-    'hurt_2': ['hit_2_0', 'hit_2_1'],
-
-    'enter_0': ['enter_0_0', 'enter_0_1', 'enter_0_2'],
-    'enter_1': ['enter_1_0', 'enter_1_1', 'enter_1_2'],
-    'enter_2': ['enter_2_0', 'enter_2_1', 'enter_2_2'],
-
-    'idle_0': ['idle_0_0', 'idle_0_1'],
-    'idle_1': ['idle_1_0', 'idle_1_1'],
-    'idle_2': ['idle_2_0', 'idle_2_1'],
-
-    'exit': ['exit'],
-  };
 };
 
 Animation.prototype = {
 
   /*
-  */
+   */
   nextAnimation() {
     this.currAnimation++;
     this.frameIdx = 0;
@@ -88,7 +75,7 @@ Animation.prototype = {
       this.frameIdx++;
 
       // reached the end of the animation
-      if (this.frameIdx === animations[aniName].length) {
+      if (this.frameIdx === this.animations[aniName].length) {
         this.nextAnimation();
       }
     }
@@ -98,19 +85,50 @@ Animation.prototype = {
     Return null if the animation is paused
   */
   getFrame() {
+
+
+    // console.log('this.done:', this.done);
+    // console.log('aniName', aniName);
+    // console.log('this.doesHoldLastFrame:', this.doesHoldLastFrame);
+    // console.log('this.animations:', this.animations);
+    // console.log('this.animations[aniName]:', this.animations[aniName]);
+
+    // If we are holding the last frame
+    if (this.done && this.doesHoldLastFrame) {
+      // let aniName = this.queue[this.currAnimation];
+      // console.log('hold last frame:', this.doesHoldLastFrame);
+
+      let lastAnim = this.queue[this.currAnimation - 1];
+      this.animations[lastAnim];
+
+      var idx = this.animations[lastAnim].length - 1;
+
+      let f = this.animations[lastAnim][idx];
+      return assets.atlases[this.atlasName].frames[f];
+    }
+
     if (this.queue.length === 0) {
       console.log('getFrame(): queue is empty');
       return null;
     }
 
     let aniName = this.queue[this.currAnimation];
+    // let aniName = this.queue[this.currAnimation];
     if (aniName === '_pause_' || this.done) {
       return null;
     }
 
-    // console.log(aniName, animations[aniName]);
-    let f = animations[aniName][this.frameIdx];
-    return assets.atlases['rat1'].frames[f];
+    let f = this.animations[aniName][this.frameIdx];
+    return assets.atlases[this.atlasName].frames[f];
+  },
+
+
+  /*
+    Once the animation is complete, it will return null
+    images unless this method is called.
+  */
+  holdLastFrame() {
+    this.doesHoldLastFrame = true;
   },
 
   /*
@@ -121,7 +139,9 @@ Animation.prototype = {
     this.frameIdx = 0;
     this.t = 0;
     this.done = false;
-    this.complete = Utils.noop;
+    this.doesHoldLastFrame = false;
+    this.complete = require('./Utils').noop;
+    return this;
   },
 
   /*
@@ -136,6 +156,12 @@ Animation.prototype = {
     count - {optional} number of times to play the animation
   */
   play(name, count) {
+
+    if (this.done) {
+      this.reset();
+      this.queue.push(name);
+    }
+
     if (typeof count === 'undefined') {
       this.queue.push(name);
     } else {

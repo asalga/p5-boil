@@ -120,13 +120,13 @@ module.exports = function(grunt) {
             filter: 'isFile'
           },
           // DATA
-          // {
-          //   expand: true,
-          //   cwd: `${src}/sketches/1/data`,
-          //   src: '**/*.json',
-          //   dest: `${app}/data/`,
-          //   filter: 'isFile'
-          // },
+          {
+            expand: true,
+            cwd: `${config.target}/data`,
+            src: '**/*.json',
+            dest: `${app}/data/`,
+            filter: 'isFile'
+          },
 
           // // JS
           // {
@@ -212,7 +212,7 @@ module.exports = function(grunt) {
       },
       scripts_dev: {
         files: [
-          `${config.target}/*.js`
+          `${config.target}/**/*.js`
         ],
         tasks: [
           'copy:dev',
