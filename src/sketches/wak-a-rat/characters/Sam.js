@@ -4,6 +4,7 @@ let Assets = require('../Assets');
 let Animation = require('../Animation');
 
 let instance;
+let nextBlinkTimer = 0;
 
 let animationSequences = {
   'blink': ['blink_0', 'blink_1', 'blink_2', 'blink_1', 'blink_0']
@@ -27,18 +28,8 @@ let Sam = function(cfg) {
     atlasName: 'sam'
   });
 
-  this.ani.play('blink')
-    .holdLastFrame();
-
   this.render = function() {
     this.p5.image(assets.get('data/images/sam/arms/images/arm_idle.png'), 224, 90);
-
-    let i = parseInt(this.p5.random(0, 500));
-    if (i === 0) {
-      console.log('blink');
-      this.ani.play('blink')
-        .holdLastFrame();
-    }
 
     let frame = this.ani.getFrame();
 
@@ -47,8 +38,26 @@ let Sam = function(cfg) {
     }
   };
 
+  /*
+   */
   this.update = function(dt) {
+    nextBlinkTimer -= dt;
+
+    if (nextBlinkTimer <= 0) {
+      nextBlinkTimer = this.getNextBlink();
+
+      this.ani.play('blink')
+        .holdLastFrame();
+    }
+
     this.ani && this.ani.update(dt);
+  };
+
+  /*
+    
+  */
+  this.getNextBlink = function() {
+    return this.p5.random(1, 3) * 1000;
   };
 };
 
