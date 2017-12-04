@@ -3,6 +3,7 @@
 /*
   TODO:
     - fix onComplete
+    - fix allowing animation to hold frame before starting
     - fix pause
     - figure out standard for queue
  */
@@ -16,7 +17,7 @@ let pausedTime = 0;
 /*
   cfg {
     p5,
-    atlasName
+    atlasName,
     animations
   }
 */
@@ -85,13 +86,19 @@ Animation.prototype = {
     Return null if the animation is paused
   */
   getFrame() {
-
-
     // console.log('this.done:', this.done);
     // console.log('aniName', aniName);
     // console.log('this.doesHoldLastFrame:', this.doesHoldLastFrame);
     // console.log('this.animations:', this.animations);
     // console.log('this.animations[aniName]:', this.animations[aniName]);
+
+    
+    if (this.started === false && this.doesHoldFirstFrame) {
+      let f = this.animations[this.currAnimation][0];
+      return assets.atlases[this.atlasName].frames[f];
+    }
+
+
 
     // If we are holding the last frame
     if (this.done && this.doesHoldLastFrame) {
@@ -107,9 +114,19 @@ Animation.prototype = {
       return assets.atlases[this.atlasName].frames[f];
     }
 
+console.log(this.doesHoldFirstFrame);
+    // 
+    if (this.queue.length === 0 && this.doesHoldFirstFrame) {
+      console.log(">>>>>>", currAnimation);
+      let aniName1 = this.queue[this.currAnimation];
+      let f = this.animations[aniName1][0];
+      return assets.atlases[this.atlasName].frames[f];
+    }
+
+    //
     if (this.queue.length === 0) {
-      console.log('getFrame(): queue is empty');
-      return null;
+    // console.log('getFrame(): queue is empty');
+    return null;
     }
 
     let aniName = this.queue[this.currAnimation];
@@ -129,6 +146,12 @@ Animation.prototype = {
   */
   holdLastFrame() {
     this.doesHoldLastFrame = true;
+    return this;
+  },
+
+  holdFirstFrame() {
+    this.doesHoldFirstFrame = true;
+    return this;
   },
 
   /*
@@ -136,11 +159,16 @@ Animation.prototype = {
   reset() {
     this.queue = [];
     this.currAnimation = 0;
+
     this.frameIdx = 0;
     this.t = 0;
     this.done = false;
-    this.doesHoldLastFrame = false;
+    this.started = false;
     this.complete = require('./Utils').noop;
+
+    this.doesHoldLastFrame = false;
+    this.doesHoldFirstFrame = false;
+
     return this;
   },
 
@@ -156,10 +184,10 @@ Animation.prototype = {
     count - {optional} number of times to play the animation
   */
   play(name, count) {
+    this.started = true;
 
     if (this.done) {
       this.reset();
-      this.queue.push(name);
     }
 
     if (typeof count === 'undefined') {
