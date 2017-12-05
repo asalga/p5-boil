@@ -39,8 +39,8 @@ function update(dt) {
 }
 
 function render() {
-  max.render();
   GameBoard.render();
+  max.render();
   sam.render();
 }
 
@@ -102,6 +102,7 @@ var newp5 = new p5(function(p) {
   */
   p.mousePressed = function() {
     GameBoard.hit({ x: p.mouseX, y: p.mouseY });
+    max.hit();
   };
 
   /*

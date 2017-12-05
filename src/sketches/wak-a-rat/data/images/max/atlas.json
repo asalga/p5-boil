@@ -1,0 +1,48 @@
+{"frames": [
+
+{
+	"filename": "hit_0.png",
+	"frame": {"x":2,"y":2,"w":210,"h":250},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":210,"h":250},
+	"sourceSize": {"w":210,"h":250},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "hit_1.png",
+	"frame": {"x":214,"y":2,"w":180,"h":250},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":180,"h":250},
+	"sourceSize": {"w":180,"h":250},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "hit_2.png",
+	"frame": {"x":2,"y":254,"w":180,"h":250},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":180,"h":250},
+	"sourceSize": {"w":180,"h":250},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "idle.png",
+	"frame": {"x":184,"y":254,"w":166,"h":250},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":166,"h":250},
+	"sourceSize": {"w":166,"h":250},
+	"pivot": {"x":0.5,"y":0.5}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "atlas.png",
+	"format": "RGBA8888",
+	"size": {"w":506,"h":506},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:77311b7514a112dad4179ac782e8d6c4:13ef9c297171774de8b4ca1ef1e67a2d:cbce6b53f0f49e0bf15173c25c41f876$"
+}
+}

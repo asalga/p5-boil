@@ -8,9 +8,7 @@ const Atlas = require('./Atlas');
 const Data = {
   images: [
     'data/images/background/background.png',
-    'data/images/max/head.png',
-    'data/images/max/hand.png',
-
+    
     'data/images/sam/arms/images/arm_idle.png'
     // font
   ],
@@ -24,6 +22,11 @@ const Data = {
       name: 'sam',
       atlas: 'data/images/sam/atlas.png',
       meta: 'data/images/sam/atlas.json'
+    },
+    {
+      name: 'max',
+      atlas: 'data/images/max/atlas.png',
+      meta: 'data/images/max/atlas.json'
     }
   ]
 };
