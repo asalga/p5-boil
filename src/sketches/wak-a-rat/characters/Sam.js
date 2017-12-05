@@ -27,11 +27,11 @@ let Sam = function(cfg) {
   instance = this;
 
   this.getNextBlink = function() {
-    return this.p5.random(2, 4) * 1000;
+    return this.p5.random(1, 4) * 1000;
   };
 
   this.getNextLickTimer = function() {
-    return this.p5.random(4, 7) * 1000;
+    return this.p5.random(2, 7) * 1000;
   };
 
   nextBlinkTimer = this.getNextBlink();
@@ -41,26 +41,24 @@ let Sam = function(cfg) {
   this.blinkAni = new Animation({
     p5: this.p5,
     animations: blinkSequence,
-    atlasName: 'sam'
+    atlasName: 'sam',
+    startFrame: 'blink_0',
+    endFrame: 'blink_0'
   });
-  this.startFrame('eyes_0');
-  
-  // this.blinkAni.holdFirstFrame();
 
-  // .holdFirstFrame()
-  // .holdLastFrame();
-
-  // this.lickAni = new Animation({
-  //   p5: this.p5,
-  //   animations: lickSequence,
-  //   atlasName: 'sam'
-  // });
+  this.lickAni = new Animation({
+    p5: this.p5,
+    animations: lickSequence,
+    atlasName: 'sam',
+    startFrame: 't_0',
+    endFrame: 't_0'
+  });
 
   this.render = function() {
     this.p5.image(assets.get('data/images/sam/arms/images/arm_idle.png'), 224, 90);
 
     this.blinkAni.getFrame() && this.p5.image(this.blinkAni.getFrame(), 443, 70);
-    // this.lickAni.getFrame() && this.p5.image(this.lickAni.getFrame(), 436, 110);
+    this.lickAni.getFrame() && this.p5.image(this.lickAni.getFrame(), 436, 110);
   };
 
   /*
@@ -71,22 +69,16 @@ let Sam = function(cfg) {
 
     if (nextBlinkTimer <= 0) {
       nextBlinkTimer = this.getNextBlink();
-      console.log('blink >>', nextBlinkTimer);
-
-      this.blinkAni.play('blink')
-        .holdLastFrame()
-        .holdFirstFrame();
+      this.blinkAni.play('blink');
     }
 
     if (nextLickTimer <= 0) {
       nextLickTimer = this.getNextLickTimer();
-      // this.lickAni.play('lick')
-        // .holdLastFrame()
-        // .holdFirstFrame();
+      this.lickAni.play('lick');
     }
 
     this.blinkAni && this.blinkAni.update(dt);
-    // this.lickAni && this.lickAni.update(dt);
+    this.lickAni && this.lickAni.update(dt);
   };
 };
 
