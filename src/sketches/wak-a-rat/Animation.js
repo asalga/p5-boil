@@ -1,5 +1,8 @@
 'use strict';
 
+
+// Convert module to closure!
+
 /*
   TODO:
     - fix onComplete
@@ -12,6 +15,7 @@ let assets;
 
 const msPerFrame = 150;
 let pausedTime = 0;
+let t = 0;
 
 /*
   cfg {
@@ -24,7 +28,10 @@ let pausedTime = 0;
 let Animation = function(cfg) {
   Object.assign(this, cfg || {});
   assets = new Assets(this.p5);
+
+  
   this.firstTime = true;
+
   this.reset();
 };
 
@@ -47,6 +54,7 @@ Animation.prototype = {
   update(dt) {
 
     if (this.done) {
+      this.isPlaying = false;
       return;
     }
 
@@ -70,10 +78,11 @@ Animation.prototype = {
       aniName();
     }
 
-    this.t += dt;
-    if (aniName !== '_pause_' && this.t >= msPerFrame) {
+    // this.t += dt;
+    t += dt;
+    if (aniName !== '_pause_' && t >= msPerFrame) {
 
-      this.t -= msPerFrame;
+      t -= msPerFrame;
       this.frameIdx++;
 
       // reached the end of the animation
@@ -90,7 +99,7 @@ Animation.prototype = {
     // If the animation playing hasn't started yet, but we
     // still need to show a frame, so the animation image
     // doesn't just 'jump' into existance
-    if ( !this.started && this.startFrame && this.firstTime) {
+    if (!this.started && this.startFrame && this.firstTime) {
       return assets.atlases[this.atlasName].frames[this.startFrame];
     }
 
@@ -119,11 +128,12 @@ Animation.prototype = {
   /*
    */
   reset() {
+    console.log('Reset:', this.name);
     this.queue = [];
     this.currAnimation = 0;
-
+    this.isPlaying = false;
     this.frameIdx = 0;
-    this.t = 0;
+    t = 0;
     this.done = false;
     this.started = false;
     this.complete = require('./Utils').noop;
@@ -143,8 +153,13 @@ Animation.prototype = {
     count - {optional} number of times to play the animation
   */
   play(name, count) {
-    this.started = true;
+    console.log("Play:", this.name);
 
+    this.started = true;
+    this.isPlaying = true;
+
+    // If the animation is already finished, we'll need to reset it so 
+    // it can replay.
     if (this.done) {
       this.reset();
     }
@@ -166,6 +181,7 @@ Animation.prototype = {
   /*
    */
   pause(timeInMS) {
+    console.log('pause:', this.name);
     if (timeInMS > 0) {
       this.queue.push('_pause_');
       pausedTime = timeInMS;
@@ -176,10 +192,13 @@ Animation.prototype = {
   /*
    */
   stop() {
-    this.t = 0;
+    console.log('stop:', this.name);
+    t = 0;
+    //this.t = 0;
     this.frameIdx = 0;
     this.currAnimation = 0;
     this.queue = [];
+    this.isPlaying = false;
     return this;
   },
 };

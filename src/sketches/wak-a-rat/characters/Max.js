@@ -17,6 +17,7 @@ let Max = function(cfg) {
 
   assets = new Assets(this.p5);
   this.hitAni = new Animation({
+    name: 'max hit',
     p5: this.p5,
     animations: hitSequence,
     atlasName: 'max',
@@ -30,7 +31,9 @@ let Max = function(cfg) {
   };
 
   this.hit = function() {
-    this.hitAni.play('hit');
+    if (this.hitAni.isPlaying === false) {
+      this.hitAni.play('hit');
+    }
   };
 
   this.update = function(dt) {
