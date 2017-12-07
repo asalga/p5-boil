@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>3.7.1</string>
         <key>fileName</key>
-        <string>/Users/andor/Desktop/p5-boil/src/sketches/wak-a-rat/data/images/max/spritesheet.tps</string>
+        <string>/Users/andor/Desktop/p5-boil/src/sketches/wak-a-rat/data/images/max/atlas.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
