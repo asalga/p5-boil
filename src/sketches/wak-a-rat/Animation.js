@@ -1,8 +1,5 @@
 'use strict';
 
-
-// Convert module to closure!
-
 /*
   TODO:
     - fix onComplete
@@ -15,7 +12,6 @@ let assets;
 
 const msPerFrame = 150;
 let pausedTime = 0;
-let t = 0;
 
 /*
   cfg {
@@ -27,11 +23,8 @@ let t = 0;
 */
 let Animation = function(cfg) {
   Object.assign(this, cfg || {});
-  assets = new Assets(this.p5);
-
-  
+  assets = new Assets(this.p5);  
   this.firstTime = true;
-
   this.reset();
 };
 
@@ -79,10 +72,10 @@ Animation.prototype = {
     }
 
     // this.t += dt;
-    t += dt;
-    if (aniName !== '_pause_' && t >= msPerFrame) {
+    this.t += dt;
+    if (aniName !== '_pause_' && this.t >= msPerFrame) {
 
-      t -= msPerFrame;
+      this.t -= msPerFrame;
       this.frameIdx++;
 
       // reached the end of the animation
@@ -133,7 +126,7 @@ Animation.prototype = {
     this.currAnimation = 0;
     this.isPlaying = false;
     this.frameIdx = 0;
-    t = 0;
+    this.t = 0;
     this.done = false;
     this.started = false;
     this.complete = require('./Utils').noop;
@@ -193,8 +186,7 @@ Animation.prototype = {
    */
   stop() {
     console.log('stop:', this.name);
-    t = 0;
-    //this.t = 0;
+    this.t = 0;
     this.frameIdx = 0;
     this.currAnimation = 0;
     this.queue = [];
