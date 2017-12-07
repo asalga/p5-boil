@@ -38,10 +38,12 @@ function update(dt) {
   max.update(dt);
 }
 
-function render() {
-  GameBoard.render();
+function render() {  
+  _p5.image(assets.get('data/images/background/bk.png'), 0, 0);
+  _p5.image(assets.get('data/images/background/board.png'), 0, 238);
   max.render();
   sam.render();
+  GameBoard.render();
 }
 
 function drawMouseCoords() {
@@ -63,8 +65,6 @@ function drawFPS() {
   _p5.bitmapText(`${GameBoard.getNumHits()} - ${GameBoard.getNumMisses()}`, 58, 38);
   _p5.bitmapText(`${fps}`, 20, 100);
 }
-
-
 
 
 var newp5 = new p5(function(p) {
@@ -130,8 +130,7 @@ var newp5 = new p5(function(p) {
 
     update(delta);
 
-    // background
-    p.image(assets.get('data/images/background/background.png'), 0, 0);
+    
 
     render();
 

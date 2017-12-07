@@ -7,9 +7,11 @@ const Atlas = require('./Atlas');
 
 const Data = {
   images: [
-    'data/images/background/background.png',
+    'data/images/background/bk.png',
+    'data/images/background/board.png',
     
-    'data/images/sam/arms/images/arm_idle.png'
+    'data/images/sam/arms/images/arm_idle.png',
+    'data/images/sam/sam.png'
     // font
   ],
 

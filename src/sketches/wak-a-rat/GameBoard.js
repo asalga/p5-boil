@@ -108,6 +108,7 @@ let Board = (function() {
   /*
    */
   this.render = function() {
+    // this.p5.image(assets.get('data/images/background/board.png'), 0, 238);
     ratsOut.forEach(r => r.render());
 
     // this.p5.fill(33, 66, 99, 200);

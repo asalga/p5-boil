@@ -55,6 +55,7 @@ let Sam = function(cfg) {
   });
 
   this.render = function() {
+    this.p5.image(assets.get('data/images/sam/sam.png'), 336, 3);
     this.p5.image(assets.get('data/images/sam/arms/images/arm_idle.png'), 224, 90);
 
     this.blinkAni.getFrame() && this.p5.image(this.blinkAni.getFrame(), 443, 70);

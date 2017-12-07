@@ -16,7 +16,7 @@ let pausedTime = 0;
 /*
   cfg {
     {Object} p5
-    animations
+    {Array} animations - array
     {String} atlasName
     {String} startFrame
   }
