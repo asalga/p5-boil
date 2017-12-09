@@ -22,6 +22,7 @@ let pausedTime = 0;
   }
 */
 let Animation = function(cfg) {
+  console.log('animation ctor');
   Object.assign(this, cfg || {});
   assets = new Assets(this.p5);  
   this.firstTime = true;
@@ -121,7 +122,7 @@ Animation.prototype = {
   /*
    */
   reset() {
-    console.log('Reset:', this.name);
+    console.log('reset:', this.name);
     this.queue = [];
     this.currAnimation = 0;
     this.isPlaying = false;
@@ -137,6 +138,7 @@ Animation.prototype = {
   /*
    */
   onComplete(f) {
+    console.log('onComplete');
     this.complete = f;
     return this;
   },
@@ -146,7 +148,7 @@ Animation.prototype = {
     count - {optional} number of times to play the animation
   */
   play(name, count) {
-    console.log("Play:", this.name);
+    console.log("play:", this.name);
 
     this.started = true;
     this.isPlaying = true;
