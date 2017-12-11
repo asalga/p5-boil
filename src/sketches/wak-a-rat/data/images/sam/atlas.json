@@ -29,29 +29,29 @@
 },
 {
 	"filename": "t_0.png",
-	"frame": {"x":44,"y":30,"w":68,"h":30},
+	"frame": {"x":44,"y":30,"w":44,"h":30},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":68,"h":30},
-	"sourceSize": {"w":68,"h":30},
+	"spriteSourceSize": {"x":0,"y":0,"w":44,"h":30},
+	"sourceSize": {"w":44,"h":30},
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
 	"filename": "t_1.png",
-	"frame": {"x":2,"y":62,"w":68,"h":30},
+	"frame": {"x":2,"y":62,"w":44,"h":30},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":68,"h":30},
-	"sourceSize": {"w":68,"h":30},
+	"spriteSourceSize": {"x":0,"y":0,"w":44,"h":30},
+	"sourceSize": {"w":44,"h":30},
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
 	"filename": "t_2.png",
-	"frame": {"x":2,"y":94,"w":68,"h":30},
+	"frame": {"x":48,"y":62,"w":44,"h":30},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":68,"h":30},
-	"sourceSize": {"w":68,"h":30},
+	"spriteSourceSize": {"x":0,"y":0,"w":44,"h":30},
+	"sourceSize": {"w":44,"h":30},
 	"pivot": {"x":0.5,"y":0.5}
 }],
 "meta": {
@@ -59,8 +59,8 @@
 	"version": "1.0",
 	"image": "atlas.png",
 	"format": "RGBA8888",
-	"size": {"w":126,"h":126},
+	"size": {"w":94,"h":94},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:c933035d631d2351b3a068c84c60236e:ce826c2be0ec80f3b734764cef8580ad:cbce6b53f0f49e0bf15173c25c41f876$"
+	"smartupdate": "$TexturePacker:SmartUpdate:4eb5be6f396dfa99a40863765f807a0f:394e8055e70c530df1f396afd684892d:cbce6b53f0f49e0bf15173c25c41f876$"
 }
 }

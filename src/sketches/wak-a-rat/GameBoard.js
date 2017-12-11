@@ -30,7 +30,7 @@ let ratSlotCoords = [
 
 let instance;
 
-let Board = (function() {
+(function() {
 
   let freeSlots = [2, 4, 0, 1, 3],
     ratsOut = [],
@@ -102,8 +102,9 @@ let Board = (function() {
     numHits++;
   };
 
-  this.getNumMisses = function() { return numMisses };
-  this.getNumHits = function() { return numHits };
+
+  this.getNumMisses = function() { return numMisses; };
+  this.getNumHits = function() { return numHits; };
 
   /*
    */

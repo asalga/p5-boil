@@ -3,6 +3,8 @@
   Wak-a-Rat
   Andor Saga
   Oct 2017
+
+  fix jshint issues
 */
 
 const KEY_A = 65;

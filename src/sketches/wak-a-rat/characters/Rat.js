@@ -119,7 +119,7 @@ Rat.prototype = {
   },
 
   update(dt) {
-    this.ani && this.ani.update(dt);
+    this.ani.update(dt);
   },
 
   position(p) {

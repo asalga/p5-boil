@@ -1,4 +1,6 @@
-let Assets = require('../Assets');
+'use strict';
+
+// let Assets = require('../Assets');
 let Animation = require('../Animation');
 
 let instance,
@@ -15,7 +17,6 @@ let Max = function(cfg) {
   }
   instance = this;
 
-  assets = new Assets(this.p5);
   this.hitAni = new Animation({
     name: 'max hit',
     p5: this.p5,

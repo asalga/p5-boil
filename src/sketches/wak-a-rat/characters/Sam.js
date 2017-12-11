@@ -58,8 +58,19 @@ let Sam = function(cfg) {
     this.p5.image(assets.get('data/images/sam/sam.png'), 336, 3);
     this.p5.image(assets.get('data/images/sam/arms/images/arm_idle.png'), 224, 90);
 
-    this.blinkAni.getFrame() && this.p5.image(this.blinkAni.getFrame(), 443, 70);
-    this.lickAni.getFrame() && this.p5.image(this.lickAni.getFrame(), 436, 110);
+
+    let blinkFrame = this.blinkAni.getFrame();
+    if (blinkFrame) {
+      this.p5.image(blinkFrame, 443, 70);
+    }
+
+    let lickFrame = this.lickAni.getFrame();
+    if (lickFrame) {
+      this.p5.image(this.lickAni.getFrame(), 454, 110);
+
+      //this.p5.mouseX, this.p5.mouseY);
+      //448, 120);
+    }
   };
 
   /*
@@ -78,8 +89,13 @@ let Sam = function(cfg) {
       this.lickAni.play('lick');
     }
 
-    this.blinkAni && this.blinkAni.update(dt);
-    this.lickAni && this.lickAni.update(dt);
+    // let blink_ = this.blinkAni;
+    // if(blink_){
+    this.blinkAni.update(dt);
+    // }
+
+    // this.lickAni && 
+    this.lickAni.update(dt);
   };
 };
 

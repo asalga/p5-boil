@@ -1,3 +1,4 @@
+'use strict';
 /*
   Andor Saga
   Oct 2017

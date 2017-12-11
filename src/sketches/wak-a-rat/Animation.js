@@ -148,7 +148,7 @@ Animation.prototype = {
     count - {optional} number of times to play the animation
   */
   play(name, count) {
-    console.log("play:", this.name);
+    console.log('play:', this.name);
 
     this.started = true;
     this.isPlaying = true;
