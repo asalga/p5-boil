@@ -11,6 +11,13 @@ const Data = {
     'data/images/background/board.png',
     
     'data/images/sam/arms/images/arm_idle.png',
+    'data/images/sam/arms/images/final_center.png',
+    'data/images/sam/arms/images/final_lower_left.png',
+    'data/images/sam/arms/images/final_lower_right.png',
+    'data/images/sam/arms/images/final_upper_left.png',
+    
+    
+
     'data/images/sam/sam.png'
     // font
   ],

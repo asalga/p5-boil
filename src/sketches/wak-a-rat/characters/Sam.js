@@ -56,7 +56,19 @@ let Sam = function(cfg) {
 
   this.render = function() {
     this.p5.image(assets.get('data/images/sam/sam.png'), 336, 3);
-    this.p5.image(assets.get('data/images/sam/arms/images/arm_idle.png'), 224, 90);
+    //this.p5.image(assets.get('data/images/sam/arms/images/arm_idle.png'), 224, 90);
+
+
+    // FInal coords
+    // this.p5.image(assets.get('data/images/sam/arms/images/final_center.png'), 198, 119);
+    // this.p5.image(assets.get('data/images/sam/arms/images/final_lower_left.png'), 61, 125);
+    // this.p5.image(assets.get('data/images/sam/arms/images/final_lower_right.png'),233, 132);// this.p5.mouseX, this.p5.mouseY);
+    // this.p5.image(assets.get('data/images/sam/arms/images/final_upper_right.png'), 254, 115);
+    this.p5.image(assets.get('data/images/sam/arms/images/final_upper_left.png'), 158, 133);
+    
+    
+
+
 
 
     let blinkFrame = this.blinkAni.getFrame();
