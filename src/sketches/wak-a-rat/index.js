@@ -103,7 +103,6 @@ var newp5 = new p5(function(p) {
   */
   p.mousePressed = function() {
     GameBoard.hit({ x: p.mouseX, y: p.mouseY });
-    //max.hit();
   };
 
   /*
@@ -113,6 +112,11 @@ var newp5 = new p5(function(p) {
     if (p.keyCode >= KB._0 && p.keyCode <= KB._7) {
       let idx = p.keyCode - 48;
       sam.hit(idx);
+      
+      if(idx === 6){
+        max.hit();
+      }
+
       return;
     }
 

@@ -28,7 +28,7 @@ let Max = function(cfg) {
 
   this.render = function() {
     let frame = this.hitAni.getFrame();
-    frame && this.p5.image(frame, 0, 70);
+    frame && this.p5.image(frame, 0, 68);
   };
 
   this.hit = function() {

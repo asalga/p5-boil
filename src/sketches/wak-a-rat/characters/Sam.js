@@ -15,6 +15,9 @@ let nextLickTimer,
     'lick': ['t_0', 't_1', 't_2', 't_1', 't_0']
   };
 
+let armFrame = 'idle';
+let hitTimer = 0;
+
 //
 let armData = {
   'idle': {
@@ -59,8 +62,6 @@ let armData = {
 */
 let Sam = function(cfg) {
   Object.assign(this, cfg || {});
-
-  this.lastHit = 'idle';
 
   if (instance) {
     return instance;
@@ -108,46 +109,34 @@ let Sam = function(cfg) {
       this.p5.image(this.lickAni.getFrame(), 454, 110);
     }
 
-    if (this.lastHit) {
-      let t = this.lastHit;
-      let img = assets.get(armData[t].img);
-      this.p5.image(img, armData[t].x, armData[t].y);
+    let data = armData[armFrame];
+    if (data) {
+      let img = assets.get(data.img);
+      this.p5.image(img, data.x, data.y);
     }
+
   };
 
   /*
    */
   this.hit = function(idx) {
-    switch (idx) {
-      case 0:
-        this.lastHit = 'idle';
-        break;
-      case 1:
-        this.lastHit = 'upper_left';
-        break;
-      case 2:
-        this.lastHit = 'upper_right';
-        break;
-      case 3:
-        this.lastHit = 'center';
-        break;
-      case 4:
-        this.lastHit = 'lower_left';
-        break;
-      case 5:
-        this.lastHit = 'lower_right';
-        break;
-      case 6:
-        this.lastHit = 'max';
-        break;
-    }
-  }
+    const list = ['idle', 'upper_left', 'upper_right',
+      'center', 'lower_left', 'lower_right', 'max'
+    ];
+    hitTimer = 200;
+    armFrame = list[idx];
+  };
 
   /*
    */
   this.update = function(dt) {
     nextBlinkTimer -= dt;
     nextLickTimer -= dt;
+    hitTimer -= dt;
+
+    if (hitTimer <= 0) {
+      armFrame = 'idle';
+    }
 
     if (nextBlinkTimer <= 0) {
       nextBlinkTimer = this.getNextBlink();

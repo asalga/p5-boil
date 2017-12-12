@@ -22,7 +22,7 @@ let pausedTime = 0;
   }
 */
 let Animation = function(cfg) {
-  console.log('animation ctor');
+  // console.log('animation ctor');
   Object.assign(this, cfg || {});
   assets = new Assets(this.p5);  
   this.firstTime = true;
@@ -105,7 +105,7 @@ Animation.prototype = {
 
     //
     if (this.queue.length === 0) {
-      console.log('getFrame(): queue is empty');
+      // console.log('getFrame(): queue is empty');
       return null;
     }
 
@@ -122,7 +122,7 @@ Animation.prototype = {
   /*
    */
   reset() {
-    console.log('reset:', this.name);
+    // console.log('reset:', this.name);
     this.queue = [];
     this.currAnimation = 0;
     this.isPlaying = false;
@@ -138,7 +138,7 @@ Animation.prototype = {
   /*
    */
   onComplete(f) {
-    console.log('onComplete');
+    // console.log('onComplete');
     this.complete = f;
     return this;
   },
@@ -148,7 +148,7 @@ Animation.prototype = {
     count - {optional} number of times to play the animation
   */
   play(name, count) {
-    console.log('play:', this.name);
+    // console.log('play:', this.name);
 
     this.started = true;
     this.isPlaying = true;
@@ -176,7 +176,7 @@ Animation.prototype = {
   /*
    */
   pause(timeInMS) {
-    console.log('pause:', this.name);
+    // console.log('pause:', this.name);
     if (timeInMS > 0) {
       this.queue.push('_pause_');
       pausedTime = timeInMS;
@@ -187,7 +187,7 @@ Animation.prototype = {
   /*
    */
   stop() {
-    console.log('stop:', this.name);
+    // console.log('stop:', this.name);
     this.t = 0;
     this.frameIdx = 0;
     this.currAnimation = 0;
