@@ -20,37 +20,37 @@ let armData = {
   'idle': {
     x: 224,
     y: 90,
-    img: 'data/images/sam/arms/images/final_arm_idle.png'
+    img: 'data/images/sam/arms/images/idle.png'
   },
   'max': {
     x: 39,
     y: 124,
-    img: 'data/images/sam/arms/images/final_max.png'
+    img: 'data/images/sam/arms/images/max.png'
   },
   'center': {
     x: 198,
     y: 119,
-    img: 'data/images/sam/arms/images/final_center.png'
+    img: 'data/images/sam/arms/images/center.png'
   },
   'lower_left': {
     x: 61,
     y: 125,
-    img: 'data/images/sam/arms/images/final_lower_left.png'
+    img: 'data/images/sam/arms/images/lower_left.png'
   },
   'lower_right': {
     x: 233,
     y: 132,
-    img: 'data/images/sam/arms/images/final_lower_right.png'
+    img: 'data/images/sam/arms/images/lower_right.png'
   },
   'upper_right': {
     x: 254,
     y: 115,
-    img: 'data/images/sam/arms/images/final_upper_right.png'
+    img: 'data/images/sam/arms/images/upper_right.png'
   },
   'upper_left': {
     x: 157,
     y: 133,
-    img: 'data/images/sam/arms/images/final_upper_left.png'
+    img: 'data/images/sam/arms/images/upper_left.png'
   }
 };
 

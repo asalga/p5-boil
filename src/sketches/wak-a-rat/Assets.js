@@ -10,13 +10,13 @@ const Data = {
     'data/images/background/bk.png',
     'data/images/background/board.png',
 
-    'data/images/sam/arms/images/final_arm_idle.png',
-    'data/images/sam/arms/images/final_max.png',
-    'data/images/sam/arms/images/final_center.png',
-    'data/images/sam/arms/images/final_lower_left.png',
-    'data/images/sam/arms/images/final_lower_right.png',
-    'data/images/sam/arms/images/final_upper_left.png',
-    'data/images/sam/arms/images/final_upper_right.png',
+    'data/images/sam/arms/images/idle.png',
+    'data/images/sam/arms/images/max.png',
+    'data/images/sam/arms/images/center.png',
+    'data/images/sam/arms/images/upper_left.png',
+    'data/images/sam/arms/images/upper_right.png',
+    'data/images/sam/arms/images/lower_left.png',
+    'data/images/sam/arms/images/lower_right.png',
 
     'data/images/sam/sam.png'
     // font
