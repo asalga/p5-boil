@@ -15,11 +15,52 @@ let nextLickTimer,
     'lick': ['t_0', 't_1', 't_2', 't_1', 't_0']
   };
 
+//
+let armData = {
+  'idle': {
+    x: 224,
+    y: 90,
+    img: 'data/images/sam/arms/images/final_arm_idle.png'
+  },
+  'max': {
+    x: 39,
+    y: 124,
+    img: 'data/images/sam/arms/images/final_max.png'
+  },
+  'center': {
+    x: 198,
+    y: 119,
+    img: 'data/images/sam/arms/images/final_center.png'
+  },
+  'lower_left': {
+    x: 61,
+    y: 125,
+    img: 'data/images/sam/arms/images/final_lower_left.png'
+  },
+  'lower_right': {
+    x: 233,
+    y: 132,
+    img: 'data/images/sam/arms/images/final_lower_right.png'
+  },
+  'upper_right': {
+    x: 254,
+    y: 115,
+    img: 'data/images/sam/arms/images/final_upper_right.png'
+  },
+  'upper_left': {
+    x: 157,
+    y: 133,
+    img: 'data/images/sam/arms/images/final_upper_left.png'
+  }
+};
+
 /*
 
 */
 let Sam = function(cfg) {
   Object.assign(this, cfg || {});
+
+  this.lastHit = 'idle';
 
   if (instance) {
     return instance;
@@ -56,20 +97,6 @@ let Sam = function(cfg) {
 
   this.render = function() {
     this.p5.image(assets.get('data/images/sam/sam.png'), 336, 3);
-    //this.p5.image(assets.get('data/images/sam/arms/images/arm_idle.png'), 224, 90);
-
-
-    // FInal coords
-    // this.p5.image(assets.get('data/images/sam/arms/images/final_center.png'), 198, 119);
-    // this.p5.image(assets.get('data/images/sam/arms/images/final_lower_left.png'), 61, 125);
-    // this.p5.image(assets.get('data/images/sam/arms/images/final_lower_right.png'),233, 132);// this.p5.mouseX, this.p5.mouseY);
-    // this.p5.image(assets.get('data/images/sam/arms/images/final_upper_right.png'), 254, 115);
-    this.p5.image(assets.get('data/images/sam/arms/images/final_upper_left.png'), 158, 133);
-    
-    
-
-
-
 
     let blinkFrame = this.blinkAni.getFrame();
     if (blinkFrame) {
@@ -79,11 +106,42 @@ let Sam = function(cfg) {
     let lickFrame = this.lickAni.getFrame();
     if (lickFrame) {
       this.p5.image(this.lickAni.getFrame(), 454, 110);
+    }
 
-      //this.p5.mouseX, this.p5.mouseY);
-      //448, 120);
+    if (this.lastHit) {
+      let t = this.lastHit;
+      let img = assets.get(armData[t].img);
+      this.p5.image(img, armData[t].x, armData[t].y);
     }
   };
+
+  /*
+   */
+  this.hit = function(idx) {
+    switch (idx) {
+      case 0:
+        this.lastHit = 'idle';
+        break;
+      case 1:
+        this.lastHit = 'upper_left';
+        break;
+      case 2:
+        this.lastHit = 'upper_right';
+        break;
+      case 3:
+        this.lastHit = 'center';
+        break;
+      case 4:
+        this.lastHit = 'lower_left';
+        break;
+      case 5:
+        this.lastHit = 'lower_right';
+        break;
+      case 6:
+        this.lastHit = 'max';
+        break;
+    }
+  }
 
   /*
    */
@@ -101,12 +159,7 @@ let Sam = function(cfg) {
       this.lickAni.play('lick');
     }
 
-    // let blink_ = this.blinkAni;
-    // if(blink_){
     this.blinkAni.update(dt);
-    // }
-
-    // this.lickAni && 
     this.lickAni.update(dt);
   };
 };

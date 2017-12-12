@@ -7,10 +7,9 @@
   fix jshint issues
 */
 
-const KEY_A = 65;
-const KEY_D = 68;
-
 let p5 = require('p5');
+
+let KB = require('./KB');
 let setupBitmapFont = require('./p5BitmapFont');
 let Assets = require('./Assets');
 let GameBoard = require('./GameBoard').instance;
@@ -40,7 +39,7 @@ function update(dt) {
   max.update(dt);
 }
 
-function render() {  
+function render() {
   _p5.image(assets.get('data/images/background/bk.png'), 0, 0);
   _p5.image(assets.get('data/images/background/board.png'), 0, 238);
   max.render();
@@ -104,17 +103,24 @@ var newp5 = new p5(function(p) {
   */
   p.mousePressed = function() {
     GameBoard.hit({ x: p.mouseX, y: p.mouseY });
-    max.hit();
+    //max.hit();
   };
 
   /*
    */
   p.keyPressed = function() {
+
+    if (p.keyCode >= KB._0 && p.keyCode <= KB._7) {
+      let idx = p.keyCode - 48;
+      sam.hit(idx);
+      return;
+    }
+
     switch (p.keyCode) {
-      case KEY_D:
+      case KB._D:
         debug = !debug;
         break;
-      case KEY_A:
+      case KB._A:
         GameBoard.pushOutRat();
         break;
     }
@@ -131,9 +137,6 @@ var newp5 = new p5(function(p) {
     let delta = time1 - time2;
 
     update(delta);
-
-    
-
     render();
 
     drawMouseCoords();
@@ -143,28 +146,9 @@ var newp5 = new p5(function(p) {
   };
 });
 
-function drawArm(key) {
-  // let k = armPositions[key];
-  //  _p5.image(k.img, k.x, k.y);
-}
-
-// armPositions.idle = {
-//   x: 224,
-//   y: 90,
-//   img: p.loadImage('data/arm_idle.png')
-// }
-
-// armPositions.slot3 = {
-//   x: 200,
-//   y: 125,
-//   img: p.loadImage('data/arm_slot3.png')
-// }
-
 // p.image(rat, hitBoxPositions[0][0] - 14, hitBoxPositions[0][1] - 90);
 // if (_p5.keyIsDown(51)) {
 //   drawArm('slot3');
 // } else {
 //   drawArm('idle');
 // }
-
-// Sam.play('arm_slot3')
