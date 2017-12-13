@@ -96,10 +96,13 @@ let Sam = function(cfg) {
     endFrame: 't_0'
   });
 
-  this.render = function() {
+  /*
+    Need to make sure rats are rendered above the 
+    body but below the arm.
+  */
+  this.renderBody = function(){
     this.p5.image(assets.get('data/images/sam/sam.png'), 336, 3);
-
-    let blinkFrame = this.blinkAni.getFrame();
+     let blinkFrame = this.blinkAni.getFrame();
     if (blinkFrame) {
       this.p5.image(blinkFrame, 443, 70);
     }
@@ -108,22 +111,21 @@ let Sam = function(cfg) {
     if (lickFrame) {
       this.p5.image(this.lickAni.getFrame(), 454, 110);
     }
+  };
 
+  this.renderArm = function(){
     let data = armData[armFrame];
     if (data) {
       let img = assets.get(data.img);
       this.p5.image(img, data.x, data.y);
     }
-
   };
 
   /*
    */
   this.hit = function(idx) {
-    const list = ['idle', 'upper_left', 'upper_right',
-      'center', 'lower_left', 'lower_right', 'max'
-    ];
-    hitTimer = 200;
+    const list = ['upper_left', 'lower_left', 'center', 'upper_right', 'lower_right', 'max'];
+    hitTimer = 200100;
     armFrame = list[idx];
   };
 

@@ -7,15 +7,18 @@
 let Rat = require('./characters/Rat');
 let Utils = require('./Utils');
 
+// make game more difficult by reducing size of hitboxes?
 const HitboxWidth = 80;
 const HitBoxHeight = 26;
 
+
 let hitBoxPositions = [
-  { x: 164, y: 260 }, // top
-  { x: 70, y: 310 }, // bottom left
-  { x: 210, y: 300 }, // center
-  { x: 344, y: 286 }, // far right
-  { x: 250, y: 340 } // bottom
+  { x: 164, y: 260, w: HitboxWidth, h: HitBoxHeight }, // top
+  { x: 70, y: 310, w: HitboxWidth, h: HitBoxHeight }, // bottom left
+  { x: 210, y: 300, w: HitboxWidth, h: HitBoxHeight }, // center
+  { x: 344, y: 286, w: HitboxWidth, h: HitBoxHeight }, // far right
+  { x: 250, y: 340, w: HitboxWidth, h: HitBoxHeight }, // bottom
+  { x: 30, y: 200, w: 120, h: 100 } // max
 ];
 
 // these coordinates are the slot positions offset
@@ -30,6 +33,11 @@ let ratSlotCoords = [
 
 let instance;
 
+/*
+  ratsIn - array of rats that are 'inside' the game board
+  ratsOut - array of rats that are 'outside'/visible
+  freeSlots - 
+*/
 (function() {
 
   let freeSlots = [2, 4, 0, 1, 3],
@@ -45,32 +53,37 @@ let instance;
   instance = this;
 
   /*
-    p - point object with x and y properties
+    {Object} p - point object with properties x & y
+
+    order of slots indices in quinqunx ranges from 0-5
+    the 'Max' slot is index 5.
+
+    5     0       3
+
+              2
+
+          1       4
+
+    return {Number} from -1 to 5 inclusive
   */
   this.hit = function(p) {
+    let retIdx = -1;
 
-    hitBoxPositions.forEach((c, i) => {
-      let slotID = i;
-      let rect = {
-        x: c.x,
-        y: c.y,
-        w: HitboxWidth,
-        h: HitBoxHeight
-      };
+    hitBoxPositions.forEach((rectangle, slotID) => {
 
-      if (Utils.pointInRect(p, rect)) {
+      if (Utils.pointInRect(p, rectangle)) {
 
         // We hit one of the slots, is it occupied?
-        ratsOut.forEach((r, i) => {
-          console.log(r.slotID, slotID);
-          if (r.slotID === slotID) {
-            r.hit();
+        ratsOut.forEach((rat) => {
+          if (rat.slotID === slotID) {
+            rat.hit();
           }
         });
-        return i;
+        retIdx = slotID;
       }
     });
-    return -1;
+
+    return retIdx;
   };
 
   /*
@@ -102,21 +115,32 @@ let instance;
     numHits++;
   };
 
-
   this.getNumMisses = function() { return numMisses; };
   this.getNumHits = function() { return numHits; };
 
   /*
+    Depending on where the user hit, we'll need 
+    to adjust rendering order
+
+    A = arm
+    _ = rat hit that we omit rendering
+
+    0: _  A, 2, 4, 3, 1
+    1: 0, A, 2, 4, 3, _
+    2: 0, A, _  4, 3, 1
+    3: 0, A, 2, 4, _, 1
+    4: 0, 2, A, _, 3, 1
+    5: A, 0, 2, 4, 3, 1
+
+
+
    */
-  this.render = function() {
-    // this.p5.image(assets.get('data/images/background/board.png'), 0, 238);
-    ratsOut.forEach(r => r.render());
+  this.renderAboveArm = function() {
+    ratsOut.forEach(rat => rat.render());
 
     // this.p5.fill(33, 66, 99, 200);
     // this.p5.stroke(255);
-    // hitBoxPositions.forEach(b => {
-      // this.p5.rect(b.x, b.y, HitboxWidth, HitBoxHeight);
-    // });
+    // hitBoxPositions.forEach(r => this.p5.rect(r.x, r.y, r.w, r.h));
     // this.p5.text("in: " + ratsIn.length, 100, 100);
     // this.p5.text("out: " + ratsOut.length, 100, 140);
     // this.p5.text(numHits, 30, 30);
@@ -125,24 +149,30 @@ let instance;
 
   /*
    */
+  this.renderBelowArm = function() {
+    ratsOut.forEach(rat => rat.render());
+  };
+
+  /*
+    Request that a rat enter the game.
+   */
   this.pushOutRat = function() {
+
+    // If all the slots are occupied, we can't do anything
     if (freeSlots.length === 0) {
       console.log('no free slots!');
       return;
     }
 
-    let rat;
-    let slotIdx = freeSlots.pop();
+    // Try to get a rat that is inside the gameboard
+    let rat = ratsIn.pop();
 
-    // First let's see if there are any ratsIn in the queue.
-    if (ratsIn.length > 0) {
-      rat = ratsIn.pop();
-    }
-    // No ratsOut in the queue, so create a new one.
-    else {
+    // If no rats in the queue, create a new one
+    if (rat === undefined) {
       rat = new Rat({ p5: this.p5, name: 'rat' });
     }
 
+    let slotIdx = freeSlots.pop();
     ratsOut.push(rat);
     rat.assignSlot(slotIdx);
     rat.position(ratSlotCoords[slotIdx]);

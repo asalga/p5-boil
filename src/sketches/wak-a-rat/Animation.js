@@ -5,12 +5,13 @@
     - fix onComplete
     - fix pause
     - figure out standard for queue
+    - make sure rendering of rats overlaps properly
  */
 
 let Assets = require('./Assets');
 let assets;
 
-const msPerFrame = 150;
+const msPerFrame = 5000;
 let pausedTime = 0;
 
 /*
