@@ -4,9 +4,8 @@
   Andor Saga
   Oct 2017
 
-  - fix jshint issues
-  - add pause
-  - add hitboxes
+  - add pause copy
+
 */
 
 let p5 = require('p5');
@@ -62,6 +61,12 @@ function render() {
   GameBoard.render(sam);
 }
 
+function renderOverlay() {
+  _p5.noStroke();
+  _p5.fill(0, 120)
+  _p5.rect(0, 0, _p5.width, _p5.height);
+}
+
 function drawMouseCoords() {
   if (!debug) {
     return;
@@ -93,8 +98,10 @@ var newp5 = new p5(function(p) {
 
   p.setup = function setup() {
     p.createCanvas(640, 400);
-    GameBoard.p5 = p;
     p.bitmapTextFont(bitmapFont);
+    p.cursor(p.CROSS);
+
+    GameBoard.p5 = p;
 
     max = new Max({ p5: p });
     sam = new Sam({ p5: p });
@@ -119,7 +126,7 @@ var newp5 = new p5(function(p) {
     User tried to hit a slot
   */
   p.mousePressed = function() {
-    if(paused){
+    if (paused) {
       return;
     }
 
@@ -172,9 +179,7 @@ var newp5 = new p5(function(p) {
     drawFPS();
 
     if (paused) {
-      p.noStroke();
-      p.fill(0, 120)
-      p.rect(0, 0, p.width, p.height);
+      renderOverlay();
     }
 
     p.bitmapText(`${parseInt(gameTime/1000)}`, 20, 140);
