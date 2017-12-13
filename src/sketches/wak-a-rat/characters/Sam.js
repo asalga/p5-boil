@@ -78,6 +78,7 @@ let Sam = function(cfg) {
 
   nextBlinkTimer = this.getNextBlink();
   nextLickTimer = this.getNextLickTimer();
+  this.slotHit = -1;
 
   var assets = new Assets(this.p5);
   this.blinkAni = new Animation({
@@ -100,9 +101,9 @@ let Sam = function(cfg) {
     Need to make sure rats are rendered above the 
     body but below the arm.
   */
-  this.renderBody = function(){
+  this.renderBody = function() {
     this.p5.image(assets.get('data/images/sam/sam.png'), 336, 3);
-     let blinkFrame = this.blinkAni.getFrame();
+    let blinkFrame = this.blinkAni.getFrame();
     if (blinkFrame) {
       this.p5.image(blinkFrame, 443, 70);
     }
@@ -113,7 +114,7 @@ let Sam = function(cfg) {
     }
   };
 
-  this.renderArm = function(){
+  this.renderArm = function() {
     let data = armData[armFrame];
     if (data) {
       let img = assets.get(data.img);
@@ -121,12 +122,17 @@ let Sam = function(cfg) {
     }
   };
 
+  this.getArmPosition = function() {
+    return this.slotHit;
+  };
+
   /*
    */
-  this.hit = function(idx) {
-    const list = ['upper_left', 'lower_left', 'center', 'upper_right', 'lower_right', 'max'];
-    hitTimer = 200100;
-    armFrame = list[idx];
+  this.hit = function(slotIdx) {
+    const slotNames = ['upper_left', 'lower_left', 'center', 'upper_right', 'lower_right', 'max'];
+    hitTimer = 150;
+    this.slotHit = slotIdx;
+    armFrame = slotNames[slotIdx];
   };
 
   /*
@@ -138,6 +144,7 @@ let Sam = function(cfg) {
 
     if (hitTimer <= 0) {
       armFrame = 'idle';
+      this.slotHit = -1;
     }
 
     if (nextBlinkTimer <= 0) {

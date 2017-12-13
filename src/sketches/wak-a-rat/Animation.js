@@ -11,7 +11,7 @@
 let Assets = require('./Assets');
 let assets;
 
-const msPerFrame = 5000;
+const msPerFrame = 150;
 let pausedTime = 0;
 
 /*

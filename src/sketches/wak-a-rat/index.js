@@ -46,13 +46,10 @@ function render() {
   _p5.image(assets.get('data/images/background/board.png'), 0, 238);
   sam.renderBody();
   max.render();
-  
-  
-  // Render rats below arm
-  GameBoard.renderBelowArm();
-  sam.renderArm();
-  GameBoard.renderAboveArm();
-
+    
+  // render all the rats in the gameboard,
+  // which takes care of rendering Sam's arm at the right time
+  GameBoard.render(sam);
 }
 
 function drawMouseCoords() {

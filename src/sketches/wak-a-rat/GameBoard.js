@@ -2,7 +2,10 @@
 
 /*
   Singleton for managing the rats
+
+  TODO - deprecate freeslots
 */
+
 
 let Rat = require('./characters/Rat');
 let Utils = require('./Utils');
@@ -36,6 +39,7 @@ let instance;
 /*
   ratsIn - array of rats that are 'inside' the game board
   ratsOut - array of rats that are 'outside'/visible
+  
   freeSlots - 
 */
 (function() {
@@ -45,7 +49,11 @@ let instance;
     ratsIn = [],
     t,
     numMisses = 0,
-    numHits = 0;
+    numHits = 0,
+
+    // ratSlots - When rendering, we need to render based
+    // on the order of the slots.
+    ratSlots = [null, null, null, null, null];
 
   if (instance) {
     return instance;
@@ -88,6 +96,8 @@ let instance;
 
   /*
     Let the GameBoard know this slot can now be re-used
+
+    {Object} rat - Rat that is going back in the board
   */
   this.freeSlot = function(rat) {
     freeSlots.push(rat.slotID);
@@ -97,6 +107,8 @@ let instance;
     if (idx !== -1) {
       ratsIn.push(ratsOut.splice(idx, 1)[0]);
     }
+
+    ratSlots[rat.slotIdx] = null;
     rat.slotID = -1;
   };
 
@@ -119,38 +131,43 @@ let instance;
   this.getNumHits = function() { return numHits; };
 
   /*
-    Depending on where the user hit, we'll need 
-    to adjust rendering order
-
-    A = arm
-    _ = rat hit that we omit rendering
-
-    0: _  A, 2, 4, 3, 1
-    1: 0, A, 2, 4, 3, _
-    2: 0, A, _  4, 3, 1
-    3: 0, A, 2, 4, _, 1
-    4: 0, 2, A, _, 3, 1
-    5: A, 0, 2, 4, 3, 1
-
-
-
+    Depending on where Sam's arm, we'll need to adjust rendering order
+    a = arm
+    
+    1: 0  a  2   4  3
+    2: 0     a   4  3  1
+    3: 0     2   4  a  1
+    4: 0     2   a  3  1
+    --------------------
+    0: a     2   4  3  1
+    5: a  0  2   4  3  1
+   -1: a  0  2   4  3  1
    */
-  this.renderAboveArm = function() {
-    ratsOut.forEach(rat => rat.render());
+  this.render = function(sam) {
+    let armPos = sam.getArmPosition();
 
-    // this.p5.fill(33, 66, 99, 200);
-    // this.p5.stroke(255);
+    // If we are hitting Max or have an idle position, render arm first
+    // then all rats above arm.
+    if (armPos === 5 || armPos === -1) {
+      sam.renderArm();
+    }
+
+    let renderOrder = [0, 2, 4, 3, 1];
+    renderOrder.forEach((v, i) => {
+      if (armPos === v) {
+        sam.renderArm();
+      } else {
+        ratSlots[v] && ratSlots[v].render();
+      }
+    });
+
+    // his.p5.fill(33, 66, 99, 200);
+    // his.p5.stroke(255);
     // hitBoxPositions.forEach(r => this.p5.rect(r.x, r.y, r.w, r.h));
-    // this.p5.text("in: " + ratsIn.length, 100, 100);
-    // this.p5.text("out: " + ratsOut.length, 100, 140);
-    // this.p5.text(numHits, 30, 30);
-    // this.p5.text(numMisses, 60, 30);
-  };
-
-  /*
-   */
-  this.renderBelowArm = function() {
-    ratsOut.forEach(rat => rat.render());
+    // his.p5.text("in: " + ratsIn.length, 100, 100);
+    // his.p5.text("out: " + ratsOut.length, 100, 140);
+    // his.p5.text(numHits, 30, 30);
+    // his.p5.text(numMisses, 60, 30);
   };
 
   /*
@@ -173,6 +190,7 @@ let instance;
     }
 
     let slotIdx = freeSlots.pop();
+    ratSlots[slotIdx] = rat;
     ratsOut.push(rat);
     rat.assignSlot(slotIdx);
     rat.position(ratSlotCoords[slotIdx]);
