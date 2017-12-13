@@ -7,12 +7,12 @@ let instance;
 
 let nextBlinkTimer,
   blinkSequence = {
-    'blink': ['blink_0', 'blink_1', 'blink_2', 'blink_1', 'blink_0']
+    'blink': ['eyes_0', 'eyes_1', 'eyes_2', 'eyes_1', 'eyes_0']
   };
 
 let nextLickTimer,
   lickSequence = {
-    'lick': ['t_0', 't_1', 't_2', 't_1', 't_0']
+    'lick': ['tongue_0', 'tongue_1', 'tongue_2', 'tongue_1', 'tongue_0']
   };
 
 let armFrame = 'idle';
@@ -84,16 +84,16 @@ let Sam = function(cfg) {
     p5: this.p5,
     animations: blinkSequence,
     atlasName: 'sam',
-    startFrame: 'blink_0',
-    endFrame: 'blink_0'
+    startFrame: 'eyes_0',
+    endFrame: 'eyes_0'
   });
 
   this.lickAni = new Animation({
     p5: this.p5,
     animations: lickSequence,
     atlasName: 'sam',
-    startFrame: 't_0',
-    endFrame: 't_0'
+    startFrame: 'tongue_0',
+    endFrame: 'tongue_0'
   });
 
   /*
