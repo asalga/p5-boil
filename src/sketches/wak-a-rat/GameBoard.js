@@ -6,14 +6,12 @@
   TODO - deprecate freeslots
 */
 
-
 let Rat = require('./characters/Rat');
 let Utils = require('./Utils');
 
 // make game more difficult by reducing size of hitboxes?
 const HitboxWidth = 80;
 const HitBoxHeight = 26;
-
 
 let hitBoxPositions = [
   { x: 164, y: 260, w: HitboxWidth, h: HitBoxHeight }, // top
@@ -39,15 +37,12 @@ let instance;
 /*
   ratsIn - array of rats that are 'inside' the game board
   ratsOut - array of rats that are 'outside'/visible
-  
-  freeSlots - 
 */
 (function() {
 
   let freeSlots = [2, 4, 0, 1, 3],
     ratsOut = [],
     ratsIn = [],
-    t,
     numMisses = 0,
     numHits = 0,
 
@@ -115,7 +110,6 @@ let instance;
   /*
    */
   this.update = function(dt) {
-    t += dt;
     ratsOut.forEach(r => r.update(dt));
   };
 
@@ -153,11 +147,13 @@ let instance;
     }
 
     let renderOrder = [0, 2, 4, 3, 1];
-    renderOrder.forEach((v, i) => {
+    renderOrder.forEach(v => {
       if (armPos === v) {
         sam.renderArm();
       } else {
-        ratSlots[v] && ratSlots[v].render();
+        if (ratSlots[v]) {
+          ratSlots[v].render();
+        }
       }
     });
 

@@ -123,6 +123,7 @@ var newp5 = new p5(function(p) {
     Just for debugging
    */
   p.keyPressed = function() {
+    // console.log(p.keyCode);
     switch (p.keyCode) {
       case KB._D:
         debug = !debug;
