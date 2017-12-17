@@ -21,6 +21,7 @@ let UI = require('./UI');
 setupBitmapFont(p5);
 
 let debug = true;
+let paused = false;
 
 let assets;
 let _p5;
@@ -28,15 +29,12 @@ let _p5;
 let now = 0,
   lastTime = 0,
   gameTime = 0;
-let paused = false;
 
 let fps = 0;
 
-let max;
-let sam;
+let max, sam;
 
 let bitmapFont;
-
 
 function update(dt) {
   if (paused) {

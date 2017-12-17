@@ -45,10 +45,12 @@ let instance;
     ratsIn = [],
     numMisses = 0,
     numHits = 0,
+    // When rendering, we need to render based on the order of the slots.
+    ratSlots = [null, null, null, null, null],
+    // releaseTimer = 0,
 
-    // ratSlots - When rendering, we need to render based
-    // on the order of the slots.
-    ratSlots = [null, null, null, null, null];
+    gameTimeElapsed = 0,
+    nextTime = 2000;
 
   if (instance) {
     return instance;
@@ -56,15 +58,28 @@ let instance;
   instance = this;
 
   /*
+    Get the next time we'll release a rat.
+    frequency increases proportionally with time increase.
+  */
+  this.getNextTime = function() {
+    let time = gameTimeElapsed / 1000;
+    console.log('gameTime:' , time);
+
+    // if (time > 40) {return this.p5.random(100, 200);}
+    if (time > 30) return this.p5.random(200, 400);
+    if (time > 20) return this.p5.random(300, 500);
+    if (time > 10) return this.p5.random(400, 700);
+    return this.p5.random(500, 1000);
+  };
+
+  /*
     {Object} p - point object with properties x & y
 
-    order of slots indices in quinqunx ranges from 0-5
+    Order of slots indices in quinqunx ranges from 0-5
     the 'Max' slot is index 5.
 
     5     0       3
-
               2
-
           1       4
 
     return {Number} from -1 to 5 inclusive
@@ -110,6 +125,17 @@ let instance;
   /*
    */
   this.update = function(dt) {
+    gameTimeElapsed += dt;
+    nextTime -= dt;
+
+    // if (timeElapsed >= nextTime) {
+    if(nextTime <= 0){
+      // timeElapsed = 0; //-= nextTime;
+      nextTime = this.getNextTime();
+      console.log(nextTime);
+      this.pushOutRat();
+    }
+
     ratsOut.forEach(r => r.update(dt));
   };
 
@@ -157,13 +183,13 @@ let instance;
       }
     });
 
-    // his.p5.fill(33, 66, 99, 200);
-    // his.p5.stroke(255);
+    // this.p5.fill(33, 66, 99, 200);
+    // this.p5.stroke(255);
     // hitBoxPositions.forEach(r => this.p5.rect(r.x, r.y, r.w, r.h));
-    // his.p5.text("in: " + ratsIn.length, 100, 100);
-    // his.p5.text("out: " + ratsOut.length, 100, 140);
-    // his.p5.text(numHits, 30, 30);
-    // his.p5.text(numMisses, 60, 30);
+    // this.p5.text("in: " + ratsIn.length, 100, 100);
+    // this.p5.text("out: " + ratsOut.length, 100, 140);
+    // this.p5.text(numHits, 30, 30);
+    // this.p5.text(numMisses, 60, 30);
   };
 
   /*
