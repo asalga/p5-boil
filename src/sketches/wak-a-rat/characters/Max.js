@@ -1,7 +1,8 @@
 'use strict';
 
-// let Assets = require('../Assets');
 let Animation = require('../Animation');
+// let Zaj = require('../../../libs/Zaj');
+let Zaj = require('../Zaj');
 
 let instance,
   hitSequence = {
@@ -34,6 +35,8 @@ let Max = function(cfg) {
   this.hit = function() {
     if (this.hitAni.isPlaying === false) {
       this.hitAni.play('hit');
+      Zaj.play('max');      
+      // this.soundHit.play();
     }
   };
 

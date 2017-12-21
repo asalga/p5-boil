@@ -1,6 +1,8 @@
 'use strict';
 
 /*
+  Animation.js
+  
   TODO:
     - fix onComplete
     - fix pause

@@ -1,11 +1,14 @@
 'use strict';
+
 /*
+  Assets.js
 
 */
 
 const Atlas = require('./Atlas');
 
 const Data = {
+  // IMAGES
   images: [
     'data/images/background/bk.png',
     'data/images/background/board.png',
@@ -19,9 +22,9 @@ const Data = {
     'data/images/sam/arms/images/lower_right.png',
 
     'data/images/sam/sam.png'
-    // font
   ],
 
+  // ATLASES
   atlases: [{
       name: 'rat',
       atlas: 'data/images/rat/spritesheet.png',
@@ -37,6 +40,28 @@ const Data = {
       atlas: 'data/images/max/atlas.png',
       meta: 'data/images/max/atlas.json'
     }
+  ],
+
+  audio: [{
+      name: 'max-hit',
+      path: 'data/audio/max/max.mp3'
+    },
+    {
+      name: 'sam-hit-1',
+      path: 'data/audio/sam/hit1.mp3'
+    },
+    {
+      name: 'sam-hit-2',
+      path: 'data/audio/sam/hit2.mp3'
+    },
+    {
+      name: 'sam-miss',
+      path: 'data/audio/sam/miss.mp3'
+    },
+    {
+      name: 'music',
+      path: 'data/audio/background/music.mp3'
+    }
   ]
 };
 
@@ -51,14 +76,17 @@ let Assets = function(p) {
 
   instance = this;
   this.p5 = p;
+
   this.images = {};
   this.atlases = {};
+  this.audio = {};
 
   this.numAssetsLoaded = 0;
 
   /*
    */
   this.preload = function() {
+    console.log('Preloading started');
 
     if (this.isDone()) {
       return;
@@ -66,7 +94,7 @@ let Assets = function(p) {
 
     let that = this;
 
-    //
+    // ** ATLASES
     Data.atlases.forEach((v) => {
 
       that.p5.loadImage(v.atlas, function(atlasImg) {
@@ -90,9 +118,13 @@ let Assets = function(p) {
       });
     });
 
-    //
-    Data.images.forEach(v => {
 
+    // Data.audio.forEach(v => {
+
+      //});
+
+    // ** IMAGES
+    Data.images.forEach(v => {
       that.p5.loadImage(v, p5img => {
         that.images[v] = p5img;
         that.numAssetsLoaded++;
@@ -140,8 +172,8 @@ let Assets = function(p) {
   /*
    */
   this.isDone = function() {
-    return this.numAssetsLoaded ===
-      (Data.images.length + Data.atlases.length);
+    let totalAssets = Data.images.length + Data.atlases.length + Data.audio.length;
+    return this.numAssetsLoaded === totalAssets;
   };
 
   /*

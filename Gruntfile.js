@@ -137,6 +137,16 @@ module.exports = function(grunt) {
           //   filter: 'isFile'
           // },
 
+          // AUDIO
+          {
+            expand: true,
+            flatten: false,
+            cwd: `${config.target}/data/audio`,
+            src: ['**/*.{mp3,ogg}'],
+            dest: `${app}/data/audio`,
+            filter: 'isFile'
+          },
+
           // IMAGES
           {
             expand: true,

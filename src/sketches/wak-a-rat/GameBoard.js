@@ -63,7 +63,7 @@ let instance;
   */
   this.getNextTime = function() {
     let time = gameTimeElapsed / 1000;
-    console.log('gameTime:' , time);
+    // console.log('gameTime:' , time);
 
     // if (time > 40) {return this.p5.random(100, 200);}
     if (time > 30) return this.p5.random(200, 400);
@@ -132,7 +132,7 @@ let instance;
     if(nextTime <= 0){
       // timeElapsed = 0; //-= nextTime;
       nextTime = this.getNextTime();
-      console.log(nextTime);
+      // console.log(nextTime);
       this.pushOutRat();
     }
 
@@ -199,7 +199,7 @@ let instance;
 
     // If all the slots are occupied, we can't do anything
     if (freeSlots.length === 0) {
-      console.log('no free slots!');
+      // console.log('no free slots!');
       return;
     }
 

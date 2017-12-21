@@ -1,6 +1,8 @@
 'use strict';
 
 /*
+  Atlas.js
+  
   cfg{
    img - p5Image
    meta - string
