@@ -130,10 +130,13 @@ var newp5 = new p5(function(p) {
 
     let slotIdx = GameBoard.hit({ x: p.mouseX, y: p.mouseY });
 
+
+
     if (slotIdx >= 0 && slotIdx <= 5) {
       sam.hit(slotIdx);
     }
     if (slotIdx === 5) {
+      sam.hit(5);
       max.hit();
     }
   };

@@ -1,6 +1,8 @@
 'use strict';
 
 let Animation = require('../Animation');
+let Assets = require('../Assets');
+
 // let Zaj = require('../../../libs/Zaj');
 let Zaj = require('../Zaj');
 
@@ -9,6 +11,10 @@ let instance,
     'hit': ['hit_0', 'hit_1', 'hit_2']
   };
 
+
+/*
+
+*/
 let Max = function(cfg) {
 
   Object.assign(this, cfg || {});
@@ -17,6 +23,8 @@ let Max = function(cfg) {
     return instance;
   }
   instance = this;
+
+  this.assets = new Assets();
 
   this.hitAni = new Animation({
     name: 'max hit',
@@ -35,8 +43,7 @@ let Max = function(cfg) {
   this.hit = function() {
     if (this.hitAni.isPlaying === false) {
       this.hitAni.play('hit');
-      Zaj.play('max');      
-      // this.soundHit.play();
+      this.assets.get('data/audio/max/max.mp3').play();
     }
   };
 

@@ -233,6 +233,18 @@ module.exports = function(grunt) {
           livereload: true
         }
       },
+      // AUDIO
+      audio: {
+        files: [
+          `${config.target}/data/**/*.{mp3,ogg}`
+        ],
+        tasks: [
+          'copy:dev'
+        ],
+        options: {
+          livereload: true
+        }
+      },
       // IMAGES
       images: {
         files: [

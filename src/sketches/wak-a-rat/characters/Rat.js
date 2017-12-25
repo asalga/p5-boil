@@ -67,6 +67,10 @@ Rat.prototype = {
     } else {
       this.ani.play('hurt_0');
     }
+
+    let randomHit = ~~(this.p5.random(0,3));
+    assets.get(`data/audio/rat/hit${randomHit}.mp3`).play();
+
     this.ani.onComplete(() => {
       GameBoard.increaseHits();
       GameBoard.freeSlot(this);

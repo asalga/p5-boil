@@ -2,12 +2,12 @@
 
 /*
   Assets.js
-
 */
 
 const Atlas = require('./Atlas');
+const Howl = require('Howler').Howl;
 
-const Data = {
+const Manifest = {
   // IMAGES
   images: [
     'data/images/background/bk.png',
@@ -47,15 +47,15 @@ const Data = {
       path: 'data/audio/max/max.mp3'
     },
     {
-      name: 'sam-hit-1',
-      path: 'data/audio/sam/hit1.mp3'
+      path: 'data/audio/rat/hit0.mp3'
     },
     {
-      name: 'sam-hit-2',
-      path: 'data/audio/sam/hit2.mp3'
+      path: 'data/audio/rat/hit1.mp3'
     },
     {
-      name: 'sam-miss',
+      path: 'data/audio/rat/hit2.mp3'
+    },
+    {
       path: 'data/audio/sam/miss.mp3'
     },
     {
@@ -75,7 +75,7 @@ let Assets = function(p) {
   }
 
   instance = this;
-  this.p5 = p;
+  this.p5 = this.p5 || p;
 
   this.images = {};
   this.atlases = {};
@@ -95,7 +95,7 @@ let Assets = function(p) {
     let that = this;
 
     // ** ATLASES
-    Data.atlases.forEach((v) => {
+    Manifest.atlases.forEach((v) => {
 
       that.p5.loadImage(v.atlas, function(atlasImg) {
         // Once the image is loaded, get the meta file
@@ -118,21 +118,26 @@ let Assets = function(p) {
       });
     });
 
-
-    // Data.audio.forEach(v => {
-
-      //});
+    // ** AUDIO
+    Manifest.audio.forEach((v) => {
+      // 
+      that.audio[v.path] = new Howl({
+        src: v.path,
+        volume: 1,
+        loop: false,
+        autoplay: false,
+        onload: v => {
+          that.numAssetsLoaded++;
+        }
+      });
+    });
 
     // ** IMAGES
-    Data.images.forEach(v => {
+    Manifest.images.forEach(v => {
       that.p5.loadImage(v, p5img => {
         that.images[v] = p5img;
         that.numAssetsLoaded++;
       });
-
-      // var resolve = function(a){
-      //   console.log('resolved! ', a);
-      // }
 
       // loadAtlasImage()
       //   .then(()=> loadAtlasMeta())
@@ -140,30 +145,27 @@ let Assets = function(p) {
       //     // split();
       //   });
 
-      // Once we have the image, get the associated metadata file
+      // Once we have the image, get the associated metaManifest file
       // and then create a spritesheet.
-
-
 
       //  var a = new Promise(function(resolve, reject) {
 
-      //   that.p5.loadImage( 'data/rat/rat_2.png', function(){
+      //   that.p5.loadImage( 'Manifest/rat/rat_2.png', function(){
       //     resolve();
       //   });
-
       // })
 
       //  a.then(function(){
       //   console.log("TEST");
       //  });
 
-      // xhr the spritesheet meta data
+      // xhr the spritesheet meta Manifest
 
-      // once we have both the metadata and image, we can split
+      // once we have both the metaManifest and image, we can split
       // apart the spritesheet
     });
 
-    // Data.animations.forEach(function() {
+    // Manifest.animations.forEach(function() {
     //   // ajax animations
     //   that.numAssetsLoaded++;
     // });
@@ -172,18 +174,29 @@ let Assets = function(p) {
   /*
    */
   this.isDone = function() {
-    let totalAssets = Data.images.length + Data.atlases.length + Data.audio.length;
+    let totalAssets = Manifest.images.length + Manifest.atlases.length + Manifest.audio.length;
     return this.numAssetsLoaded === totalAssets;
   };
 
   /*
+    Should find a better way of deciding which object to peek in.
    */
   this.get = function(key) {
-    if (!this.images[key]) {
+
+    // Fix this 
+    if (!this.images[key] && !this.audio[key]) {
       throw Error(`${key} needs to be preloaded before it can be used.`);
     }
-    return this.images[key];
+
+    if (this.images[key]) {
+      return this.images[key];
+    }
+
+    if (this.audio[key]) {
+      return this.audio[key];
+    }
   };
+
 };
 
 module.exports = Assets;

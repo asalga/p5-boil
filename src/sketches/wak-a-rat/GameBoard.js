@@ -33,12 +33,14 @@ let ratSlotCoords = [
 ];
 
 let instance;
+let assets;
 
 /*
   ratsIn - array of rats that are 'inside' the game board
   ratsOut - array of rats that are 'outside'/visible
 */
 (function() {
+
 
   let freeSlots = [2, 4, 0, 1, 3],
     ratsOut = [],
@@ -56,6 +58,8 @@ let instance;
     return instance;
   }
   instance = this;
+
+  // assets = new Assets(this.p5);
 
   /*
     Get the next time we'll release a rat.
@@ -86,6 +90,7 @@ let instance;
   */
   this.hit = function(p) {
     let retIdx = -1;
+    let hitRat = false;
 
     hitBoxPositions.forEach((rectangle, slotID) => {
 
@@ -95,11 +100,18 @@ let instance;
         ratsOut.forEach((rat) => {
           if (rat.slotID === slotID) {
             rat.hit();
+            hitRat = true;
           }
         });
         retIdx = slotID;
       }
     });
+
+    if(hitRat === false){
+      let Assets = require('./Assets');
+      assets = new Assets();
+      assets.get('data/audio/max/miss.mp3').play();
+    }
 
     return retIdx;
   };
