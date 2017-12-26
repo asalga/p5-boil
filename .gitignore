@@ -12,6 +12,7 @@ dist/
 archived/
 node_modules/
 .sass-cache/
+WIP/
 
 # OS / IDE
 Thumbs.db

@@ -110,7 +110,7 @@ let assets;
     if(hitRat === false){
       let Assets = require('./Assets');
       assets = new Assets();
-      assets.get('data/audio/max/miss.mp3').play();
+      assets.get('data/audio/sam/miss.mp3').play();
     }
 
     return retIdx;

@@ -43,7 +43,6 @@ const Manifest = {
   ],
 
   audio: [{
-      name: 'max-hit',
       path: 'data/audio/max/max.mp3'
     },
     {
@@ -59,7 +58,6 @@ const Manifest = {
       path: 'data/audio/sam/miss.mp3'
     },
     {
-      name: 'music',
       path: 'data/audio/background/music.mp3'
     }
   ]
