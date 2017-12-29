@@ -25,6 +25,7 @@
     "grunt-processhtml": "^0.4.1",
     "matchdep": "^1.0.1",
     "p5": "^0.5.16",
+    "p5-bitmapfont": "^1.0.3",
     "serve-static": "^1.13.1"
   },
   "dependencies": {}

@@ -9,16 +9,16 @@
 */
 
 let p5 = require('p5');
+let p5BitmapFont = require('p5-bitmapfont');
 
 let KB = require('./KB');
-let setupBitmapFont = require('./p5BitmapFont');
 let Assets = require('./Assets');
 let GameBoard = require('./GameBoard').instance;
 let Max = require('./characters/Max');
 let Sam = require('./characters/Sam');
 let UI = require('./UI');
 
-setupBitmapFont(p5);
+p5BitmapFont(p5);
 
 let debug = true;
 let paused = false;
@@ -35,6 +35,7 @@ let fps = 0;
 let max, sam;
 
 let bitmapFont;
+let testFont;
 
 function update(dt) {
   if (paused) {
@@ -69,6 +70,8 @@ function drawMouseCoords() {
   if (!debug) {
     return;
   }
+
+  _p5.bitmapTextFont(testFont);
   _p5.bitmapText(`${_p5.mouseX} , ${_p5.mouseY}`, 200, 10);
 }
 
@@ -81,6 +84,7 @@ function drawFPS() {
     fps = Math.round(_p5.frameRate());
   }
 
+  _p5.bitmapTextFont(bitmapFont);
   _p5.bitmapText(`${GameBoard.getNumHits()} - ${GameBoard.getNumMisses()}`, 58, 38);
   _p5.bitmapText(`${fps}`, 20, 100);
 }
@@ -111,12 +115,15 @@ var newp5 = new p5(function(p) {
     assets = new Assets(p);
     assets.preload();
 
+    testFont = p.loadBitmapFont('data/fonts/scumm.png', 'data/fonts/scumm.json');
+
     bitmapFont = p.loadBitmapFont('data/fonts/lucasFont.png', {
       glyphWidth: 14,
       glyphHeight: 16,
       glyphBorder: 0,
       rows: 12,
-      cols: 9
+      cols: 9,
+      charSpacing: 1
     });
   };
 
@@ -183,8 +190,11 @@ var newp5 = new p5(function(p) {
       renderOverlay();
     }
 
-    p.bitmapText(`${parseInt(gameTime/1000)}`, 20, 140);
-
+    _p5.bitmapTextFont(testFont);
+    _p5.tint(0);
+    p.bitmapText(`GameTime: ${~~(gameTime/1000)}`, 20, 140);
+    _p5.noTint();
+    
     lastTime = now;
   };
 });
