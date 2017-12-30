@@ -3,11 +3,7 @@
   Wak-a-Rat
   Andor Saga
   Oct 2017
-
-  - add pause copy
-
 */
-
 
 let p5 = require('p5');
 let p5BitmapFont = require('p5-bitmapfont')(p5);
@@ -19,10 +15,8 @@ let Max = require('./characters/Max');
 let Sam = require('./characters/Sam');
 let UI = require('./UI');
 
-// p5BitmapFont(p5);
-
-let debug = true;
-let paused = false;
+let debug = false;
+let paused = true; //false;
 
 let assets;
 let _p5;
@@ -36,7 +30,7 @@ let fps = 0;
 let max, sam;
 
 let bitmapFont;
-let testFont;
+let scummFont;
 
 function update(dt) {
   if (paused) {
@@ -61,22 +55,46 @@ function render() {
   GameBoard.render(sam);
 }
 
-function renderOverlay() {
+
+/*
+
+*/
+function renderPauseOverlay() {
   _p5.noStroke();
   _p5.fill(0, 120)
   _p5.rect(0, 0, _p5.width, _p5.height);
+
+  let rectObj = {
+    x: 110,
+    y: 140,
+    h: 20,
+    w: 440
+  };
+
+  // _p5.fill(150, 150, 150);
+  // _p5.rect(rectObj.x, rectObj.y, rectObj.w, rectObj.h);
+  // _p5.stroke(100);
+  // _p5.line(rectObj.x, rectObj.y + rectObj.h, rectObj.w, 2);
+
+  _p5.image(assets.get('data/images/pause_bar.png'), rectObj.x, rectObj.y);
+  _p5.bitmapTextFont(scummFont);
+  _p5.tint(80, 80, 80);
+  _p5.bitmapText(`Game Paused. Press SPACE to Continue.`, rectObj.x + 5, rectObj.y + 1);
+  _p5.noTint();;
 }
 
-function drawMouseCoords() {
-  if (!debug) {
-    return;
-  }
-
-  _p5.bitmapTextFont(testFont);
-  _p5.bitmapText(`${_p5.mouseX} , ${_p5.mouseY}`, 200, 10);
+/*
+  Just the score
+*/
+function drawUI() {
+  _p5.bitmapTextFont(bitmapFont);
+  _p5.bitmapText(`${GameBoard.getNumHits()} - ${GameBoard.getNumMisses()}`, 58, 38);
 }
 
-function drawFPS() {
+/*
+  Draw FPS & GameTime
+*/
+function drawDebug() {
   if (!debug) {
     return;
   }
@@ -85,9 +103,10 @@ function drawFPS() {
     fps = Math.round(_p5.frameRate());
   }
 
-  _p5.bitmapTextFont(bitmapFont);
-  _p5.bitmapText(`${GameBoard.getNumHits()} - ${GameBoard.getNumMisses()}`, 58, 38);
-  _p5.bitmapText(`${fps}`, 20, 100);
+  _p5.bitmapTextFont(scummFont);
+  _p5.bitmapText(`FPS: ${fps}`, 20, 60);
+  _p5.bitmapText(`GameTime: ${~~(gameTime/1000)}`, 20, 80);
+  _p5.bitmapText(`${_p5.mouseX} , ${_p5.mouseY}`, 20, 100);
 }
 
 /*
@@ -116,7 +135,7 @@ var newp5 = new p5(function(p) {
     assets = new Assets(p);
     assets.preload();
 
-    testFont = p.loadBitmapFont('data/fonts/scumm.png', 'data/fonts/scumm.json');
+    scummFont = p.loadBitmapFont('data/fonts/scumm.png', 'data/fonts/scumm.json');
 
     bitmapFont = p.loadBitmapFont('data/fonts/lucasFont.png', {
       glyphWidth: 14,
@@ -138,8 +157,6 @@ var newp5 = new p5(function(p) {
 
     let slotIdx = GameBoard.hit({ x: p.mouseX, y: p.mouseY });
 
-
-
     if (slotIdx >= 0 && slotIdx <= 5) {
       sam.hit(slotIdx);
     }
@@ -153,8 +170,6 @@ var newp5 = new p5(function(p) {
     Just for debugging
    */
   p.keyPressed = function() {
-    // console.log(p.keyCode);
-
     switch (p.keyCode) {
       case KB._D:
         debug = !debug;
@@ -184,18 +199,13 @@ var newp5 = new p5(function(p) {
     update(delta);
     render();
 
-    drawMouseCoords();
-    drawFPS();
+    drawDebug();
+    drawUI();
 
     if (paused) {
-      renderOverlay();
+      renderPauseOverlay();
     }
 
-    _p5.bitmapTextFont(testFont);
-    _p5.tint(0);
-    p.bitmapText(`GameTime: ${~~(gameTime/1000)}`, 20, 140);
-    _p5.noTint();
-    
     lastTime = now;
   };
 });
