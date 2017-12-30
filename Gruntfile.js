@@ -115,7 +115,7 @@ module.exports = function(grunt) {
     copy: {
       dev: {
         files: [
-          // // MARKUP
+          // MARKUP
           // {
           //   expand: true,
           //   cwd: `${src}/`,
@@ -299,7 +299,8 @@ module.exports = function(grunt) {
           `src/index.html`
         ],
         tasks: [
-          'copy:dev'
+          // 'copy:dev'
+          'processhtml'
         ],
         options: {
           livereload: true

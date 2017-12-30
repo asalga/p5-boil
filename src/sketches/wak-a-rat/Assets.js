@@ -1,68 +1,11 @@
-'use strict';
-
 /*
   Assets.js
 */
+'use strict';
 
 const Atlas = require('./Atlas');
 const Howl = require('Howler').Howl;
-
-const Manifest = {
-  // IMAGES
-  images: [
-    'data/images/background/bk.png',
-    'data/images/background/board.png',
-
-    'data/images/sam/arms/images/idle.png',
-    'data/images/sam/arms/images/max.png',
-    'data/images/sam/arms/images/center.png',
-    'data/images/sam/arms/images/upper_left.png',
-    'data/images/sam/arms/images/upper_right.png',
-    'data/images/sam/arms/images/lower_left.png',
-    'data/images/sam/arms/images/lower_right.png',
-
-    'data/images/sam/sam.png'
-  ],
-
-  // ATLASES
-  atlases: [{
-      name: 'rat',
-      atlas: 'data/images/rat/spritesheet.png',
-      meta: 'data/images/rat/spritesheet.json'
-    },
-    {
-      name: 'sam',
-      atlas: 'data/images/sam/atlas.png',
-      meta: 'data/images/sam/atlas.json'
-    },
-    {
-      name: 'max',
-      atlas: 'data/images/max/atlas.png',
-      meta: 'data/images/max/atlas.json'
-    }
-  ],
-
-  audio: [{
-      path: 'data/audio/max/max.mp3'
-    },
-    {
-      path: 'data/audio/rat/hit0.mp3'
-    },
-    {
-      path: 'data/audio/rat/hit1.mp3'
-    },
-    {
-      path: 'data/audio/rat/hit2.mp3'
-    },
-    {
-      path: 'data/audio/sam/miss.mp3'
-    },
-    {
-      path: 'data/audio/background/music.mp3'
-    }
-  ]
-};
-
+const Manifest = require('./Manifest');
 
 let instance;
 
@@ -84,7 +27,6 @@ let Assets = function(p) {
   /*
    */
   this.preload = function() {
-    console.log('Preloading started');
 
     if (this.isDone()) {
       return;
@@ -136,37 +78,7 @@ let Assets = function(p) {
         that.images[v] = p5img;
         that.numAssetsLoaded++;
       });
-
-      // loadAtlasImage()
-      //   .then(()=> loadAtlasMeta())
-      //   .then(() => {
-      //     // split();
-      //   });
-
-      // Once we have the image, get the associated metaManifest file
-      // and then create a spritesheet.
-
-      //  var a = new Promise(function(resolve, reject) {
-
-      //   that.p5.loadImage( 'Manifest/rat/rat_2.png', function(){
-      //     resolve();
-      //   });
-      // })
-
-      //  a.then(function(){
-      //   console.log("TEST");
-      //  });
-
-      // xhr the spritesheet meta Manifest
-
-      // once we have both the metaManifest and image, we can split
-      // apart the spritesheet
     });
-
-    // Manifest.animations.forEach(function() {
-    //   // ajax animations
-    //   that.numAssetsLoaded++;
-    // });
   };
 
   /*

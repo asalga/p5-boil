@@ -1,25 +1,36 @@
 body {
+  background: #000;
   margin: 0;
-  padding: 0;
-  background: #808080;
-  border: 1px solid blue;
   overflow: hidden;
+  padding: 20px 0 0 0;
+}
+
+#p5_loading {
+  color: white;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-size: 2em;
+  font-weight: bold;
+  padding-top: 100px;
+  text-align: center;
 }
 
 canvas#defaultCanvas0 {
-  margin: 0;
-  padding: 0;
-  // width: 100% !important;
+  background-color: #000;
+  border: 1px solid #FFF;
+  display: block;
   height: auto !important;
-  // image-rendering: pixelated;
+  margin: 0;
+  margin: 0 auto;
+  padding: 0;
+  width: 640px;
 }
 
 #debug {
-  position: absolute;
-  z-index: 1;
-  display: inline-block;
-  color: #ff008d;
   background-color: transparent;
+  color: #ff008d;
+  display: inline-block;
   font-size: 14pt;
   font-family: monospace;
+  position: absolute;
+  z-index: 1;
 }
