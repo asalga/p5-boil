@@ -8,8 +8,9 @@
 
 */
 
+
 let p5 = require('p5');
-let p5BitmapFont = require('p5-bitmapfont');
+let p5BitmapFont = require('p5-bitmapfont')(p5);
 
 let KB = require('./KB');
 let Assets = require('./Assets');
@@ -18,7 +19,7 @@ let Max = require('./characters/Max');
 let Sam = require('./characters/Sam');
 let UI = require('./UI');
 
-p5BitmapFont(p5);
+// p5BitmapFont(p5);
 
 let debug = true;
 let paused = false;

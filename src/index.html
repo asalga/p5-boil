@@ -8,22 +8,20 @@
   
 
     <!-- build:dev -->
-    <!--     <% if (library == "p5js"){ %>
+    <% if (library == "p5js"){ %>
     <script language="javascript" src="libs/p5.js"></script>
     <% } %>
     <% if (library == "processingjs"){ %>
     <script language="javascript" src="libs/pjs1.4.8.js"></script>
     <% } %>
     <% if (library == "processingjs-hack"){ %>
-    <% } %> -->
+    <% } %>
     <!-- /build -->
-
-    <!-- <script language="javascript" src="libs/p5.bitmapFont.js"></script> -->
 
 	<!-- build:dev -->
  	<% if (bundleMethod == "concat"){ %>
     <!--  using concat method -->
-    <script type="text/javascript" src="index.js"></script>
+    <script language="javascript" src="index.js"></script>
     <% } %>
     
     <% if (bundleMethod == "browserify"){ %>

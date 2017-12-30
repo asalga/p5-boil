@@ -96,6 +96,18 @@ module.exports = function(grunt) {
       }
     },
 
+    /**
+     *
+     */
+    concat:{
+      dev: {
+        dest: `${app}/index.js`,
+        src: `${config.target}/index.js`
+      },
+      options:{
+
+      }
+    },
 
     /**
      *
@@ -306,7 +318,7 @@ module.exports = function(grunt) {
     }
     //
     else if (`${config.bundleMethod}` === 'concat') {
-      // grunt.task.run('concat:dev');
+      grunt.task.run('concat');
     }
   });
 
