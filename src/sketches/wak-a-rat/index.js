@@ -71,11 +71,6 @@ function renderPauseOverlay() {
     w: 440
   };
 
-  // _p5.fill(150, 150, 150);
-  // _p5.rect(rectObj.x, rectObj.y, rectObj.w, rectObj.h);
-  // _p5.stroke(100);
-  // _p5.line(rectObj.x, rectObj.y + rectObj.h, rectObj.w, 2);
-
   _p5.image(assets.get('data/images/pause_bar.png'), rectObj.x, rectObj.y);
   _p5.bitmapTextFont(scummFont);
   _p5.tint(80, 80, 80);
@@ -113,6 +108,9 @@ function drawDebug() {
  */
 function togglePause() {
   paused = !paused;
+  if (paused === false) {
+    lastTime = _p5.millis();
+  }
 }
 
 var newp5 = new p5(function(p) {
@@ -167,21 +165,14 @@ var newp5 = new p5(function(p) {
   };
 
   /*
-    Just for debugging
    */
   p.keyPressed = function() {
     switch (p.keyCode) {
       case KB._D:
         debug = !debug;
         break;
-      case KB._A:
-        GameBoard.pushOutRat();
-        break;
       case KB._SPACE:
         togglePause();
-        if (paused === false) {
-          lastTime = p.millis();
-        }
         break;
     }
   };

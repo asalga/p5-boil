@@ -6,10 +6,10 @@ let Assets = require('../Assets');
 // let Zaj = require('../../../libs/Zaj');
 let Zaj = require('../Zaj');
 
-let instance,
-  hitSequence = {
-    'hit': ['hit_0', 'hit_1', 'hit_2']
-  };
+let instance;
+let hitSequence = {
+  'hit': ['hit_0', 'hit_1', 'hit_2']
+};
 
 
 /*

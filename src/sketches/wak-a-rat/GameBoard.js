@@ -49,7 +49,6 @@ let assets;
     numHits = 0,
     // When rendering, we need to render based on the order of the slots.
     ratSlots = [null, null, null, null, null],
-    // releaseTimer = 0,
 
     gameTimeElapsed = 0,
     nextTime = 2000;
@@ -58,8 +57,6 @@ let assets;
     return instance;
   }
   instance = this;
-
-  // assets = new Assets(this.p5);
 
   /*
     Get the next time we'll release a rat.
@@ -107,7 +104,7 @@ let assets;
       }
     });
 
-    if(hitRat === false){
+    if(hitRat === false && retIdx !== -1){
       let Assets = require('./Assets');
       assets = new Assets();
       assets.get('data/audio/sam/miss.mp3').play();
@@ -194,14 +191,6 @@ let assets;
         }
       }
     });
-
-    // this.p5.fill(33, 66, 99, 200);
-    // this.p5.stroke(255);
-    // hitBoxPositions.forEach(r => this.p5.rect(r.x, r.y, r.w, r.h));
-    // this.p5.text("in: " + ratsIn.length, 100, 100);
-    // this.p5.text("out: " + ratsOut.length, 100, 140);
-    // this.p5.text(numHits, 30, 30);
-    // this.p5.text(numMisses, 60, 30);
   };
 
   /*
@@ -211,7 +200,6 @@ let assets;
 
     // If all the slots are occupied, we can't do anything
     if (freeSlots.length === 0) {
-      // console.log('no free slots!');
       return;
     }
 
