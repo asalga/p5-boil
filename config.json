@@ -1,10 +1,16 @@
 {
-  "id": "wak-a-rat",
+  "id": "example-timing",
 
   "targets": {
 
     "tower-toppler-viz": {
       "dir": "tower-toppler-viz",
+      "library": "p5js",
+      "bundleMethod": "concat"
+    },
+
+    "example-timing":{
+      "dir": "example-timing",
       "library": "p5js",
       "bundleMethod": "concat"
     },

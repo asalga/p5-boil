@@ -1,14 +1,11 @@
-'use strict';
-
 /*
   Animation.js
   
   TODO:
     - fix onComplete
-    - fix pause
     - figure out standard for queue
-    - make sure rendering of rats overlaps properly
- */
+*/
+'use strict';
 
 let Assets = require('./Assets');
 let assets;
@@ -25,9 +22,8 @@ let pausedTime = 0;
   }
 */
 let Animation = function(cfg) {
-  // console.log('animation ctor');
   Object.assign(this, cfg || {});
-  assets = new Assets(this.p5);  
+  assets = new Assets(this.p5);
   this.firstTime = true;
   this.reset();
 };
@@ -166,7 +162,7 @@ Animation.prototype = {
       this.queue.push(name);
     } else {
       // in case user passes in negative value
-      count = this.p5.max(count, 0);
+      count = Math.max(count, 0);
 
       while (count) {
         this.queue.push(name);
