@@ -1,5 +1,5 @@
 {
-  "id": "example-timing",
+  "id": "tunnel",
 
   "targets": {
 
@@ -9,7 +9,7 @@
       "bundleMethod": "concat"
     },
 
-    "example-timing":{
+    "example-timing": {
       "dir": "example-timing",
       "library": "p5js",
       "bundleMethod": "concat"
@@ -19,6 +19,12 @@
       "dir": "wak-a-rat",
       "library": "p5js",
       "bundleMethod": "browserify"
+    },
+
+    "tunnel": {
+      "dir": "tunnel",
+      "library": "p5js",
+      "bundleMethod": "concat"
     },
 
     "p5-require": {

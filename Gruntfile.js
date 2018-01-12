@@ -102,7 +102,7 @@ module.exports = function(grunt) {
     concat:{
       dev: {
         dest: `${app}/index.js`,
-        src: `${config.target}/index.js`
+        src: `${config.target}/*.js`
       },
       options:{
 
