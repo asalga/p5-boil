@@ -1,19 +1,30 @@
 /*
 	Andor Saga
 	Jan 2018
+	unfold
+
+	Make line spin from end of grid to future position.
+
+	- get destination vector
+	- get vector perp to both
+
+	- rotate along perp vector
+	- get angle between vectors
+
+	- need to create artificial delay between 
 */
 
-// Can a line unfold from two different directions at once?
 let multiUnfold = false;
 let grid = [];
-let xLen = 10;
-let yLen = 4;
+let xLen = 6;
+let yLen = 2;
 
+let intensityScale = 170;
 let next = 0;
 let xStart = 200;
 let pos = 0;
-let speed = 1.0;
-
+let speed = 0.025;
+let unfoldSpeed = 1.0;
 
 function setup() {
   createCanvas(windowWidth, windowHeight, WEBGL);
@@ -22,12 +33,8 @@ function setup() {
 
   for (let x = 0; x < xLen; ++x) {
     grid.push([]);
-
     for (let y = 0; y < yLen; ++y) {
-      let n = noise(x / 10, y / 10);
-      n = n * 2;
-      n -= 0.5;
-      grid[x].push(n)
+      grid[x].push(getNoise(x, y));
     }
   }
 }
@@ -37,74 +44,58 @@ function draw() {
 
   rotateX(1);
   translate(pos - xStart, 20, 20);
-  // rotateX(mouseX / windowWidth * TWO_PI);
+  rotateX(mouseX / windowWidth * TWO_PI * 4);
 
   let sc = 30;
-  let zSc = 170;
 
   //
   for (let y = 0; y < yLen; ++y) {
-    for (let x = 0; x < xLen - 1; ++x) {
 
-      let col = 0;
-      let prev = 0;
+  	// -1 since we need to 'look forward' 1 index
+  	// -1 since we need to draw the animated line.
+    for (let x = 0; x < xLen - 2; ++x) {
 
-      if (x === -1 || x === xLen + 3) {
-        // stroke(0, 0, 200);
-      } else {
-
-        let f = 255;
-        let nPos = abs(pos / 30);
-        // console.log(nPos);
-
-        let prevCol = (x - 1) / xLen;
-        let nextCol = (x + 1) / xLen;
-
-        f = 255;
-        // nextCol += sin( ((x + 1) / xLen + (frameCount/50)) * PI);
-
-        nextCol = sin(((x + 1) / xLen + (pos / (30 * xLen))) * PI);
-
-        if (x === 7) {
-          // let test = lerp(prevCol, nextCol, nPos);
-          // console.log(prevCol, nextCol);
-        }
-
-        // we cycle between 0 and 30
-        // depending on where the pos is, our colors will need to lerp
-        // lerp based on the position
-
-        // let f = lerp(intensity, nextCol, pos / 30);
-        stroke(255 * nextCol, 0, 0);
-      }
-
-
-      // let last = max(0,sin((x +1) / (xLen - 1.0) * PI) * 255);
-      // let s = sin(x / (xLen - 1.0) * PI) * 255;
-      // let test = lerp(last, s, pos / 60);
-
+      let f = (x < xLen - 1) ? 255 : 40;
+      stroke(0, f, 0);
 
       line(
-        (x + 0) * sc, y * sc, grid[x][y] * zSc,
-        (x + 1) * sc, y * sc, grid[x + 1][y] * zSc
+        (x + 0) * sc, y * sc, grid[x][y] * intensityScale,
+        (x + 1) * sc, y * sc, grid[x + 1][y] * intensityScale
       );
     }
   }
 
-  // // towards user
+  // towards user
   for (let x = 0; x < xLen; ++x) {
-    let last = sin((x - 1) / (xLen - 1.0) * PI) * 100;
-    let s = sin(x / (xLen - 1.0) * PI) * 100;
-    let test = lerp(last, s, pos / 30);
-    // let nextCol = sin(((x + 1) / xLen + (pos / (30 * xLen))) * PI);
     stroke(255, 0, 0);
-
     for (let y = 0; y < yLen - 1; ++y) {
       line(
-        x * sc, (y + 0) * sc, grid[x][y] * zSc,
-        x * sc, (y + 1) * sc, grid[x][y + 1] * zSc
+        x * sc, (y + 0) * sc, grid[x][y] * intensityScale,
+        x * sc, (y + 1) * sc, grid[x][y + 1] * intensityScale
       );
     }
+  }
+
+  // draw animated lines
+  for (let y = 0; y < yLen; ++y) {
+    push();
+
+    startVector = new p5.Vector(
+      (xLen - 2) * sc - (xLen - 3) * sc,
+      0,
+      grid[xLen - 2][y] * intensityScale - grid[xLen - 3][y] * intensityScale
+    );
+
+    stroke(255, 0, 255);
+
+    translate(
+      (xLen - 3) * sc,
+      y * sc,
+      grid[xLen - 3][y] * intensityScale);
+
+    line(0, 0, 0, startVector.x, startVector.y, startVector.z);
+
+    pop();
   }
 
   pos -= speed;
@@ -113,6 +104,10 @@ function draw() {
     next++;
     shiftValues();
   }
+}
+
+function getNoise(x, y) {
+  return noise(x / 10, y / 10) * 2 - 0.5;
 }
 
 /*
@@ -130,9 +125,6 @@ function shiftValues() {
 
   // create new values
   for (let y = 0; y < yLen; ++y) {
-    let n = noise((xLen + next) / 10, y / 10);
-    n = n * 2;
-    n -= 0.5;
-    grid[xLen - 1][y] = n;
+    grid[xLen - 1][y] = getNoise(xLen + next, y);
   }
 }
