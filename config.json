@@ -1,5 +1,5 @@
 {
-  "id": "tunnel",
+  "id": "unfold",
 
   "targets": {
 
@@ -31,6 +31,12 @@
       "dir": "examples/p5-require",
       "library": "p5js",
       "bundleMethod": "browserify"
+    },
+
+     "unfold": {
+      "dir": "unfold",
+      "library": "p5js",
+      "bundleMethod": "concat"
     }
   }
 }

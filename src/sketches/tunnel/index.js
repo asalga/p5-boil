@@ -10,7 +10,7 @@ function setup() {
   myShader = new p5.Shader(this._renderer, vert, frag);
   shader(myShader);
   noStroke();
-  pimg = loadImage('data/brick.jpg');
+  pimg = loadImage('data/m.jpg');
 
   let c = document.getElementById('defaultCanvas0');
   c.addEventListener('contextmenu', e => { e.preventDefault(); });
