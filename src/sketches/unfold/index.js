@@ -83,7 +83,7 @@ function draw() {
     startVector = new p5.Vector(
       (xLen - 2) * sc - (xLen - 3) * sc,
       0,
-      grid[xLen - 2][y] * intensityScale - grid[xLen - 3][y] * intensityScale
+      grid[xLen - 2][y] * intensityScale - grid[xLen - 3hp][y] * intensityScale
     );
 
     stroke(255, 0, 255);
@@ -92,6 +92,7 @@ function draw() {
       (xLen - 3) * sc,
       y * sc,
       grid[xLen - 3][y] * intensityScale);
+    // rotateX(1);
 
     line(0, 0, 0, startVector.x, startVector.y, startVector.z);
 
