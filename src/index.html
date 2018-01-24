@@ -5,9 +5,6 @@
     <script type="text/javascript" src="//localhost:35729/livereload.js"></script>
     <link rel="stylesheet" href="style.css">
 
-
-
-
     <!-- build:dev -->
     <% if (library == "p5js"){ %>
     <script language="javascript" src="libs/p5-0.5.16.js"></script>
@@ -22,12 +19,16 @@
 	<!-- build:dev -->
  	<% if (bundleMethod == "concat"){ %>
     <!--  using concat method -->
-    <script language="javascript" src="index.js"></script>
+    <script src="index.js"></script>
     <% } %>
     
+    <% if (bundleMethod == "module"){ %>
+    <script type="module" src="index.js"></script>
+    <% } %>
+
     <% if (bundleMethod == "browserify"){ %>
     <!-- using browserify -->
-	<script language="javascript" src="dev_bundle.js"></script>
+	<script src="dev_bundle.js"></script>
 	<% } %>
  	<!-- /build -->
 
@@ -37,8 +38,4 @@
     <!-- <div id="p5_loading">Loading the stuffs...<div> -->
 </body>
 
-
-   <!--  <script language="javascript" src="libs/jquery-3.3.1.slim.min.js"></script>
-    <script language="javascript" src="libs/jq-ease.js"></script>
-     -->
 </html>

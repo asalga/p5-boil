@@ -99,12 +99,12 @@ module.exports = function(grunt) {
     /**
      *
      */
-    concat:{
+    concat: {
       dev: {
         dest: `${app}/index.js`,
         src: `${config.target}/*.js`
       },
-      options:{
+      options: {
 
       }
     },
@@ -140,14 +140,14 @@ module.exports = function(grunt) {
             filter: 'isFile'
           },
 
-          // // JS
-          // {
-          //   expand: true,
-          //   cwd: `${src}/sketches/1/`,
-          //   src: '*.js',
-          //   dest: `${app}/`,
-          //   filter: 'isFile'
-          // },
+          // JS
+          {
+            expand: true,
+            cwd: `${config.target}/data`,
+            src: '*.js',
+            dest: `${app}/`,
+            filter: 'isFile'
+          },
 
           // AUDIO
           {
@@ -320,6 +320,10 @@ module.exports = function(grunt) {
     //
     else if (`${config.bundleMethod}` === 'concat') {
       grunt.task.run('concat');
+    }
+    //
+    else if (`${config.bundleMethod}` === 'module') {
+      grunt.task.run('copy');
     }
   });
 
