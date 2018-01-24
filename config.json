@@ -35,7 +35,7 @@
 
      "unfold": {
       "dir": "unfold",
-      "library": "p5js",
+      "library": "p5js-0.6",
       "bundleMethod": "concat"
     }
   }

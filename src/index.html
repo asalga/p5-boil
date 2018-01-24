@@ -6,8 +6,11 @@
     <link rel="stylesheet" href="style.css">
 
     <!-- build:dev -->
-    <% if (library == "p5js"){ %>
+    <% if (library == "p5js-0.5.16"){ %>
     <script language="javascript" src="libs/p5-0.5.16.js"></script>
+    <% } %>
+    <% if (library == "p5js-0.6"){ %>
+    <script language="javascript" src="libs/p5-0.6.js"></script>
     <% } %>
     <% if (library == "processingjs"){ %>
     <script language="javascript" src="libs/pjs1.4.8.js"></script>
