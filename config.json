@@ -1,5 +1,5 @@
 {
-  "id": "unfold",
+  "id": "synthwave",
 
   "targets": {
 
@@ -33,8 +33,14 @@
       "bundleMethod": "browserify"
     },
 
-     "unfold": {
+    "unfold": {
       "dir": "unfold",
+      "library": "p5js-0.6",
+      "bundleMethod": "concat"
+    },
+
+    "synthwave": {
+      "dir": "synthwave",
       "library": "p5js-0.6",
       "bundleMethod": "concat"
     }

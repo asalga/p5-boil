@@ -26,9 +26,11 @@ module.exports = function(grunt) {
   let config = {
     // load by default if we can't find the target
     target: `${basePath}/examples/p5-require`,
-    library: 'p5js',
+    library: 'p5-0.6.js',
     bundleMethod: 'concat'
   };
+
+console.log(config);
 
   /*
    */
