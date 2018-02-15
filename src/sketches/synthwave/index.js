@@ -59,6 +59,12 @@ function draw() {
 
 }
 
+// create image
+// draw sun
+// cut out parts
+//
+
+
 function drawSun() {
   fill(250, 250, 100);
   //ellipse(width / 2, height / 2 - 10, 250, 250);
