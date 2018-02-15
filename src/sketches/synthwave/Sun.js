@@ -50,6 +50,10 @@ class PlanetGenerator {
 class Sun {
   constructor() {
 
+      let p = new PlanetGenerator();
+  this.sunNoise = p.create();
+
+
     this.gfx = createGraphics(width, height);
     this.gfxSun = createGraphics(width, height);
     this.lines = createGraphics(width, height);
@@ -121,7 +125,7 @@ class Sun {
     this.gfxSun.push();
     // this.gfxSun.imageMode(CENTER);
     // this.gfxSun.translate(width / 2, height / 2);
-    this.gfxSun.image(sunNoise, 0, 0);
+    this.gfxSun.image(this.sunNoise, 0, 0);
     // this.gfxSun.ellipse(width / 2, height / 2 - 10, 200, 200);
     this.gfxSun.pop();
 
