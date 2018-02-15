@@ -1,22 +1,25 @@
 /*
-Elements
-
-- starfield
-    - movement
-    - parallax
-
-- scanlines
-
-- sun
-    - sun blur
-    - sun blur offset
+    - scanlines
+    - sun
+    - stars
+    - mountain
+    - grid
 */
 
 let stars = new Array(150);
+let img;
+let c;
+
+function preload() {
+  img = loadImage('data/grunge.jpg');
+}
 
 function setup() {
   createCanvas(400, 400);
+  initSun();
+
   initStars();
+
 }
 
 function initStars() {
@@ -30,17 +33,45 @@ function initStars() {
   }
 }
 
+
+function initSun() {
+  fill(196, 40, 123);
+  ellipse(width / 2, height / 2 - 10, 280, 280);
+
+  filter(BLUR, 14);
+  c = get(0, 0, width, height);
+}
+
 function draw() {
   background(24, 30, 60);
+
+  push();
+  translate(0, -10);
+  image(c, 0, 0);
+  pop();
+
   drawSun();
-  drawStars();
-  drawGrid();
-  drawScanlines();
+
+  // drawStars();
+
+  // drawGrid();
+  // drawScanlines();
+
 }
 
 function drawSun() {
   fill(250, 250, 100);
-  ellipse(width / 2, height / 2 - 10, 250, 250);
+  //ellipse(width / 2, height / 2 - 10, 250, 250);
+
+  noStroke();
+  fill(24, 30, 60);
+
+  let y = 20;
+  let yPos = frameCount/10 % 20;
+
+  for (let i = 1; i < 10; ++i) {
+    rect(0, yPos + 150 + y * i, width, yPos/20 + pow(i, 1.1));
+  }
 }
 
 function drawStars() {
@@ -59,7 +90,7 @@ function drawScanlines() {
 }
 
 function drawGrid() {
-  stroke(0, 255, 0);
+  stroke(196, 40, 123);
   let r = 1.5;
 
   for (let i = 0; i < 20; i++) {
@@ -68,7 +99,7 @@ function drawGrid() {
   }
 
   for (let i = 0; i < width; i += 10) {
-    line(i, height / r, (i - width / 2) * 10, height);
+    line(i, height / r, (i - width / 2) * 20, height);
   }
 
   // noStroke();
