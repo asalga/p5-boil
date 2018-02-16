@@ -5,11 +5,11 @@ class Grid {
     this.h = 160;
 
     this.gfx = createGraphics(width, this.h);
-    this.gfx.stroke(160, 180, 90);
-    this.gfx.strokeWeight(2);
+
+
   }
 
-  draw() {
+  drawLines() {
     this.gfx.clear();
 
     let r = 50;
@@ -25,14 +25,33 @@ class Grid {
       this.gfx.line(
         i, 5,
         (i - width / 2) * 20,
-        this.h * 5// change constant for perspective
+        this.h * 5 // change constant for perspective
       );
     }
+  }
+
+  draw() {
+
+    // BLURRY LINES
+    this.gfx.stroke(160, 180, 90);
+    this.gfx.strokeWeight(3);
+    this.drawLines();
+    this.gfx.filter(BLUR, 2);
 
     push();
     translate(0, height - this.h);
-    // this.gfx.filter(BLUR, 1);
     blend(this.gfx, 0, 0, width, height, 0, 0, width, height, ADD);
+    pop();
+
+
+    // CLEAR LINES
+    this.gfx.stroke(10, 255, 255);
+    this.gfx.strokeWeight(1);
+    this.drawLines();
+
+    push();
+    translate(0, height - this.h);
+    blend(this.gfx, 0, 0, width, height, 0, 0, width, height, SCREEN);
     pop();
   }
 }
