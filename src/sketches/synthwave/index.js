@@ -23,6 +23,7 @@ function setup() {
 
 function draw() {
   background(24, 30, 60);
+  
   sun.draw();
   stars.draw();
   grid.draw();

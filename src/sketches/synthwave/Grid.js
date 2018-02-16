@@ -1,12 +1,14 @@
 /*
+  Grid TODO:
+  - change color based on y position
+  - animate lines
+  - move blur to shader
  */
+
 class Grid {
   constructor() {
     this.h = 160;
-
     this.gfx = createGraphics(width, this.h);
-
-
   }
 
   drawLines() {

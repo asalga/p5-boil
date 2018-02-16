@@ -1,3 +1,11 @@
+/*
+    Sun TODO:
+        - re-add noise
+        - add soft-edge
+        - fix horiz cut banners
+        - move blur to shader
+*/
+
 // BLEND, DARKEST, LIGHTEST, DIFFERENCE, MULTIPLY, 
 // EXCLUSION, SCREEN, REPLACE, OVERLAY, HARD_LIGHT, SOFT_LIGHT, 
 // DODGE, BURN, ADD, NORMAL
@@ -7,9 +15,7 @@ const BlurOffset = 60;
 
 class PlanetGenerator {
 
-  constructor() {
-
-  }
+  constructor() {}
 
   create() {
     this.img = createImage(SunSize, SunSize);
@@ -90,7 +96,6 @@ class Sun {
   createColorGradient() {
     this.gfxColorGradient = createGraphics(width, height);
 
-
     this.gfxColorGradient.loadPixels();
 
     for (let x = 0; x < width; x++) {
@@ -135,19 +140,22 @@ class Sun {
 
     // horizontal lines on the lower part of the sun
     this.lines.noStroke();
-    let y = 20;
-    let yPos = frameCount / 10 % 20;
+    let yPos = (frameCount / 5) % 20;
 
-    // this.lines.fill(50, 255);
-    // this.lines.rect(0, 0, width, height);
+    let bannerHeight = 10;
 
     this.lines.fill(255, 255);
     this.lines.noStroke();
 
-    this.lines.rect(0, 0, width, 180);
-    for (let i = 1; i < 10; ++i) {
-      this.lines.rect(0, yPos + 150 + y * i, width, yPos / 20 + pow(i, 1.1));
+    this.lines.push();
+    for (let i = 0; i < 30; ++i) {
+      this.lines.translate(0, ((i * 20) + yPos) / 20);
+      this.lines.rect(0, -bannerHeight, width, bannerHeight);
+
+      // this.lines.rect(0, -bannerHeight + yPos + (20 * i), width, bannerHeight);
+      // this.lines.rect(0,yPos + 150 + y * i,width,yPos / 20 + pow(i, 1.1));
     }
+    this.lines.pop();
 
     // this.gfxColorGradient.blend(this.gfxSun, 0, 0, width, height, 0, 0, width, height,ADD);
 
