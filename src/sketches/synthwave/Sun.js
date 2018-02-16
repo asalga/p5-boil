@@ -68,8 +68,6 @@ class Sun {
 
     this.createColorGradient();
 
-
-
     // BLURRY TIME!
     this.gfxGlow.fill(255, 40, 150);
     this.gfxGlow.ellipse(this.gfxGlow.height / 2, this.gfxGlow.height / 2, SunSize, SunSize);

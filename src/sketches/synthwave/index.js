@@ -3,11 +3,8 @@
   Feb 2018
 */
 
-let grungeImage,
-  scanLines,
-  sun,
-  grid,
-  sunNoise;
+let grungeImage;
+let layers = [];
 
 function preload() {
   grungeImage = loadImage('data/g.png');
@@ -15,21 +12,16 @@ function preload() {
 
 function setup() {
   createCanvas(500, 500);
-  sun = new Sun();
-  stars = new Stars();
-  grid = new Grid();
-  scanLines = new ScanLines();
-}
 
-function draw() {
+  layers.push(
+    new Sun(),
+    new Grid(),
+    new Mountain(),
+    new Stars(),
+    new ScanLines()
+    );
+
   background(24, 30, 60);
-
-  sun.draw();
-  stars.draw();
-  grid.draw();
-  scanLines.draw();
-
-  // innerHeartTitle.draw();
-
+  layers.forEach(l => l.draw());
   blend(grungeImage, 0, 0, width, height, 0, 0, width, height, ADD);
 }
