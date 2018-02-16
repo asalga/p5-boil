@@ -1,16 +1,18 @@
 // BLEND, DARKEST, LIGHTEST, DIFFERENCE, MULTIPLY, 
 // EXCLUSION, SCREEN, REPLACE, OVERLAY, HARD_LIGHT, SOFT_LIGHT, 
-// DODGE, BURN, ADD or NORMAL.
-// OVERLAY
+// DODGE, BURN, ADD, NORMAL
+
+const SunSize = 280;
+const BlurOffset = 60;
 
 class PlanetGenerator {
 
   constructor() {
-    this.s = 280;
+
   }
 
   create() {
-    this.img = createImage(this.s, this.s);
+    this.img = createImage(SunSize, SunSize);
     this.img.loadPixels();
 
     let xNoiseOffset = 1; //random(0, 10);
@@ -20,11 +22,11 @@ class PlanetGenerator {
     noiseDetail(20, 0.6);
     noiseSeed(noiseSeedVal);
 
-    for (let x = 0; x < this.img.width; x++) {
-      for (let y = 0; y < this.img.height; y++) {
+    for (let x = 0; x < this.img.width; ++x) {
+      for (let y = 0; y < this.img.height; ++y) {
 
-        let xNoise = xNoiseOffset + (x * 0.0021);
-        let yNoise = yNoiseOffset + (y * 0.0021);
+        let xNoise = xNoiseOffset + (x * 0.002);
+        let yNoise = yNoiseOffset + (y * 0.002);
 
         let n = noise(xNoise, yNoise);
         // let v = map(n, 0, 1, 0, gradientMap.width - 2);
@@ -33,10 +35,9 @@ class PlanetGenerator {
         let col = 150 + (n * 255);
         let startColor = color(255, 255, 50, 255);
 
-        if (dist(this.s / 2.0, this.s / 2.0, x + 0.5, y + 0.5) <= this.s / 2.0) {
+        if (dist(SunSize / 2, SunSize / 2, x + 0.5, y + 0.5) <= SunSize / 2) {
           this.img.set(x, y, col);
         }
-
       }
     }
 
@@ -50,11 +51,10 @@ class PlanetGenerator {
 class Sun {
   constructor() {
 
-      let p = new PlanetGenerator();
-  this.sunNoise = p.create();
+    let p = new PlanetGenerator();
+    this.sunNoise = p.create();
 
-
-    this.gfx = createGraphics(width, height);
+    this.gfxGlow = createGraphics(SunSize + BlurOffset, SunSize + BlurOffset);
     this.gfxSun = createGraphics(width, height);
     this.lines = createGraphics(width, height);
     this.gradientImg = createImage(width, height);
@@ -62,43 +62,47 @@ class Sun {
 
     this.createColorGradient();
 
-    this.gfx.fill(255, 40, 150);
-    this.gfx.ellipse(width / 2, height / 2 - 20, 300, 300);
-    this.gfx.filter(BLUR, 20);
-    this.sunGlowImg = this.gfx.get(0, 0, width, height);
+
+
+    // BLURRY TIME!
+    this.gfxGlow.fill(255, 40, 150);
+    this.gfxGlow.ellipse(this.gfxGlow.height / 2, this.gfxGlow.height / 2, SunSize, SunSize);
+    this.gfxGlow.filter(BLUR, 20);
+    this.sunGlowImg = this.gfxGlow.get(0, 0, this.gfxGlow.width, this.gfxGlow.height);
 
     // We only want the outer glow of the sun
     // we don't want to blend the pink glow ontop of the sun diffuse color
-    this.sunGlowImg.loadPixels();
-    for (let x = 0; x < width; x++) {
-      for (let y = 0; y < height; y++) {
+    // this.sunGlowImg.loadPixels();
+    // for (let x = 0; x < width; x++) {
+    //   for (let y = 0; y < height; y++) {
 
-        if (dist(width / 4 + (200 / 2.0),
-            50 + (280 / 2.0), x + 0.5, y + 0.5) <= 280 / 2.0) {
-          this.sunGlowImg.set(x, y, color(150, 25, 200));
-        }
-      }
-    }
-    this.sunGlowImg.updatePixels();
+    //     if (dist(width / 2 + (200 / 2), (SunSize / 2), x + 0.5, y + 0.5) <= SunSize / 2) {
+    //        this.sunGlowImg.set(x, y, color(150, 25, 200));
+    //     }
+    //   }
+    // }
+    // this.sunGlowImg.updatePixels();
   }
 
+
+  /*
+   */
   createColorGradient() {
     this.gfxColorGradient = createGraphics(width, height);
 
-    let h = 280;
+
     this.gfxColorGradient.loadPixels();
 
     for (let x = 0; x < width; x++) {
-      for (let y = 0; y < h; ++y) {
+      for (let y = 0; y < SunSize; ++y) {
 
-        let i = y / h;
-        let s = 280;
+        let i = y / SunSize;
 
         let lerpR = lerp(250, 255, i);
         let lerpG = lerp(250, 50, i)
         let lerpB = lerp(100, 140, i);
 
-        if (dist(s / 2, s / 2, x + 0.5, y + 0.5) <= s / 2) {
+        if (dist(SunSize / 2, SunSize / 2, x + 0.5, y + 0.5) <= SunSize / 2) {
 
           let c = color(lerpR, lerpG, lerpB);
           // this.gfxColorGradient.stroke(color(lerpR, lerpG, lerpB));
@@ -114,11 +118,11 @@ class Sun {
 
   draw() {
     this.g.clear();
-    this.gfx.clear();
+    this.gfxGlow.clear();
     this.gfxSun.clear();
     this.lines.clear();
 
-    this.gfx.image(this.sunGlowImg, 0, 0);
+    this.gfxGlow.image(this.sunGlowImg, 0, 0);
     // this.gfx.ellipse(width / 2, height / 2 - 10, 200, 200);
     // this.gfxSun.fill(150, 150, 50);
 
@@ -140,35 +144,33 @@ class Sun {
     this.lines.fill(255, 255);
     this.lines.noStroke();
 
-    this.lines.push();
     this.lines.rect(0, 0, width, 180);
     for (let i = 1; i < 10; ++i) {
       this.lines.rect(0, yPos + 150 + y * i, width, yPos / 20 + pow(i, 1.1));
     }
-    this.lines.pop();
 
     // this.gfxColorGradient.blend(this.gfxSun, 0, 0, width, height, 0, 0, width, height,ADD);
 
     this.gradientImg = this.gfxColorGradient.get(0, 0, width, height);
     this.gradientImg.mask(this.lines);
 
-    this.g.push();
-    this.g.image(this.gradientImg, 0, 0);
-    this.g.pop();
+    // this.gfxSun.blend(this.gfxColorGradient, 0, 0, width, height, 0, 0, width, height, MULTIPLY);
+    // blend(this.lines, 0, 0, width, height, 0, 0, width, height,DIFFERENCE);
 
-    this.gfxSun.blend(this.gfxColorGradient, 0, 0, width, height, 0, 0, width, height,
-      MULTIPLY);
+    let ySunPos = 50;
 
-    // blend(this.lines, 0, 0, width, height, 0, 0, width, height,
-    // DIFFERENCE);
-
-    // image(this.gfxColorGradient, 0, 0);
-
-    // GLOW
-    blend(this.gfx, 0, 0, width, height, 0, 0, width, height, ADD);
-
+    // SUN GLOW
     push();
-    translate(60, 50);
+    imageMode(CENTER);
+    translate(width / 2 - this.gfxGlow.width / 2, ySunPos - 40);
+    blend(this.gfxGlow, 0, 0, width, height, 0, 0, width, height, ADD);
+    pop();
+
+
+    // GRADIENT IMAGE / ACTUAL SUN
+    this.g.image(this.gradientImg, 0, 0);
+    push();
+    translate(width / 2 - SunSize / 2, ySunPos);
     image(this.g, 0, 0);
     // blend(this.gfxSun, 0, 0, width, height, 0, 0, width, height, SCREEN);
     // image(this.gfxSun, 0, 0);
