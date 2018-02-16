@@ -1,31 +1,38 @@
-
 /*
  */
 class Grid {
   constructor() {
-    this.gfx = createGraphics(width, height);
+    this.h = 160;
+
+    this.gfx = createGraphics(width, this.h);
     this.gfx.stroke(160, 180, 90);
-    this.gfx.strokeWeight(1);
+    this.gfx.strokeWeight(2);
   }
 
   draw() {
     this.gfx.clear();
-    let r = 1.5;
 
-    for (let i = 0; i < 20; i++) {
-      let y = pow(((i + frameCount / 40) % 15), 2);
-      this.gfx.line(0, height / r + y, width, height / r + y);
+    let r = 50;
+
+    // horizontal lines
+    for (let i = 0; i < 18; i++) {
+      let y = pow((i % 15), 2);
+      this.gfx.line(0, this.h / r + y, width, this.h / r + y);
     }
 
-    for (let i = 0; i < width; i += 10) {
-      this.gfx.line(i, height / r, (i - width / 2) * 20, height);
+    // perspective lines
+    for (let i = 0; i < width; i += 20) {
+      this.gfx.line(
+        i, 5,
+        (i - width / 2) * 20,
+        this.h * 5// change constant for perspective
+      );
     }
 
-    blend(this.gfx, 0, 0, width, height, 0, 0, width, height, DODGE);
-    
-    // for (let i = 0; i < height; i += 10) {
-    //   fill(0, 255 - (i / height * 255) * 1.5);
-    //   rect(0, i - 2, width * 2, 10); // use -2 instead of extra call to rectMode(CENTER)
-    // }
+    push();
+    translate(0, height - this.h);
+    // this.gfx.filter(BLUR, 1);
+    blend(this.gfx, 0, 0, width, height, 0, 0, width, height, ADD);
+    pop();
   }
 }

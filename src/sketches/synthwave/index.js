@@ -14,7 +14,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(400, 400);
+  createCanvas(500, 500);
   sun = new Sun();
   stars = new Stars();
   grid = new Grid();
