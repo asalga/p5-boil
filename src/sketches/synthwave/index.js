@@ -23,10 +23,13 @@ function setup() {
 
 function draw() {
   background(24, 30, 60);
-  
+
   sun.draw();
   stars.draw();
   grid.draw();
   scanLines.draw();
+
+  // innerHeartTitle.draw();
+
   blend(grungeImage, 0, 0, width, height, 0, 0, width, height, ADD);
 }

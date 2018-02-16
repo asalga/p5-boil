@@ -2,8 +2,8 @@
     Sun TODO:
         - re-add noise
         - add soft-edge
-        - fix horiz cut banners
         - move blur to shader
+        - remove center pink glow
 */
 
 // BLEND, DARKEST, LIGHTEST, DIFFERENCE, MULTIPLY, 
@@ -73,15 +73,18 @@ class Sun {
     // BLURRY TIME!
     this.gfxGlow.fill(255, 40, 150);
     this.gfxGlow.ellipse(this.gfxGlow.height / 2, this.gfxGlow.height / 2, SunSize, SunSize);
+
+    this.gfxGlow.fill(100,40, 100);
+    this.gfxGlow.ellipse(this.gfxGlow.height / 2, this.gfxGlow.height / 2, SunSize-50, SunSize-50);
+
     this.gfxGlow.filter(BLUR, 20);
     this.sunGlowImg = this.gfxGlow.get(0, 0, this.gfxGlow.width, this.gfxGlow.height);
 
     // We only want the outer glow of the sun
-    // we don't want to blend the pink glow ontop of the sun diffuse color
+    // // we don't want to blend the pink glow ontop of the sun diffuse color
     // this.sunGlowImg.loadPixels();
     // for (let x = 0; x < width; x++) {
     //   for (let y = 0; y < height; y++) {
-
     //     if (dist(width / 2 + (200 / 2), (SunSize / 2), x + 0.5, y + 0.5) <= SunSize / 2) {
     //        this.sunGlowImg.set(x, y, color(150, 25, 200));
     //     }
@@ -166,6 +169,8 @@ class Sun {
     // blend(this.lines, 0, 0, width, height, 0, 0, width, height,DIFFERENCE);
 
     let ySunPos = 50;
+
+
 
     // SUN GLOW
     push();
