@@ -1,13 +1,11 @@
 /*
   Andor Saga
   Feb 2018
-
-   - add key to toggle draw
-   - add key to toggle reference image
 */
 
 let grungeImage, referenceImage;
 let isLooping = false;
+let drawReference = false;
 
 let markerColor;
 let Red;
@@ -17,7 +15,7 @@ let layers = [];
 
 function preload() {
   grungeImage = loadImage('data/g.png');
-  reference = loadImage('data/reference.jpg');
+  referenceImage = loadImage('data/reference.jpg');
 }
 
 function setup() {
@@ -34,7 +32,7 @@ function setup() {
     new ScanLines()
   );
 
-  markerColor = color(255, 0, 0);
+  markerColor = Red;
   drawLayers();
 }
 
@@ -42,6 +40,11 @@ function drawLayers() {
   background(24, 30, 60);
   layers.forEach(l => l.draw());
   blend(grungeImage, 0, 0, width, height, 0, 0, width, height, ADD);
+
+  if (drawReference) {
+    console.log('draw ref:', drawReference);
+    image(referenceImage, 0, 0);
+  }
 }
 
 function keyPressed(key) {
@@ -49,15 +52,12 @@ function keyPressed(key) {
     isLooping = !isLooping;
   }
 
-  if (isLooping) {
-    markerColor = Green;
-    loop();
+  if (key.code === 'KeyR') {
+    drawReference = !drawReference;
   }
-  // 
-  else {
-    markerColor = Red;
-    noLoop();
-  }
+
+  markerColor = isLooping ? Green : Red;
+  isLooping ? loop() : noLoop();
 }
 
 // Make it obvious that redrawing is happening.
