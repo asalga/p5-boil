@@ -24,11 +24,7 @@ class Grid {
         let colB = color(200, 50, 100);
 
         let c = lerpColor(colA, colB, i);
-        // let lerpR = lerp(255, 200, i);
-        // let lerpG = lerp(100, 50, i)
-        // let lerpB = lerp(100, 100, i);
 
-        // let c = color(lerpR, lerpG, lerpB);
         this.gfxColorGradient.set(x, y, c);
       }
     }

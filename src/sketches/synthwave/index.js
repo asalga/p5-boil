@@ -29,6 +29,7 @@ function setup() {
     new Grid(),
     new Mountain(),
     new Stars(),
+    new Title(),
     new ScanLines()
   );
 
@@ -42,7 +43,6 @@ function drawLayers() {
   blend(grungeImage, 0, 0, width, height, 0, 0, width, height, ADD);
 
   if (drawReference) {
-    console.log('draw ref:', drawReference);
     image(referenceImage, 0, 0);
   }
 }
@@ -72,4 +72,6 @@ function drawMaker(col) {
 function draw() {
   drawLayers();
   drawMaker(markerColor);
+
+
 }

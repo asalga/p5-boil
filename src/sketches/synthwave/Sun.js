@@ -72,8 +72,8 @@ class Sun {
     this.gfxGlow.fill(255, 40, 150);
     this.gfxGlow.ellipse(this.gfxGlow.height / 2, this.gfxGlow.height / 2, SunSize, SunSize);
 
-    this.gfxGlow.fill(100,40, 100);
-    this.gfxGlow.ellipse(this.gfxGlow.height / 2, this.gfxGlow.height / 2, SunSize-50, SunSize-50);
+    this.gfxGlow.fill(100, 40, 100);
+    this.gfxGlow.ellipse(this.gfxGlow.height / 2, this.gfxGlow.height / 2, SunSize - 50, SunSize - 50);
 
     this.gfxGlow.filter(BLUR, 20);
     this.sunGlowImg = this.gfxGlow.get(0, 0, this.gfxGlow.width, this.gfxGlow.height);
@@ -104,13 +104,12 @@ class Sun {
 
         let i = y / SunSize;
 
-        let lerpR = lerp(250, 255, i);
-        let lerpG = lerp(250, 50, i)
-        let lerpB = lerp(100, 140, i);
+        let colFrom = color(255, 255, 100);
+        let colTo = color(255, 50, 140);
 
         if (dist(SunSize / 2, SunSize / 2, x + 0.5, y + 0.5) <= SunSize / 2) {
 
-          let c = color(lerpR, lerpG, lerpB);
+          let c = color(lerpColor(colFrom, colTo, i));
           // this.gfxColorGradient.stroke(color(lerpR, lerpG, lerpB));
           // this.gfxColorGradient.line(0, y, width, y);
           this.gfxColorGradient.set(x, y, c);
