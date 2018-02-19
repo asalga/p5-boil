@@ -14,7 +14,7 @@ class Mountain {
   drawMountainBlur() {
     this.gfx.strokeWeight(5);
 
-    this.gfx.fill(30, 60, 100, 128, 128);
+    this.gfx.fill(30, 60, 100, 128);
 
     this.gfx.stroke(60, 150, 200, 255)
 
@@ -30,7 +30,7 @@ class Mountain {
   }
 
   drawMountain() {
-    this.gfx.fill(33, 66, 99, 128, 100);
+    this.gfx.fill(33, 66, 99, 128);
     this.gfx.strokeWeight(2);
     // this.gfx.stroke(60, 150, 200, 210)
     this.gfx.stroke(255);
