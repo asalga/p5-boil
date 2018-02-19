@@ -91,8 +91,6 @@ class Grid {
     // blend(this.gradientImg, 0, 0, width, height, 0, 0, width, height, SCREEN);
     pop();
 
-
-
     this.lines.clear();
     this.lines.stroke(255);
     this.lines.strokeWeight(2);

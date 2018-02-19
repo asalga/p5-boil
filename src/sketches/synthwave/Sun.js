@@ -1,6 +1,6 @@
 /*
     Sun TODO:
-        - re-add noise
+=        - re-add noise
         - add soft-edge
         - move blur to shader
         - remove center pink glow
@@ -166,8 +166,6 @@ class Sun {
     // blend(this.lines, 0, 0, width, height, 0, 0, width, height,DIFFERENCE);
 
     let ySunPos = 50;
-
-
 
     // SUN GLOW
     push();
