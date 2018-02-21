@@ -66,7 +66,13 @@ class Sun {
     this.gradientImg = createImage(width, height);
     this.g = createGraphics(width, height);
 
+    this.blurGfx = createGraphics(width, height, WEBGL);
+    this.blurShader = makeBlurShader({ gfx: this.blurGfx, kSize: "20.0" });
+
+
     this.createColorGradient();
+
+
 
     // BLURRY TIME!
     this.gfxGlow.fill(255, 40, 150);
@@ -75,8 +81,28 @@ class Sun {
     this.gfxGlow.fill(100, 40, 100);
     this.gfxGlow.ellipse(this.gfxGlow.height / 2, this.gfxGlow.height / 2, SunSize - 50, SunSize - 50);
 
+
+    // this.blurGfx.shader(this.blurShader);
+    // this.blurShader.setUniform('texture0', this.gfxGlow);
+    // this.blurShader.setUniform('res', [width, height]);
+
+    // this.blurGfx.push();
+    // this.blurGfx.translate(-width / 2, -height / 2);
+    // this.blurGfx.rect(0, 0, width, height);
+    // this.blurGfx.pop();
+
+    // image(blurGfx, 0, 0);
+
+    // blend(this.blurGfx, 0, 0, width, height, 0, 0, width, height, ADD);
+
+    // OLD slow way
     this.gfxGlow.filter(BLUR, 20);
     this.sunGlowImg = this.gfxGlow.get(0, 0, this.gfxGlow.width, this.gfxGlow.height);
+
+
+    // this.sunGlowImg = this.blurGfx.get(0, 0, this.gfxGlow.width, this.gfxGlow.height);
+
+
 
     // We only want the outer glow of the sun
     // // we don't want to blend the pink glow ontop of the sun diffuse color
@@ -127,7 +153,10 @@ class Sun {
     this.gfxSun.clear();
     this.lines.clear();
 
+    // OLD Slow way
     this.gfxGlow.image(this.sunGlowImg, 0, 0);
+    // this.gfxGlow.image(this.blurGfx, 0, 0);
+
     // this.gfx.ellipse(width / 2, height / 2 - 10, 200, 200);
     // this.gfxSun.fill(150, 150, 50);
 

@@ -1,5 +1,5 @@
 /*
-	- basically need to do everything
+  - basically need to do everything
 */
 let mountainHeight = 250;
 let mountainWidth = 200;
@@ -9,6 +9,9 @@ class Mountain {
 
   constructor() {
     this.gfx = createGraphics(width, height);
+
+    this.blurGfx = createGraphics(width, height, WEBGL);
+    this.blurShader = makeBlurShader({ gfx: this.blurGfx, kSize: "3.0" });
   }
 
   drawMountainBlur() {
@@ -26,7 +29,23 @@ class Mountain {
     this.gfx.stroke(25, 170, 200, 255)
     this.gfx.line(-width, mountainHeight, width, mountainHeight);
     this.gfx.pop();
-    this.gfx.filter(BLUR, 2);
+
+
+
+
+    this.blurGfx.shader(this.blurShader);
+    this.blurShader.setUniform('texture0', this.gfx);
+    this.blurShader.setUniform('res', [width, height]);
+
+    this.blurGfx.push();
+    this.blurGfx.translate(-width / 2, -height / 2);
+    this.blurGfx.rect(0, 0, width, height);
+    this.blurGfx.pop();
+
+    this.gfx.image(this.blurGfx, 0, 0);
+
+    // blend(this.blurGfx, 0, 0, width, height, 0, 0, width, height, ADD);
+    // this.gfx.filter(BLUR, 1);
   }
 
   drawMountain() {
@@ -41,7 +60,7 @@ class Mountain {
 
     // base of mountian
     this.gfx.stroke(255);
-	this.gfx.strokeWeight(1);
+    this.gfx.strokeWeight(1);
     this.gfx.line(-width, mountainHeight, width, mountainHeight);
     this.gfx.pop();
   }

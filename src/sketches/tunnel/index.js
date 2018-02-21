@@ -1,6 +1,7 @@
 /*
- Andor Saga
+  Andor Saga
 */
+
 let myShader,
   mouse = [0, 0, 0];
 let pimg;
@@ -25,7 +26,7 @@ function mouseReleased(event) {
 }
 
 function draw() {
-    translate(-width/2, -height/2);
+  translate(-width / 2, -height / 2);
 
   shader(myShader);
   myShader.setUniform('time', millis());
