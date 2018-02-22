@@ -1,5 +1,5 @@
 {
-  "id": "synthwave",
+  "id": "sobel",
 
   "targets": {
 
@@ -19,6 +19,12 @@
       "dir": "wak-a-rat",
       "library": "p5js",
       "bundleMethod": "browserify"
+    },
+
+    "sobel": {
+      "dir": "sobel",
+      "library": "p5js-0.6",
+      "bundleMethod": "concat"
     },
 
     "tunnel": {
