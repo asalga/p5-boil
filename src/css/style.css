@@ -14,10 +14,18 @@ body {
   text-align: center;
 }
 
+/*video {
+  /*display: inline-block;*/
+  /*width: 200;*/
+  /*height: 200;*/
+  /*border: 1px solid red;*/
+/*}*/
+
+
 canvas#defaultCanvas0 {
   background-color: #000;
   border: 1px solid #FFF;
-  display: block;
+  display: inline-block;
   height: auto !important;
   margin: 0;
   margin: 0 auto;

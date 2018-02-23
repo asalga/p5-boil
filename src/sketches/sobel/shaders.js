@@ -9,9 +9,12 @@ varying vec3 var_vertNormal;
 varying vec2 var_vertTexCoord;
 
 uniform sampler2D texture0;
-uniform sampler2D texture1;
 uniform vec3 mouse;
 uniform vec2 res;
+uniform float time;
+
+// vec2 sampling offsets
+uniform float _[18];
 
 float aspect = res.x/res.y;
 
@@ -19,9 +22,6 @@ mat3 sobelX = mat3(
   -1.0, 0.0, 1.0,
   -2.0, 0.0, 2.0,
   -1.0, 0.0, 1.0);
-
-// vec2 sampling offsets
-uniform float _[18];
 
 /*
 */
@@ -56,7 +56,7 @@ void main() {
 
   float resCol = sqrt(colX.r * colX.r + colY.r * colY.r);
 
-  vec2 p = gl_FragCoord.xy / res;
+  vec2 p = (gl_FragCoord.xy / res);// * 2.0 - 1.0;
   p.y = 1.0 - p.y;
 
   vec4 diffuse = texture2D(texture0, p);
