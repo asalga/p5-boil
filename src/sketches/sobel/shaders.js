@@ -20,11 +20,9 @@ float aspect = res.x/res.y;
 
 mat3 sobelX = mat3(
   -1.0, 0.0, 1.0,
-  -2.0, 0.0, 2.0,
+  -1.0, 0.0, 1.0,
   -1.0, 0.0, 1.0);
 
-/*
-*/
 vec4 sample(vec2 offset){
   vec2 p = vec2(gl_FragCoord.xy + offset) / res;
   p.y = 1.0 - p.y;
@@ -61,7 +59,7 @@ void main() {
 
   vec4 diffuse = texture2D(texture0, p);
 
-  gl_FragColor = vec4(0.0, resCol * diffuse.r * 2.0, 0.0, 1.0);
+  gl_FragColor = vec4(0.0, resCol * 2.0, 0.0, 1.0);
 
   if(mouse.z == 1.0){
     gl_FragColor = gl_FragColor + diffuse;
