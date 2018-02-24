@@ -18,10 +18,9 @@ uniform float _[18];
 
 float aspect = res.x/res.y;
 
-mat3 sobelX = mat3(
-  -1.0, 0.0, 1.0,
-  -1.0, 0.0, 1.0,
-  -1.0, 0.0, 1.0);
+mat3 sobel = mat3(  -1.0, 0.0, 1.0,
+                    -1.0, 0.0, 1.0,
+                    -1.0, 0.0, 1.0);
 
 vec4 sample(vec2 offset){
   vec2 p = vec2(gl_FragCoord.xy + offset) / res;
@@ -42,15 +41,17 @@ void main() {
   vec2 _12 = vec2(_[14], _[15]);
   vec2 _22 = vec2(_[16], _[17]);
 
-   vec4 colX = 
-   sample(_00) * sobelX[0][0] + sample(_01) * sobelX[0][1] + sample(_02) * sobelX[0][2] + 
-   sample(_10) * sobelX[1][0] + sample(_11) * sobelX[1][1] + sample(_12) * sobelX[1][2] + 
-   sample(_20) * sobelX[2][0] + sample(_21) * sobelX[2][1] + sample(_22) * sobelX[2][2];
+  vec4 colX = 
+   sample(_00) * sobel[0][0] + sample(_01) * sobel[0][1] + sample(_02) * sobel[0][2] + 
+   sample(_10) * sobel[1][0] + sample(_11) * sobel[1][1] + sample(_12) * sobel[1][2] + 
+   sample(_20) * sobel[2][0] + sample(_21) * sobel[2][1] + sample(_22) * sobel[2][2];
+
+  // sobel = transpose(sobel);
 
   vec4 colY = 
-   sample(_01) * sobelX[0][0] + sample(_01) * sobelX[1][0] + sample(_02) * sobelX[2][0] + 
-   sample(_12) * sobelX[0][1] + sample(_11) * sobelX[1][1] + sample(_12) * sobelX[2][1] + 
-   sample(_20) * sobelX[0][2] + sample(_21) * sobelX[1][2] + sample(_22) * sobelX[2][2];
+   sample(_01) * sobel[0][0] + sample(_01) * sobel[1][0] + sample(_02) * sobel[2][0] + 
+   sample(_12) * sobel[0][1] + sample(_11) * sobel[1][1] + sample(_12) * sobel[2][1] + 
+   sample(_20) * sobel[0][2] + sample(_21) * sobel[1][2] + sample(_22) * sobel[2][2];
 
   float resCol = sqrt(colX.r * colX.r + colY.r * colY.r);
 
@@ -59,10 +60,18 @@ void main() {
 
   vec4 diffuse = texture2D(texture0, p);
 
-  gl_FragColor = vec4(0.0, resCol * 2.0, 0.0, 1.0);
+
+  float i = (2.0 * sin(time/500.0)-1.0);
+
+
+  gl_FragColor = vec4( 0.0, resCol * i, (1.0 - i) * resCol, 1.0);
 
   if(mouse.z == 1.0){
     gl_FragColor = gl_FragColor + diffuse;
+  }
+
+  if(mouse.x < gl_FragCoord.x){
+    gl_FragColor = diffuse;
   }
 }`;
 
