@@ -4,6 +4,10 @@
 */
 'use strict';
 
+let test;
+
+let capture;
+
 navigator.getUserMedia = (navigator.getUserMedia ||
   navigator.webkitGetUserMedia ||
   navigator.mozGetUserMedia ||
@@ -31,12 +35,13 @@ let onError = function(err) {
 /*
  */
 function setup() {
-  windowWidth = windowWidth / 2;
-  windowHeight = windowHeight / 2;
+  windowWidth = windowWidth / 1;
+  windowHeight = windowHeight / 1;
 
   createCanvas(windowWidth, windowHeight, WEBGL);
   gfx = createGraphics(windowWidth, windowHeight);
   myShader = new p5.Shader(this._renderer, vert, frag);
+  capture = createCapture(VIDEO);
 
   videoCanvas = createEl('canvas');
   videoCanvas.id = 'videoCanvas'
@@ -67,7 +72,7 @@ function setup() {
     window.setInterval(() => {
       window.videoCanvasCtx = videoCanvasCtx;
       videoCanvasCtx.drawImage(videoEl, 0, 0, windowWidth, windowHeight);
-      // let imgData = videoCanvasCtx.getImageData(0, 0, 400, 400);
+      test = videoCanvasCtx.getImageData(0, 0, windowWidth, windowHeight);
     }, 33.3);
   }, onError);
 
@@ -111,11 +116,20 @@ function mouseReleased(event) {
 }
 
 function draw() {
+
+  //if (videoCanvas && videoCanvas.width > 1) {
   gfx.push();
   gfx.translate(width / 2, height / 2);
   gfx.imageMode(CENTER);
   // gfx.rotate(frameCount/100);
+
+
   gfx.image(pimg, 0, 0);
+  if (test) {
+    gfx.image(capture, 0, 0);
+  }
+
+
   gfx.pop();
 
   push();
@@ -125,8 +139,15 @@ function draw() {
   myShader.setUniform('res', [width, height]);
   myShader.setUniform('mouse', [pmouseX, height - pmouseY, mouse[0], mouse[2]]);
   myShader.setUniform('_', [-1, -1, 0, -1, 1, -1, -1, 0, 0, 0, 1, 0, -1, 1, 0, 1, 1, 1]);
+
+  // if (videoCanvas && videoCanvas.width > 1) {
+  // debugger;
+  // myShader.setUniform('texture0', videoEl);
+  // myShader.setUniform('texture0', videoCanvasCtx);
   myShader.setUniform('texture0', gfx);
+  // }
 
   rect(0, 0, windowWidth, windowHeight, 1, 1);
   pop();
+  //}
 }
