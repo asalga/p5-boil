@@ -1,5 +1,5 @@
 {
-  "id": "sobel",
+  "id": "cel",
 
   "targets": {
 
@@ -23,6 +23,12 @@
 
     "sobel": {
       "dir": "sobel",
+      "library": "p5js-0.6",
+      "bundleMethod": "concat"
+    },
+
+    "cel": {
+      "dir": "cel",
       "library": "p5js-0.6",
       "bundleMethod": "concat"
     },

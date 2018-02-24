@@ -60,9 +60,7 @@ void main() {
 
   vec4 diffuse = texture2D(texture0, p);
 
-
   float i = (2.0 * sin(time/500.0)-1.0);
-
 
   gl_FragColor = vec4( 0.0, resCol * i, (1.0 - i) * resCol, 1.0);
 

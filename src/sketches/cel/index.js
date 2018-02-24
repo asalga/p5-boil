@@ -38,6 +38,7 @@ function draw() {
   myShader.setUniform('time', millis());
   myShader.setUniform('res', [width, height]);
   myShader.setUniform('mouse', [pmouseX, height - pmouseY, mouse[0], mouse[2]]);
+  myShader.setUniform('_', [-1, -1, 0, -1, 1, -1, -1, 0, 0, 0, 1, 0, -1, 1, 0, 1, 1, 1]);
   myShader.setUniform('texture0', gfx);
   rect(0, 0, windowWidth, windowHeight, 1, 1);
   pop();
