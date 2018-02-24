@@ -30,30 +30,24 @@ vec4 sample(vec2 offset){
 
 void main() {
 
-  // calculate the intensity of the color
-  float intensity = (diffuse.r + diffuse.g + diffuse.b) /3.;
-
-  vec4 col = vec4(0.111, 0.3333, 0.6666, 0.999);
-
-  float result = 0.0;
 
 
 
-  vec2 p = (gl_FragCoord.xy / res);
-  p.y = 1.0 - p.y;
-  vec4 diffuse = texture2D(texture0, p);
+ //  // calculate the intensity of the color
+ //  float intensity = (diffuse.r + diffuse.g + diffuse.b) /3.;
+
+ //  vec4 col = vec4(0.111, 0.3333, 0.6666, 0.999);
+
+ //  float result = 0.0;
 
 
-  if(intensity < 0.1){ result = 0.1;}
-  else if( intensity < 0.3333){result = 0.3;}
-  else if( intensity < 0.6666){result = 0.6;}
-  else if( intensity < 0.9){result = 0.9;}
-  else{result = 1.;}
+ //  if(intensity < 0.1){ result = 0.1;}
+ //  else if( intensity < 0.3333){result = 0.3;}
+ //  else if( intensity < 0.6666){result = 0.6;}
+ //  else if( intensity < 0.9){result = 0.9;}
+ //  else{result = 1.;}
 
-  gl_FragColor = vec4( vec3(result), 1.0);
-
-
-
+ // // gl_FragColor = vec4( vec3(result), 1.0);
 
 
   vec2 _00 = vec2(_[0], _[1]);
@@ -68,12 +62,14 @@ void main() {
   vec2 _12 = vec2(_[14], _[15]);
   vec2 _22 = vec2(_[16], _[17]);
 
+  vec2 p = gl_FragCoord.xy / res;
+  p.y = 1.0 - p.y;
+  vec4 diffuse = texture2D(texture0, p);
+
   vec4 colX = 
    sample(_00) * sobel[0][0] + sample(_01) * sobel[0][1] + sample(_02) * sobel[0][2] + 
    sample(_10) * sobel[1][0] + sample(_11) * sobel[1][1] + sample(_12) * sobel[1][2] + 
    sample(_20) * sobel[2][0] + sample(_21) * sobel[2][1] + sample(_22) * sobel[2][2];
-
-  // sobel = transpose(sobel);
 
   vec4 colY = 
    sample(_01) * sobel[0][0] + sample(_01) * sobel[1][0] + sample(_02) * sobel[2][0] + 
@@ -82,20 +78,25 @@ void main() {
 
   float resCol = sqrt(colX.r * colX.r + colY.r * colY.r);
 
+//  float i = (2.0 * sin(time/500.0)-1.0);
 
-
-
-  float i = (2.0 * sin(time/500.0)-1.0);
-
-  gl_FragColor = vec4( 0.0, resCol * i, (1.0 - i) * resCol, 1.0);
-
-  if(mouse.z == 1.0){
-    gl_FragColor = gl_FragColor + diffuse;
+  if(gl_FragCoord.x > (res.x/3.0) + res.x/3.0){
+    gl_FragColor = vec4( 0.0, resCol, 0.0, 1.0);  
+  }
+  else{
+    gl_FragColor = diffuse;  
   }
 
-  if(mouse.x < gl_FragCoord.x){
-    gl_FragColor = diffuse;
-  }
+  
+  
+
+  //if(mouse.z == 1.0){
+//    gl_FragColor = gl_FragColor + diffuse;
+  //}
+
+  // if(mouse.x < gl_FragCoord.x){
+  //  gl_FragColor = diffuse;
+  // }
 }`;
 
 let vert = `
