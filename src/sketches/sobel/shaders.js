@@ -56,15 +56,15 @@ void main() {
 
   float resCol = sqrt(colX.r * colX.r + colY.r * colY.r);
 
-  vec2 p = (gl_FragCoord.xy / res);// * 2.0 - 1.0;
+  vec2 p = (gl_FragCoord.xy / res);
   p.y = 1.0 - p.y;
 
   vec4 diffuse = texture2D(texture0, p);
 
-  gl_FragColor = vec4(resCol, resCol * diffuse.r, resCol, 1.0) + diffuse;
+  gl_FragColor = vec4(0.0, resCol * diffuse.r * 2.0, 0.0, 1.0);
 
   if(mouse.z == 1.0){
-    gl_FragColor = diffuse;
+    gl_FragColor = gl_FragColor + diffuse;
   }
 }`;
 
