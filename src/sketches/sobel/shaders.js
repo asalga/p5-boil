@@ -29,6 +29,33 @@ vec4 sample(vec2 offset){
 }
 
 void main() {
+
+  // calculate the intensity of the color
+  float intensity = (diffuse.r + diffuse.g + diffuse.b) /3.;
+
+  vec4 col = vec4(0.111, 0.3333, 0.6666, 0.999);
+
+  float result = 0.0;
+
+
+
+  vec2 p = (gl_FragCoord.xy / res);
+  p.y = 1.0 - p.y;
+  vec4 diffuse = texture2D(texture0, p);
+
+
+  if(intensity < 0.1){ result = 0.1;}
+  else if( intensity < 0.3333){result = 0.3;}
+  else if( intensity < 0.6666){result = 0.6;}
+  else if( intensity < 0.9){result = 0.9;}
+  else{result = 1.;}
+
+  gl_FragColor = vec4( vec3(result), 1.0);
+
+
+
+
+
   vec2 _00 = vec2(_[0], _[1]);
   vec2 _10 = vec2(_[2], _[2]);
   vec2 _20 = vec2(_[4], _[3]);
@@ -55,10 +82,8 @@ void main() {
 
   float resCol = sqrt(colX.r * colX.r + colY.r * colY.r);
 
-  vec2 p = (gl_FragCoord.xy / res);
-  p.y = 1.0 - p.y;
 
-  vec4 diffuse = texture2D(texture0, p);
+
 
   float i = (2.0 * sin(time/500.0)-1.0);
 

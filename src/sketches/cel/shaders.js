@@ -55,6 +55,11 @@ void main() {
   }
 
   gl_FragColor = vec4( vec3(result), 1.0);
+
+  if(mouse.x < gl_FragCoord.x){
+    gl_FragColor = diffuse;
+  }
+
 }`;
 
 let vert = `
