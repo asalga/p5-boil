@@ -1,4 +1,6 @@
-let frag1 = `
+// Cel Fragment Shader
+
+let celShaderFrag = `
 #ifdef GL_ES
   precision mediump float;
 #endif
@@ -9,6 +11,7 @@ varying vec3 var_vertNormal;
 varying vec2 var_vertTexCoord;
 
 uniform sampler2D texture0;
+uniform sampler2D texture1;
 uniform vec3 mouse;
 uniform vec2 res;
 uniform float time;
@@ -51,18 +54,30 @@ void main() {
     result = 0.9;
   }
   else{
-    result = 1.;
+    result = 1.0;
   }
 
-  gl_FragColor = vec4( vec3(result), 1.0);
-
-  if(gl_FragCoord.x < res.x / 3.0){
+  gl_FragColor = diffuse;
+  
+  // 0 -25%  Original
+  if( gl_FragCoord.x < res.x * 0.25){
+     gl_FragColor = diffuse;
+  }
+  // 25% - 50%
+  else if(gl_FragCoord.x > 0.25 * res.x && gl_FragCoord.x < 0.5 * res.x){
+    gl_FragColor = vec4( vec3(result), 1.0);
+  }
+  // 50% - 75%
+  else if(gl_FragCoord.x > 0.5 * res.x && gl_FragCoord.x < 0.75 * res.x){  
     gl_FragColor = diffuse;
   }
-
+  // 75% - 100%
+  else if(gl_FragCoord.x > 0.75 * res.x){
+    gl_FragColor = vec4( vec3(result), 1.0); 
+  }
 }`;
 
-let vert1 = `
+let celShaderVert = `
 #ifdef GL_ES
   precision highp float;
   precision mediump int;
