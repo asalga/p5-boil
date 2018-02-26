@@ -31,6 +31,8 @@ function draw() {
 
   gfx.push();
   gfx.translate(width / 2, height / 2);
+  let scaleRatio = windowWidth / 480;
+  gfx.scale(scaleRatio, scaleRatio);
   gfx.imageMode(CENTER);
   gfx.image(capture, 0, 0);
   gfx.pop();
@@ -45,14 +47,8 @@ function draw() {
   celShader.setUniform('texture0', gfx);
   gfx3D.rect(0, 0, windowWidth, windowHeight, 1, 1);
   gfx3D.pop();
-  
-  // push();
-  // stroke(255,0,0);
-  // translate(-width / 2, -height / 2);
-  // rect(0,0, windowWidth, windowHeight,1,1);
-  // pop();
 
-  // SOBEL
+  // // SOBEL
   push();
   translate(-width / 2, -height / 2);
   shader(sobelShader);
