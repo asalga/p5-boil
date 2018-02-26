@@ -1,23 +1,29 @@
 {
-  "id": "sobel",
+  "id": "robotic-access",
 
   "targets": {
 
+    "robotic-access": {
+      "dir": "robotic-access",
+      "library": "p5js-0.6",
+      "bundleMethod": "concat"
+    },
+
     "tower-toppler-viz": {
       "dir": "tower-toppler-viz",
-      "library": "p5js",
+      "library": "p5js-0.6",
       "bundleMethod": "concat"
     },
 
     "example-timing": {
       "dir": "example-timing",
-      "library": "p5js",
+      "library": "p5js-0.6",
       "bundleMethod": "concat"
     },
 
     "wak-a-rat": {
       "dir": "wak-a-rat",
-      "library": "p5js",
+      "library": "p5js-0.6",
       "bundleMethod": "browserify"
     },
 

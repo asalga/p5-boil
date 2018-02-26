@@ -22,15 +22,12 @@ module.exports = function(grunt) {
   const app = 'app';
   const basePath = 'src/sketches/';
 
-
   let config = {
     // load by default if we can't find the target
     target: `${basePath}/examples/p5-require`,
-    library: 'p5-0.6.js',
+    library: 'p5js-0.6',
     bundleMethod: 'concat'
   };
-
-console.log(config);
 
   /*
    */
