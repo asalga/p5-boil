@@ -2,38 +2,42 @@
   Andor Saga
   Feb 2018
 */
-'use strict';
+
+let looping = true;
+const MaxSize = 75;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  noFill(255);
+  noStroke();
   rectMode(CENTER);
 }
 
-function drawBox(s) {
-  let sz = 50;
+function drawBox(s, c) {
+  fill(255);
+
+  if (s > MaxSize - 10) {
+    let col = MaxSize - s;
+    fill(255 * (col / 10));
+  }
+
   rect(0, 0, s, s);
+  fill(0);
+  let n = max(0, s - 50 / 2);
+  rect(0, 0, (s / 2) + (n / 3), s / 2 + n / 3);
+  rect(0, 0, n / 2, windowHeight);
+  rect(0, 0, windowWidth, n / 2);
 }
 
 function draw() {
   background(0);
-
   translate(width / 2, height / 2);
-  scale(2, 2);
-
-  let f = frameCount / 30;
-  let maxSize = 75;
-
-  let s1 = (f + 0) % maxSize;
-  let s2 = (f + 25) % maxSize;
-  let s3 = (f + 50) % maxSize;
-
-  stroke(0, 255, 0);
-  drawBox(s1);
-
-  stroke(255, 0, 0);
-  drawBox(s2);
-
-  stroke(0, 0, 255);
-  drawBox(s3);
+  scale(3,3);
+  
+  let f = frameCount/4;
+  let arr = [(f + 0) % MaxSize,
+    (f + 25) % MaxSize,
+    (f + 50) % MaxSize
+  ];
+  arr = sort(arr).reverse();
+  arr.forEach((v, i, a) => drawBox(v));
 }
