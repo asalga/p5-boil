@@ -6,7 +6,9 @@
 
 let capture,
   sobelShader,
-  gfx, gfx3D,
+  gfx, 
+  img,
+  gfx3D,
   mouse = [0, 0, 0];
 
 function setup() {
@@ -18,6 +20,10 @@ function setup() {
 
   capture = createCapture(VIDEO);
   capture.hide();
+}
+
+function preload(){
+  img = loadImage('data/test.png');
 }
 
 function mousePressed(event) {
@@ -43,6 +49,7 @@ function draw() {
   translate(-width / 2, -height / 2);
   shader(sobelShader);
   sobelShader.setUniform('time', millis());
+  sobelShader.setUniform('texture0', img);
   sobelShader.setUniform('res', [width, height]);
   sobelShader.setUniform('mouse', [pmouseX, height - pmouseY, mouse[0], mouse[2]]);
   rect(0, 0, windowWidth, windowHeight, 1, 1);

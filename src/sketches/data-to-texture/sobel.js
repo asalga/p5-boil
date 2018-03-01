@@ -14,8 +14,7 @@ uniform float time;
 uniform sampler2D texture0;
 
 void main() {
-  vec4 col = texture2D(texture0, vec2(0.0));
-  gl_FragColor = vec4(0.0, 0.0, 1.0, 1.0);
+  gl_FragColor = texture2D(texture0, vec2(0.0));
 }`;
 
 let vert = `
