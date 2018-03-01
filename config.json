@@ -1,5 +1,5 @@
 {
-  "id": "robotic-access",
+  "id": "data-to-texture",
 
   "targets": {
 
@@ -25,6 +25,12 @@
       "dir": "wak-a-rat",
       "library": "p5js-0.6",
       "bundleMethod": "browserify"
+    },
+
+    "data-to-texture": {
+      "dir": "data-to-texture",
+      "library": "p5js-0.6",
+      "bundleMethod": "concat"
     },
 
     "sobel": {
