@@ -8,11 +8,6 @@ function setup() {
 function draw() {
   translate(-width / 2, -height / 2);
   shader(sh);
-  sh.setUniform('mouseX', mouseX / windowWidth);
+  sh.setUniform('time', millis()/1000);
   rect(0, 0, windowWidth, windowHeight, 1, 1);
-}
-
-function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
-  sh = new p5.Shader(this._renderer, vert, frag);
 }
