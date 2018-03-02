@@ -8,6 +8,9 @@ varying vec4 var_vertCol;
 varying vec3 var_vertNormal;
 varying vec2 var_vertTexCoord;
 
+uniform sampler2D texture0;
+
 void main() {
-  gl_FragColor = vec4(0.33, 0.66, 0.99, 1.0);
+  vec4 col = texture2D(texture0, gl_FragCoord.xy / vec2(640.0, 480.0));
+  gl_FragColor = col;
 }`;

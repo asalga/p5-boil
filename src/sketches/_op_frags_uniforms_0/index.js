@@ -1,9 +1,4 @@
 let sh;
-let pimg;
-
-function preload(){
-  pimg = loadImage('data/public_domain.png');
-}
 
 function setup() {
   createCanvas(windowWidth, windowHeight, WEBGL);
@@ -13,6 +8,6 @@ function setup() {
 function draw() {
   translate(-width / 2, -height / 2);
   shader(sh);
-  sh.setUniform('texture0', pimg);
+  sh.setUniform('mouseX', mouseX / windowWidth);
   rect(0, 0, windowWidth, windowHeight, 1, 1);
 }
