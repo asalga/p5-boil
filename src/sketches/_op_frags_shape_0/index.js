@@ -17,7 +17,6 @@ function draw() {
 
   shader(sh);
   sh.setUniform('res', [windowWidth, windowHeight]);
-  sh.setUniform('aspect', windowWidth/windowHeight);
   rect(0, 0, windowWidth, windowHeight, 1, 1);
 }
 
