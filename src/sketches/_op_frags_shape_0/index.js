@@ -1,7 +1,3 @@
-/*
-	Circle
-*/
-
 let sh;
 
 function preload(){
