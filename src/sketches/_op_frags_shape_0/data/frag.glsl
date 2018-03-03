@@ -12,6 +12,7 @@ uniform float aspect;
 
 float circle(vec2 p, float r){
 	vec2 st = (gl_FragCoord.xy / res);
+	st.x *= res.x/res.y;
 	return 1.0 - step(r, distance(st, p));
 }
 
@@ -19,3 +20,4 @@ void main() {
   vec3 col = vec3( circle(vec2(0.5), 0.25) );
   gl_FragColor = vec4(col, 1.0);
 }
+

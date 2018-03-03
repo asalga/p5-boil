@@ -1,7 +1,44 @@
 {
-  "id": "data-to-texture",
+  "id": "_op_frags_shape_0",
 
   "targets": {
+
+    "_op_frags_0": {
+      "dir": "_op_frags_0",
+      "library": "p5js-0.6",
+      "bundleMethod": "concat"
+    },
+
+    "_op_frags_1": {
+      "dir": "_op_frags_1",
+      "library": "p5js-0.6",
+      "bundleMethod": "concat"
+    },
+
+    "_op_frags_window_resize": {
+      "dir": "_op_frags_window_resize",
+      "library": "p5js-0.6",
+      "bundleMethod": "concat"
+    },
+
+    "_op_frags_uniforms_0": {
+      "dir": "_op_frags_uniforms_0",
+      "library": "p5js-0.6",
+      "bundleMethod": "concat"
+    },
+
+    "_op_frags_functions_0": {
+      "dir": "_op_frags_functions_0",
+      "library": "p5js-0.6",
+      "bundleMethod": "concat"
+    },
+
+    "_op_frags_shape_0": {
+      "dir": "_op_frags_shape_0",
+      "library": "p5js-0.6",
+      "bundleMethod": "concat"
+    },
+
 
     "robotic-access": {
       "dir": "robotic-access",

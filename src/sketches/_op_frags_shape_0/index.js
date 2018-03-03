@@ -20,3 +20,7 @@ function draw() {
   sh.setUniform('aspect', windowWidth/windowHeight);
   rect(0, 0, windowWidth, windowHeight, 1, 1);
 }
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+}

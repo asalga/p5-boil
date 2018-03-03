@@ -166,7 +166,18 @@ module.exports = function(grunt) {
             src: ['**/*.{jpg,jpeg,png,gif,svg}'],
             dest: `${app}/data/`,
             filter: 'isFile'
+          },
+          
+          // SHADERS
+          {
+            expand: true,
+            flatten: false,
+            cwd: `${config.target}/data/`,
+            src: ['**/*.glsl'],
+            dest: `${app}/data/`,
+            filter: 'isFile'
           }
+
         ]
       }
     },
@@ -271,7 +282,7 @@ module.exports = function(grunt) {
       // DATA
       data: {
         files: [
-          `${config.target}/data/**/*.json`
+          `${config.target}/data/**/*.{json,glsl}`
         ],
         tasks: [
           'copy:dev'
