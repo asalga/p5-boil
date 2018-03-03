@@ -8,7 +8,14 @@ varying vec3 var_vertNormal;
 varying vec2 var_vertTexCoord;
 
 uniform vec2 res;
+uniform float aspect;
+
+float circle(vec2 p, float r){
+	vec2 st = (gl_FragCoord.xy / res);
+	return 1.0 - step(r, distance(st, p));
+}
 
 void main() {
-  gl_FragColor = vec4(step(0.5, gl_FragCoord.x/res.x));
+  vec3 col = vec3( circle(vec2(0.5), 0.25) );
+  gl_FragColor = vec4(col, 1.0);
 }
