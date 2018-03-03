@@ -1,5 +1,3 @@
-
-let vert = `
 #ifdef GL_ES
   precision highp float;
   precision mediump int;
@@ -25,4 +23,4 @@ void main() {
   var_vertCol = aVertexColor;
   var_vertNormal = aNormal;
   var_vertTexCoord = aTexCoord;
-}`;
+}

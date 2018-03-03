@@ -3,11 +3,11 @@ let pimg;
 
 function preload(){
   pimg = loadImage('data/public_domain.png');
+  sh = loadShader('data/vert.glsl', 'data/frag.glsl');
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight, WEBGL);
-  sh = new p5.Shader(this._renderer, vert, frag);
 }
 
 function draw() {
