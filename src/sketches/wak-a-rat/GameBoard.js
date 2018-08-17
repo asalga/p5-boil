@@ -53,11 +53,18 @@ let assets;
     gameTimeElapsed = 0,
     nextTime = 2000;
 
+    
+
   if (instance) {
     return instance;
   }
   instance = this;
 
+  this.gameHasEnded = false;
+
+  // this.endGame(){
+  //   gameHasEnded = true;
+  // }
   /*
     Get the next time we'll release a rat.
     frequency increases proportionally with time increase.
@@ -142,6 +149,7 @@ let assets;
       // timeElapsed = 0; //-= nextTime;
       nextTime = this.getNextTime();
       // console.log(nextTime);
+
       this.pushOutRat();
     }
 
@@ -198,6 +206,11 @@ let assets;
    */
   this.pushOutRat = function() {
 
+    // No pushing any rats out if game is over
+    if(this.gameHasEnded){
+      return;
+    }
+
     // If all the slots are occupied, we can't do anything
     if (freeSlots.length === 0) {
       return;
@@ -222,7 +235,8 @@ let assets;
 }.bind(this)());
 
 module.exports = {
-  instance: instance
+  instance: instance,
+  gameHasEnded : instance.gameHasEnded
 };
 
 Object.defineProperty(module.exports, 'instance', {

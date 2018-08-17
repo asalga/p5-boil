@@ -40,6 +40,7 @@ let Manifest = {
     }
   ],
 
+  // TODO: add slugs names?
   audio: [{
       path: 'data/audio/max/max.mp3'
     },
@@ -56,7 +57,9 @@ let Manifest = {
       path: 'data/audio/sam/miss.mp3'
     },
     {
-      path: 'data/audio/background/music.mp3'
+      // path: 'data/audio/background/music.mp3'
+      // path: 'data/audio/placeholder/test.mp3'
+      path: 'data/audio/placeholder/null.mp3'
     }
   ]
 };

@@ -1,6 +1,3 @@
-/*
-  Assets.js
-*/
 'use strict';
 
 const Atlas = require('./Atlas');

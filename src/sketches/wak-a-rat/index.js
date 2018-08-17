@@ -1,9 +1,10 @@
-'use strict';
 /*
   Wak-a-Rat
   Andor Saga
   Oct 2017
 */
+
+'use strict';
 
 let p5 = require('p5');
 let p5BitmapFont = require('p5-bitmapfont')(p5);
@@ -32,6 +33,8 @@ let max, sam;
 let bitmapFont;
 let scummFont;
 
+let bkMusic;
+
 function update(dt) {
   if (paused) {
     return;
@@ -42,6 +45,17 @@ function update(dt) {
   GameBoard.update(dt);
   sam.update(dt);
   max.update(dt);
+}
+
+/*
+  Music has finished playing we want to
+  prevent further mouse clicks,
+  prevent pausing, etc.
+  show if user has won
+*/
+function endGame(){
+  console.log('END GAME!');
+  GameBoard.gameHasEnded = true;//.endGame();
 }
 
 function render() {
@@ -110,10 +124,14 @@ function togglePause() {
   paused = !paused;
   if (paused === false) {
     lastTime = _p5.millis();
+    bkMusic.play();
+  }
+  else{
+    bkMusic.pause();
   }
 }
 
-var newp5 = new p5(function(p) {
+var newp5 = new p5(function(p,) {
   _p5 = p;
 
   p.setup = function setup() {
@@ -125,6 +143,15 @@ var newp5 = new p5(function(p) {
 
     max = new Max({ p5: p });
     sam = new Sam({ p5: p });
+
+    // bkMusic = assets.get('data/audio/background/music.mp3');
+    // bkMusic = assets.get('data/audio/placeholder/test.mp3');
+    bkMusic = assets.get('data/audio/placeholder/null.mp3');
+    
+    bkMusic.on('end', function(t){
+      console.log("MUSIC DONE!", t);
+      endGame();
+    });
   };
 
   /*
