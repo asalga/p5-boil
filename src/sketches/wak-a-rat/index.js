@@ -98,7 +98,7 @@ function renderPauseOverlay() {
   _p5.image(assets.get('data/images/pause_bar.png'), rectObj.x, rectObj.y);
   _p5.bitmapTextFont(scummFont);
   _p5.tint(80, 80, 80);
-  // debugger;
+
   _p5.bitmapText(Strings['PAUSED'], rectObj.x + 5, rectObj.y + 1);
   _p5.noTint();;
 }
@@ -111,13 +111,23 @@ function drawUI() {
   let x = 58;
   let y = 38;
 
+  let scoreCopy = `${GameBoard.getNumHits()} - ${GameBoard.getNumMisses()}`;
+  let wonLost = GameBoard.getNumHits() > 20 ? Strings['WIN'] : Strings['LOSE'];
+
+  // If game has ended we alternate between showing
+  // the WIN/LOSE copy and the Score
   if(GameBoard.gameHasEnded){
-    let wonLost = GameBoard.getNumHits() > 20 ? Strings['WIN'] : Strings['LOSE'];
-    // TODO: fix font
-    _p5.bitmapText(wonLost, x-5, y);
+    let t = ~~(gameTime/1000);
+
+    if(t % 2 == 0){
+      _p5.bitmapText(scoreCopy, x, y); 
+    }
+    else{
+      // TODO: fix font
+      _p5.bitmapText(wonLost, x-5, y);
+    }
   }
   else {
-    let scoreCopy = `${GameBoard.getNumHits()} - ${GameBoard.getNumMisses()}`;
     _p5.bitmapText(scoreCopy, x, y); 
   }
 }
@@ -143,6 +153,10 @@ function drawDebug() {
 /*
  */
 function togglePause() {
+  if(GameBoard.gameHasEnded){
+    return;
+  }
+  
   paused = !paused;
   if (paused === false) {
     lastTime = _p5.millis();
@@ -219,7 +233,7 @@ var newp5 = new p5(function(p,) {
   p.keyPressed = function() {
     switch (p.keyCode) {
       case KB._D:
-        debug = !debug;
+        // debug = !debug;
         break;
       case KB._SPACE:
         togglePause();
