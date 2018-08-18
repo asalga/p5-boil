@@ -15,9 +15,17 @@ let GameBoard = require('./GameBoard').instance;
 let Max = require('./characters/Max');
 let Sam = require('./characters/Sam');
 let UI = require('./UI');
+// let Strings = require('./Strings');
+
+// Place in Module
+let Strings = {
+  'PAUSED' : 'Game Paused. Press SPACE to Continue.',
+  'WIN' :  'WINNER!',
+  'LOSE' : 'LOSER!'
+};
 
 let debug = false;
-let paused = true; //false;
+let paused = true;
 
 let assets;
 let _p5;
@@ -30,10 +38,12 @@ let fps = 0;
 
 let max, sam;
 
-let bitmapFont;
-let scummFont;
+let bitmapFont, scummFont;
 
 let bkMusic;
+
+
+
 
 function update(dt) {
   if (paused) {
@@ -55,7 +65,7 @@ function update(dt) {
 */
 function endGame(){
   console.log('END GAME!');
-  GameBoard.gameHasEnded = true;//.endGame();
+  GameBoard.gameHasEnded = true;
 }
 
 function render() {
@@ -88,16 +98,28 @@ function renderPauseOverlay() {
   _p5.image(assets.get('data/images/pause_bar.png'), rectObj.x, rectObj.y);
   _p5.bitmapTextFont(scummFont);
   _p5.tint(80, 80, 80);
-  _p5.bitmapText(`Game Paused. Press SPACE to Continue.`, rectObj.x + 5, rectObj.y + 1);
+  // debugger;
+  _p5.bitmapText(Strings['PAUSED'], rectObj.x + 5, rectObj.y + 1);
   _p5.noTint();;
 }
 
 /*
-  Just the score
+  UI is only the Score
 */
 function drawUI() {
   _p5.bitmapTextFont(bitmapFont);
-  _p5.bitmapText(`${GameBoard.getNumHits()} - ${GameBoard.getNumMisses()}`, 58, 38);
+  let x = 58;
+  let y = 38;
+
+  if(GameBoard.gameHasEnded){
+    let wonLost = GameBoard.getNumHits() > 20 ? Strings['WIN'] : Strings['LOSE'];
+    // TODO: fix font
+    _p5.bitmapText(wonLost, x-5, y);
+  }
+  else {
+    let scoreCopy = `${GameBoard.getNumHits()} - ${GameBoard.getNumMisses()}`;
+    _p5.bitmapText(scoreCopy, x, y); 
+  }
 }
 
 /*
@@ -149,7 +171,7 @@ var newp5 = new p5(function(p,) {
     bkMusic = assets.get('data/audio/placeholder/null.mp3');
     
     bkMusic.on('end', function(t){
-      console.log("MUSIC DONE!", t);
+      // console.log("MUSIC DONE!", t);
       endGame();
     });
   };
@@ -163,11 +185,12 @@ var newp5 = new p5(function(p,) {
     scummFont = p.loadBitmapFont('data/fonts/scumm.png', 'data/fonts/scumm.json');
 
     bitmapFont = p.loadBitmapFont('data/fonts/lucasFont.png', {
-      glyphWidth: 14,
-      glyphHeight: 16,
+      // TODO: fix
+      glyphWidth: 14,//11
+      glyphHeight: 16,//14
       glyphBorder: 0,
       rows: 12,
-      cols: 9,
+      cols: 9,//8
       charSpacing: 1
     });
   };
