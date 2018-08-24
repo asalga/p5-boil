@@ -42,9 +42,6 @@ let bitmapFont, scummFont;
 
 let bkMusic;
 
-
-
-
 function update(dt) {
   if (paused) {
     return;
