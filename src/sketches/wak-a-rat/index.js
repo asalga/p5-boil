@@ -233,7 +233,7 @@ var newp5 = new p5(function(p,) {
   p.keyPressed = function() {
     switch (p.keyCode) {
       case KB._D:
-        // debug = !debug;
+        debug = !debug;
         break;
       case KB._SPACE:
         togglePause();

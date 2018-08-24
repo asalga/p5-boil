@@ -63,9 +63,7 @@ let assets;
 
   t.forEach( (v) => {
     timings.push(v*1.5);
-    // console.log(timings);
   });
-  console.log(timings);
   
   if (instance) {
     return instance;
@@ -73,6 +71,7 @@ let assets;
   instance = this; 
 
   this.gameHasEnded = false;
+  // this.gameHasStared;
 
   /*
     Get the next time we'll release a rat.
@@ -136,7 +135,9 @@ let assets;
   */
   this.freeSlot = function(rat) {
     freeSlots.push(rat.slotID);
-    // this.p5.shuffle(freeSlots, true);
+
+    // ???
+    this.p5.shuffle(freeSlots, true);
 
     let idx = ratsOut.indexOf(rat);
     if (idx !== -1) {
@@ -150,8 +151,10 @@ let assets;
   /*
    */
   this.update = function(dt) {
+
     gameTimeElapsed += dt;
     nextTime -= dt;
+    // console.log()
 
     // if (timeElapsed >= nextTime) {
     // if(nextTime <= 0){
@@ -161,10 +164,11 @@ let assets;
     //   this.pushOutRat();
     // }
 
-      let lastItem = timings[timings.length-1];
-      console.log(gameTimeElapsed/1000, lastItem);
+    let lastItem = timings[timings.length-1];
+    let buff = 3;
+    let curr = (gameTimeElapsed/1000)-buff;
 
-    if(gameTimeElapsed/1000 > lastItem){
+    if( curr > lastItem){
       this.pushOutRat();
       timings.pop();
     }
