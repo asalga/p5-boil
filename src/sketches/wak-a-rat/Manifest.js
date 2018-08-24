@@ -57,9 +57,9 @@ let Manifest = {
       path: 'data/audio/sam/miss.mp3'
     },
     {
-      // path: 'data/audio/background/music.mp3'
+      path: 'data/audio/background/1_round.mp3'
       // path: 'data/audio/placeholder/test.mp3'
-      path: 'data/audio/placeholder/null.mp3'
+      // path: 'data/audio/placeholder/null.mp3'
     }
   ]
 };

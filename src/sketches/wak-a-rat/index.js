@@ -180,12 +180,12 @@ var newp5 = new p5(function(p,) {
     max = new Max({ p5: p });
     sam = new Sam({ p5: p });
 
-    // bkMusic = assets.get('data/audio/background/music.mp3');
+    bkMusic = assets.get('data/audio/background/1_round.mp3');
     // bkMusic = assets.get('data/audio/placeholder/test.mp3');
-    bkMusic = assets.get('data/audio/placeholder/null.mp3');
+    // bkMusic = assets.get('data/audio/placeholder/null.mp3');
     
     bkMusic.on('end', function(t){
-      // console.log("MUSIC DONE!", t);
+      console.log("MUSIC DONE!", t);
       endGame();
     });
   };

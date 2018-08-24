@@ -35,6 +35,11 @@ let ratSlotCoords = [
 let instance;
 let assets;
 
+
+// items are stored in reverse order so we can just pop()
+// let timings = [0, 0.773, 1.15, 1.541, 2.485, 3.988, 4.661, 5.438, 7.966, 8.183, 10.728, 11.159, 12.158, 12.591, 12.727, 14.896, 15.743, 16.952, 17.256, 18.864, 19.529, 20.314, 22.617, 22.961, 23.961, 25.225, 25.553, 28.315, 28.971, 30.258, 30.818, 30.987, 33.092, 34.41, 35.452, 36.572, 36.731, 38.187, 38.851, 39.515, 41.468];
+
+
 /*
   ratsIn - array of rats that are 'inside' the game board
   ratsOut - array of rats that are 'outside'/visible
@@ -53,18 +58,22 @@ let assets;
     gameTimeElapsed = 0,
     nextTime = 2000;
 
-    
+  let t = [41.468, 39.515, 38.851, 38.187, 36.731, 36.572, 35.452, 34.41, 33.092, 30.987, 30.818, 30.258, 28.971, 28.315, 25.553, 25.225, 23.961, 22.961, 22.617, 20.314, 19.529, 18.864, 17.256, 16.952, 15.743, 14.896, 12.727, 12.591, 12.158, 11.159, 10.728, 8.183, 7.966, 5.438, 4.661, 3.988, 2.485, 1.541, 1.15, 0.773, 0];
+  let timings = [];
 
+  t.forEach( (v) => {
+    timings.push(v*1.5);
+    // console.log(timings);
+  });
+  console.log(timings);
+  
   if (instance) {
     return instance;
   }
-  instance = this;
+  instance = this; 
 
   this.gameHasEnded = false;
 
-  // this.endGame(){
-  //   gameHasEnded = true;
-  // }
   /*
     Get the next time we'll release a rat.
     frequency increases proportionally with time increase.
@@ -145,12 +154,19 @@ let assets;
     nextTime -= dt;
 
     // if (timeElapsed >= nextTime) {
-    if(nextTime <= 0){
-      // timeElapsed = 0; //-= nextTime;
-      nextTime = this.getNextTime();
-      // console.log(nextTime);
+    // if(nextTime <= 0){
+    //   // timeElapsed = 0; //-= nextTime;
+    //   nextTime = this.getNextTime();
+    //   // console.log(nextTime);
+    //   this.pushOutRat();
+    // }
 
+      let lastItem = timings[timings.length-1];
+      console.log(gameTimeElapsed/1000, lastItem);
+
+    if(gameTimeElapsed/1000 > lastItem){
       this.pushOutRat();
+      timings.pop();
     }
 
     ratsOut.forEach(r => r.update(dt));
