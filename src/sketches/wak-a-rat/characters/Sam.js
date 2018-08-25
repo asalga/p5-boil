@@ -17,6 +17,7 @@ let nextLickTimer,
 
 let armFrame = 'idle';
 let hitTimer = 0;
+// let dirty = true;
 
 //
 let armData = {
@@ -67,6 +68,7 @@ let Sam = function(cfg) {
     return instance;
   }
   instance = this;
+  
 
   this.getNextBlink = function() {
     return this.p5.random(1, 4) * 1000;
@@ -120,6 +122,7 @@ let Sam = function(cfg) {
       let img = assets.get(data.img);
       this.p5.image(img, data.x, data.y);
     }
+    // dirty = false;
   };
 
   this.getArmPosition = function() {
@@ -133,6 +136,7 @@ let Sam = function(cfg) {
     hitTimer = 150;
     this.slotHit = slotIdx;
     armFrame = slotNames[slotIdx];
+    // dirty = true;
   };
 
   /*
@@ -150,11 +154,13 @@ let Sam = function(cfg) {
     if (nextBlinkTimer <= 0) {
       nextBlinkTimer = this.getNextBlink();
       this.blinkAni.play('blink');
+      // dirty = true;
     }
 
     if (nextLickTimer <= 0) {
       nextLickTimer = this.getNextLickTimer();
       this.lickAni.play('lick');
+      // dirty = true;
     }
 
     this.blinkAni.update(dt);

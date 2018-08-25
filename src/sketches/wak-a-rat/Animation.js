@@ -26,6 +26,7 @@ let Animation = function(cfg) {
   assets = new Assets(this.p5);
   this.firstTime = true;
   this.reset();
+  this.dirty = true;
 };
 
 Animation.prototype = {
@@ -35,6 +36,7 @@ Animation.prototype = {
   nextAnimation() {
     this.currAnimation++;
     this.frameIdx = 0;
+    this.dirty= true;
 
     if (this.currAnimation === this.queue.length) {
       this.done = true;
@@ -45,6 +47,7 @@ Animation.prototype = {
   /*
    */
   update(dt) {
+    this.dirty= true;
 
     if (this.done) {
       this.isPlaying = false;
@@ -77,6 +80,7 @@ Animation.prototype = {
 
       this.t -= msPerFrame;
       this.frameIdx++;
+      this.dirty = true;
 
       // reached the end of the animation
       if (this.frameIdx === this.animations[aniName].length) {
@@ -89,6 +93,8 @@ Animation.prototype = {
     Return null if the animation is paused
   */
   getFrame() {
+  //  this.dirty = true;
+
     // If the animation playing hasn't started yet, but we
     // still need to show a frame, so the animation image
     // doesn't just 'jump' into existance
@@ -98,6 +104,7 @@ Animation.prototype = {
 
     // Animation has finished and we need to maintain the last frame.
     if (this.done && this.endFrame) {
+
       this.firstTime = false;
       return assets.atlases[this.atlasName].frames[this.endFrame];
     }
@@ -151,6 +158,7 @@ Animation.prototype = {
 
     this.started = true;
     this.isPlaying = true;
+
 
     // If the animation is already finished, we'll need to reset it so 
     // it can replay.

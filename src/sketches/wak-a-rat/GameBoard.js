@@ -34,6 +34,7 @@ let ratSlotCoords = [
 let instance;
 let assets;
 
+
 /*
   ratsIn - array of rats that are 'inside' the game board
   ratsOut - array of rats that are 'outside'/visible
@@ -51,6 +52,7 @@ let assets;
 
     gameTimeElapsed = 0,
     nextTime = 2000;
+    // dirty=true;
 
   // stored in reverse order so we can just use pop()
   let t = [41.468, 39.515, 38.851, 38.187, 36.731, 36.572, 35.452, 34.41, 33.092, 30.987, 30.818, 30.258, 28.971, 28.315, 25.553, 25.225, 23.961, 22.961, 22.617, 20.314, 19.529, 18.864, 17.256, 16.952, 15.743, 14.896, 12.727, 12.591, 12.158, 11.159, 10.728, 8.183, 7.966, 5.438, 4.661, 3.988, 2.485, 1.541, 1.15, 0.773, 0];
@@ -66,6 +68,8 @@ let assets;
   instance = this; 
 
   this.gameHasEnded = false;
+
+  // this.isDirty = function(){return dirty;}
 
   /*
     -- Deprecated  --
@@ -146,6 +150,8 @@ let assets;
   /*
    */
   this.update = function(dt) {
+    // dirty = false;
+
     gameTimeElapsed += dt;
     nextTime -= dt;
 
@@ -166,7 +172,13 @@ let assets;
       timings.pop();
     }
 
-    ratsOut.forEach(r => r.update(dt));
+    ratsOut.forEach(r => {
+      r.update(dt)
+
+      // if(r.dirty){
+      //   dirty = true;
+      // }
+    });
   };
 
   this.increaseMisses = function() {
@@ -212,6 +224,7 @@ let assets;
         }
       }
     });
+    // dirty = false;
   };
 
   /*

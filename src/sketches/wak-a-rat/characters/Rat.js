@@ -7,7 +7,7 @@ let Assets = require('../Assets');
 let Animation = require('../Animation');
 
 let assets;
-let damage = 25;
+let damage = 8;
 
 // references to the image names from the atlas.
 let animationSequences = {
@@ -18,10 +18,12 @@ let animationSequences = {
   'enter_0': ['enter_0_0', 'enter_0_1', 'enter_0_2'],
   'enter_1': ['enter_1_0', 'enter_1_1', 'enter_1_2'],
   'enter_2': ['enter_2_0', 'enter_2_1', 'enter_2_2'],
+  'enter_3': ['enter_3_0', 'enter_3_1'], //taunt
 
   'idle_0': ['idle_0_0', 'idle_0_1'],
   'idle_1': ['idle_1_0', 'idle_1_1'],
   'idle_2': ['idle_2_0', 'idle_2_1'],
+  'idle_3': ['idle_taunt_0', 'idle_taunt_1'],
 
   'exit': ['exit'],
 };
@@ -43,6 +45,7 @@ let Rat = function(cfg) {
     atlasName: 'rat'
   });
   this.health = 100;
+  this.dirty = true;
   this.resetAnimation();
 };
 
@@ -53,7 +56,6 @@ Rat.prototype = {
     time, they are 'invincible' until their animations completes.
   */
   hit() {
-    // return;
 
     if (this.hasBeenHit) {
       return;
@@ -91,12 +93,18 @@ Rat.prototype = {
     let idleAnim = 0;
     let GameBoard = require('../GameBoard').instance;
 
-    if (this.health < 25) {
+    if (this.health < 10) { // taunt
+      enterAnim = 3;
+      idleAnim = 3;
+    } else if (this.health < 25) {
       enterAnim = 2;
       idleAnim = 2;
     } else if (this.health < 50) {
       enterAnim = 1;
       idleAnim = 1;
+    } else if (this.health < 100) {
+      enterAnim = 0;
+      idleAnim = 0;
     }
 
     this.ani
@@ -126,6 +134,10 @@ Rat.prototype = {
 
   update(dt) {
     this.ani.update(dt);
+    // if(this.ani.dirty){
+    //   this.dirty = true;
+    // }
+    this.dirty = true; //this.ani.dirty;
   },
 
   position(p) {
@@ -138,6 +150,7 @@ Rat.prototype = {
     if (frame) {
       this.p5.image(frame, this.pos.x, this.pos.y);
     }
+    this.dirty = false;
   }
 };
 
