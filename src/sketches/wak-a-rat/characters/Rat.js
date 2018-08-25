@@ -53,6 +53,8 @@ Rat.prototype = {
     time, they are 'invincible' until their animations completes.
   */
   hit() {
+    // return;
+
     if (this.hasBeenHit) {
       return;
     }

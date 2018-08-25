@@ -101,7 +101,7 @@ function renderPauseOverlay() {
 }
 
 /*
-  UI is only the Score
+  Draw score and win/lose strings in top left.
 */
 function drawUI() {
   _p5.bitmapTextFont(bitmapFont);
@@ -158,9 +158,11 @@ function togglePause() {
   if (paused === false) {
     lastTime = _p5.millis();
     bkMusic.play();
+    _p5.loop();
   }
   else{
     bkMusic.pause();
+    _p5.noLoop();
   }
 }
 
@@ -239,6 +241,7 @@ var newp5 = new p5(function(p,) {
   };
 
   /*
+    TODO:fix timing
    */
   p.draw = function() {
     if (!assets.isDone()) {
@@ -256,6 +259,8 @@ var newp5 = new p5(function(p,) {
 
     if (paused) {
       renderPauseOverlay();
+      // Can noloop here so we get at least 1 frame rendered.
+      p.noLoop();
     }
 
     lastTime = now;

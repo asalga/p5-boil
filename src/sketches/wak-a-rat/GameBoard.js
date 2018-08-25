@@ -2,12 +2,11 @@
 
 /*
   Singleton for managing the rats
-
-  TODO - deprecate freeslots
 */
 
 let Rat = require('./characters/Rat');
 let Utils = require('./Utils');
+let Assets = require('./Assets');
 
 // make game more difficult by reducing size of hitboxes?
 const HitboxWidth = 80;
@@ -34,9 +33,6 @@ let ratSlotCoords = [
 
 let instance;
 let assets;
-
-
-
 
 /*
   ratsIn - array of rats that are 'inside' the game board
@@ -102,6 +98,7 @@ let assets;
   this.hit = function(p) {
     let retIdx = -1;
     let hitRat = false;
+    const MaxSlot = 5;
 
     hitBoxPositions.forEach((rectangle, slotID) => {
 
@@ -118,8 +115,8 @@ let assets;
       }
     });
 
-    if(hitRat === false && retIdx !== -1){
-      let Assets = require('./Assets');
+    // TODO: fix 'new'
+    if(hitRat === false && retIdx !== -1 && retIdx !== MaxSlot){
       assets = new Assets();
       assets.get('data/audio/sam/miss.mp3').play();
     }
@@ -135,7 +132,6 @@ let assets;
   this.freeSlot = function(rat) {
     freeSlots.push(rat.slotID);
 
-    // ???
     this.p5.shuffle(freeSlots, true);
 
     let idx = ratsOut.indexOf(rat);
@@ -143,7 +139,7 @@ let assets;
       ratsIn.push(ratsOut.splice(idx, 1)[0]);
     }
 
-    ratSlots[rat.slotIdx] = null;
+    ratSlots[rat.slotID] = null;
     rat.slotID = -1;
   };
 
@@ -241,11 +237,11 @@ let assets;
       rat = new Rat({ p5: this.p5, name: 'rat' });
     }
 
-    let slotIdx = freeSlots.pop();
-    ratSlots[slotIdx] = rat;
+    let slotID = freeSlots.pop();
+    ratSlots[slotID] = rat;
     ratsOut.push(rat);
-    rat.assignSlot(slotIdx);
-    rat.position(ratSlotCoords[slotIdx]);
+    rat.assignSlot(slotID);
+    rat.position(ratSlotCoords[slotID]);
     rat.enterGame();
   };
 
