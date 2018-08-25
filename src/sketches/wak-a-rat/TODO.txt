@@ -1,8 +1,3 @@
-
-- Fix rendering of arm on top of rats
-- Add cursor
-
-
 - Polish timings
 - skip frames if nothing has changed
 - Add mute button?

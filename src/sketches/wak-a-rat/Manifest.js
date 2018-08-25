@@ -8,7 +8,7 @@ let Manifest = {
   images: [
     'data/images/background/bk.png',
     'data/images/background/board.png',
-    
+    'data/images/crosshair.png',
     'data/images/pause_bar.png',
 
     'data/images/sam/arms/images/idle.png',

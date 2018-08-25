@@ -172,7 +172,8 @@ var newp5 = new p5(function(p,) {
   p.setup = function setup() {
     p.createCanvas(640, 400);
     p.bitmapTextFont(bitmapFont);
-    p.cursor(p.CROSS);
+    document.body.style.cursor = "none";
+    // p.cursor(p.CROSS);
 
     GameBoard.p5 = p;
 
@@ -262,6 +263,8 @@ var newp5 = new p5(function(p,) {
       // Can noloop here so we get at least 1 frame rendered.
       p.noLoop();
     }
+
+    p.image(assets.get('data/images/crosshair.png'), p.mouseX-25, p.mouseY-25);
 
     lastTime = now;
   };
