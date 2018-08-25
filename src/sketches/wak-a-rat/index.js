@@ -172,8 +172,9 @@ var newp5 = new p5(function(p,) {
   p.setup = function setup() {
     p.createCanvas(640, 400);
     p.bitmapTextFont(bitmapFont);
-    document.body.style.cursor = "none";
+    // document.body.style.cursor = "none";
     // p.cursor(p.CROSS);
+      document.body.style.cursor = 'url("data/images/crosshair.png"), cross;';
 
     GameBoard.p5 = p;
 
@@ -264,7 +265,7 @@ var newp5 = new p5(function(p,) {
       p.noLoop();
     }
 
-    p.image(assets.get('data/images/crosshair.png'), p.mouseX-25, p.mouseY-25);
+    // p.image(assets.get('data/images/crosshair.png'), p.mouseX-25, p.mouseY-25);
 
     lastTime = now;
   };

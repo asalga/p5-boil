@@ -5,6 +5,7 @@ body {
   /*padding: 20px 0 0 0;*/
   display: flex;
   align-items: center;
+  cursor: url(data/images/crosshair.png) 25 25, crosshair;
 }
 
 
